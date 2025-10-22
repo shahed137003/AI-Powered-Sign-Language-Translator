@@ -2,8 +2,6 @@
 
 > **Bridging the communication gap between the Deaf and hearing communities using Artificial Intelligence**
 
-
-
 ---
 
 ## 🧩 Overview  
@@ -30,6 +28,22 @@ Built with cutting-edge technologies in **computer vision**, **speech processing
 
 ---
 
+## 🏗️ System Architecture  
+
+<p align="center">
+  <img src="use Experience.png" alt="System Architecture Diagram" width="800"/>
+</p>
+
+> The architecture integrates **gesture recognition**, **speech recognition**, **translation**, and **3D avatar rendering** into one seamless AI pipeline.
+
+**Flow Summary:**
+1. 🎥 Input sources (Camera, Mic, Text, Video)
+2. 🧩 AI Processing (Gesture Recognition, Speech-to-Text, NLP)
+3. 🔤 Translation Engine (Seq2Seq Transformer)
+4. 🧍 Avatar Rendering & Output (3D animations, text, or voice)
+5. 🌐 Web Interface built with React & Tailwind CSS
+
+---
 
 ## 🧠 Methodology  
 
@@ -68,11 +82,11 @@ Built with cutting-edge technologies in **computer vision**, **speech processing
 
 ## 🧭 User Journey  
 
-1. **Home Screen** – Choose between *Live Translate*, *Video Upload*, or *Settings*.  
-2. **Live Mode** – Sign in front of the camera → Real-time text/voice translation.  
-3. **Voice Mode** – Speak into the microphone → See avatar signing your words.  
-4. **Upload Mode** – Upload video → Auto-translate with side-by-side sign output.  
-5. **Accessibility Panel** – Customize contrast, vibration alerts, voice speed, etc.
+1. **🏠 Home Screen** – Choose between *Live Translate*, *Video Upload*, or *Settings*.  
+2. **🎥 Live Mode** – Sign in front of the camera → Real-time text/voice translation.  
+3. **🎙 Voice Mode** – Speak into the microphone → See avatar signing your words.  
+4. **📹 Upload Mode** – Upload video → Auto-translate with side-by-side sign output.  
+5. **⚙️ Accessibility Panel** – Customize contrast, vibration alerts, and voice speed.
 
 ---
 
@@ -86,7 +100,6 @@ Built with cutting-edge technologies in **computer vision**, **speech processing
 
 ---
 
-
 ## 🧱 Project Vision  
 
 > “To create a scalable, inclusive, and multilingual accessibility platform that uses AI to eliminate communication barriers between Deaf and hearing individuals — fostering equality in education, healthcare, and daily life.”
@@ -98,3 +111,4 @@ Built with cutting-edge technologies in **computer vision**, **speech processing
 This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.  
 
 ---
+
