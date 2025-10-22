@@ -31,7 +31,7 @@ Built with cutting-edge technologies in **computer vision**, **speech processing
 ## 🏗️ System Architecture  
 
 <p align="center">
-  <img src="use Experience.png" alt="System Architecture Diagram" width="800"/>
+  <img src="user Experience.png" alt="System Architecture Diagram" width="800"/>
 </p>
 
 > The architecture integrates **gesture recognition**, **speech recognition**, **translation**, and **3D avatar rendering** into one seamless AI pipeline.
