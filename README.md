@@ -1,4 +1,4 @@
-# 🤖✨ AI-Powered Sign Language Translator
+# 🤖✨ AI-Powered Sign Language Translator (Skeleton-Based)
 
 > **Bridging the communication gap between the Deaf and hearing communities using Artificial Intelligence**
 
@@ -9,7 +9,7 @@
 Millions of deaf and hard-of-hearing individuals face daily communication barriers.  
 This project proposes an **AI-powered multilingual platform** that performs **real-time, bidirectional translation** between **sign and spoken/written languages**, supporting **education, healthcare, and accessibility** across platforms.  
 
-Built with cutting-edge technologies in **computer vision**, **speech processing**, and **natural language understanding**, our solution empowers inclusive communication for all.
+Unlike traditional avatar-based systems, our solution uses **AI-driven skeleton motion synthesis**, generating **realistic 2D/3D skeletal gestures** directly from text, speech, or video — creating a more lightweight, scalable, and research-focused approach.
 
 ---
 
@@ -17,40 +17,39 @@ Built with cutting-edge technologies in **computer vision**, **speech processing
 
 ### 👐 Core Features
 - **🎥 Live Camera Translation** — Capture real-time gestures via camera → Translate into text or voice.  
-- **📹 Video Upload Translation** — Translate pre-recorded or YouTube videos into sign animations.  
+- **📹 Video Upload Translation** — Translate pre-recorded or YouTube videos into skeleton-based sign motion.  
 - **🌍 Multilingual Support** — Supports multiple sign (ASL, ArSL) and spoken (Arabic, English) languages.  
-- **🗣️ Voice-to-Sign Conversion** — Convert speech input into 3D avatar sign animations in real time.  
+- **🗣️ Voice-to-Sign Conversion** — Convert speech input into AI-generated skeleton signing in real time.  
 
 ### 💡 Advanced & Innovative Features
-- **💬 AI Sign Chatbot** — Practice signing or chatting in sign language with an intelligent assistant.  
-- **📶 Offline Mode** — Uses TensorFlow Lite for translation in low-connectivity areas.  
-- **♿ Accessibility Toolkit** — Adjustable sign speed, text-to-speech, haptic notifications, high-contrast modes.  
+- **💬 AI Sign Chatbot** — Chat or practice signing with an intelligent assistant that replies using animated skeleton poses.  
+- **📶 Offline Mode** — TensorFlow Lite models allow translation in low-connectivity environments.  
+- **♿ Accessibility Toolkit** — Adjustable sign speed, vibration feedback, high-contrast visualization, and text-to-speech options.  
 
 ---
 
 ## 🏗️ System Architecture  
-
-<p align="center">
-  <img src="user Experience.png" alt="System Architecture Diagram" width="800"/>
-</p>
-
-> The architecture integrates **gesture recognition**, **speech recognition**, **translation**, and **3D avatar rendering** into one seamless AI pipeline.
+<p align="center"> <img src="user Experience.png" alt="System Architecture Diagram" width="800"/> </p>
+> The architecture integrates **gesture recognition**, **speech recognition**, **text-to-gloss translation**, and **AI motion synthesis** into one seamless skeleton-based pipeline.
 
 **Flow Summary:**
-1. 🎥 Input sources (Camera, Mic, Text, Video)
-2. 🧩 AI Processing (Gesture Recognition, Speech-to-Text, NLP)
-3. 🔤 Translation Engine (Seq2Seq Transformer)
-4. 🧍 Avatar Rendering & Output (3D animations, text, or voice)
-5. 🌐 Web Interface built with React & Tailwind CSS
+1. 🎥 Input Sources (Camera, Microphone, Text, Video)
+2. 🧠 AI Processing (Gesture Recognition, Speech-to-Text, NLP)
+3. 🔡 Translation Engine (Seq2Seq Transformer for Text → Gloss)
+4. 🦴 Motion Generator (Gloss → Pose Sequence using GAN/Transformer)
+5. 📊 Visualization (2D/3D Skeleton Animation via MediaPipe or Matplotlib)
+6. 🌐 Web Interface built with React & Tailwind CSS  
 
 ---
 
 ## 🧠 Methodology  
 
-1. **Data Preprocessing** – Extract 3D hand landmarks using MediaPipe.  
-2. **Model Training** – Train CNN/LSTM/Transformer models for gesture recognition.  
-3. **Multilingual Mapping** – Map gestures to English/Arabic words and gloss sequences.  
-4. **Avatar Animation** – Use Blender/Unity to visualize translated signs.  
+1. **Data Preprocessing** – Extract 3D body and hand landmarks using **MediaPipe** or **OpenPose** from sign language datasets.  
+2. **Model Training** – Train **Transformers / GANs (Pose2Sign, SignGAN)** for **gloss-to-pose sequence generation**.  
+3. **Text-to-Gloss Mapping** – Use **Seq2Seq models** (Transformer or BERT) to adapt spoken grammar to sign gloss.  
+4. **Skeleton Motion Visualization** – Display AI-generated motion using **Matplotlib**, **Three.js**, or **MediaPipe rendering**.  
+
+> The system bypasses the need for avatars or pre-recorded videos by directly generating motion trajectories for 2D/3D skeletons.
 
 ---
 
@@ -58,10 +57,10 @@ Built with cutting-edge technologies in **computer vision**, **speech processing
 
 | Category | Tools Used |
 |-----------|-------------|
-| Gesture Recognition | MediaPipe, OpenCV |
-| AI Models | TensorFlow, PyTorch, Transformers |
+| Gesture Recognition | MediaPipe, OpenCV, OpenPose |
+| AI Models | TensorFlow, PyTorch, Transformers, SignGAN, Pose2Sign |
 | Speech Recognition | Whisper, Wav2Vec2.0, Google Speech-to-Text |
-| Avatar Rendering | Unity, Blender, WebGL |
+| Visualization | Matplotlib, Three.js, WebGL (skeleton rendering) |
 | Front-End | React, Tailwind CSS |
 | Back-End | Python, Flask/Django (optional) |
 
@@ -78,37 +77,38 @@ Built with cutting-edge technologies in **computer vision**, **speech processing
 - [MS-ASL: Microsoft Large Scale Dataset](https://microsoft.github.io/data-for-society/dataset?d=MS-ASL-American-Sign-Language-Dataset)
 - [ASL Dataset (Kaggle)](https://www.kaggle.com/datasets/ayuraj/asl-dataset)
 
+### 📙 Pose Extraction Datasets
+- **PHOENIX-2014T** (German Sign Language, sentence-level with gloss and pose data)
+- **YouTube-ASL** (ongoing dataset for real conversational signs)
+
 ---
 
 ## 🧭 User Journey  
 
 1. **🏠 Home Screen** – Choose between *Live Translate*, *Video Upload*, or *Settings*.  
-2. **🎥 Live Mode** – Sign in front of the camera → Real-time text/voice translation.  
-3. **🎙 Voice Mode** – Speak into the microphone → See avatar signing your words.  
-4. **📹 Upload Mode** – Upload video → Auto-translate with side-by-side sign output.  
-5. **⚙️ Accessibility Panel** – Customize contrast, vibration alerts, and voice speed.
+2. **🎥 Live Mode** – Sign in front of the camera → Real-time text/voice translation using pose detection.  
+3. **🎙 Voice Mode** – Speak into the microphone → Watch generated skeleton motion representing signs.  
+4. **📹 Upload Mode** – Upload a video → Extracts audio/text and visualizes corresponding skeleton signing.  
+5. **⚙️ Accessibility Panel** – Customize skeleton color, motion speed, and feedback settings.  
 
 ---
 
 ## 🔮 Future Work  
 
-- 🧩 Expand to sentence-level translation with PHOENIX-2014T dataset.  
-- 🤖 Integrate with Alexa/Google for voice-to-sign capabilities.  
-- 🔁 Cross-sign translation (e.g., ASL ↔ BSL).  
-- 🧤 Support wearable haptic feedback gloves.  
-- 🕶️ Smart glasses integration for live subtitles and translation overlays.  
+- 🧬 Integrate **text-to-pose models** (Text2Pose, SignFlow) for smoother skeleton motion.  
+- 🧠 Expand to **sentence-level translation** using PHOENIX-2014T.  
+- 🔁 Enable **cross-sign translation** (e.g., ASL ↔ BSL).  
+- 🕶️ Add **AR-based visualization** for skeleton signs in mixed reality.  
+- 📈 Explore **self-supervised pose generation** using multimodal datasets.  
 
 ---
 
 ## 🧱 Project Vision  
 
-> “To create a scalable, inclusive, and multilingual accessibility platform that uses AI to eliminate communication barriers between Deaf and hearing individuals — fostering equality in education, healthcare, and daily life.”
+> “To create a scalable, inclusive, and multilingual accessibility platform that uses **AI-driven skeleton motion synthesis** to eliminate communication barriers between Deaf and hearing individuals — advancing research in sign language translation and human motion generation.”
 
 ---
 
 ## 📜 License  
 
 This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.  
-
----
-
