@@ -47,18 +47,11 @@ export default function Home() {
   return (
     <div className="relative w-full bg-white dark:bg-gray-900 overflow-hidden">
       {/* BACKGROUND GLOWS */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.4 }}
-        transition={{ duration: 1 }}
-        className="absolute top-[-150px] left-[-150px] w-[300px] h-[300px] bg-gradient-to-tr from-[#A044FF]/40 to-[#6A3093]/20 dark:from-[#7B1FA2]/40 dark:to-[#4A148C]/30 rounded-full blur-3xl animate-pulse"
-      />
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.5 }}
-        transition={{ duration: 1.2 }}
-        className="absolute bottom-[-150px] right-[-150px] w-[350px] h-[350px] bg-gradient-to-br from-[#BF5AE0]/40 to-[#6A3093]/20 dark:from-[#8E24AA]/40 dark:to-[#311B92]/30 rounded-full blur-3xl animate-pulse delay-200"
-      />
+<div className="absolute top-[-150px] left-[-150px] w-[300px] h-[300px] bg-gradient-to-tr from-[#A044FF]/40 to-[#6A3093]/20 dark:from-[#7B1FA2]/40 dark:to-[#4A148C]/30 rounded-full blur-3xl animate-pulse" />
+ <div className="absolute bottom-[-150px] right-[-150px] w-[350px] h-[350px] bg-gradient-to-br from-[#BF5AE0]/40 to-[#6A3093]/20 dark:from-[#8E24AA]/40 dark:to-[#311B92]/30 rounded-full blur-3xl animate-pulse delay-200" />
+  <div className="absolute bottom-[-200px] left-[-180px] w-[320px] h-[320px] bg-[#BF5AE0]/30 dark:bg-[#8E24AA]/25 rounded-full blur-3xl" /> 
+  <div className="absolute top-[-200px] right-[-180px] w-[380px] h-[380px] bg-[#BF5AE0]/30 dark:bg-[#6A1B9A]/25 rounded-full blur-3xl" /> 
+  <div className="absolute inset-0 m-auto w-[420px] h-[420px] hidden dark:block bg-gradient-to-r from-[#8E24AA]/20 to-[#512DA8]/20 rounded-full blur-[120px]" />
 
       {/* MAIN CONTENT */}
       <div className="relative w-full flex flex-col-reverse lg:flex-row items-center justify-between px-8 lg:px-20 py-24 gap-10">
