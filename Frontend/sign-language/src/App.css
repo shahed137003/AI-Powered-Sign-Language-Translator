@@ -1,0 +1,28 @@
+@keyframes floating-slow {
+  0% { transform: translateY(0px) translateX(0px); }
+  50% { transform: translateY(25px) translateX(15px); }
+  100% { transform: translateY(0px) translateX(0px); }
+}
+
+@keyframes floating-medium {
+  0% { transform: translateY(0px) translateX(0px); }
+  50% { transform: translateY(-25px) translateX(-15px); }
+  100% { transform: translateY(0px) translateX(0px); }
+}
+
+@keyframes pulse-smooth {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 0.95; }
+}
+
+.animate-floating-slow {
+  animation: floating-slow 10s ease-in-out infinite;
+}
+
+.animate-floating-medium {
+  animation: floating-medium 12s ease-in-out infinite;
+}
+
+.animate-pulse-smooth {
+  animation: pulse-smooth 8s ease-in-out infinite;
+}
