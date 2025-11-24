@@ -8,50 +8,35 @@ import Mobile from "../assets/feature4.svg";
 const features = [
   {
     img: Sign,
-    title: "Voice-to-text Translation",
-    description: `Our Voice-to-text Translation feature allows users to speak in English and see words instantly converted into animated avatars performing sign language gestures.`,
+    title: "Voice-to-Text Translation",
+    description: `Convert spoken language into written text in real-time. Ideal for facilitating communication for people with hearing impairments, meetings, or classrooms. Users can speak naturally, and our AI ensures accurate transcription and context understanding, which is then rendered into animated sign language gestures for better accessibility.`,
   },
   {
     img: Avatar,
     title: "Video Upload Translation",
-    description: `Upload videos or links to get synchronized sign language animations created with high accuracy and context understanding.`,
+    description: `Upload pre-recorded videos or links and automatically generate synchronized sign language animations. Perfect for creating educational content, presentations, or social media posts that are accessible to the deaf community. Our system analyzes gestures, context, and speech, ensuring highly accurate and context-aware avatar animations.`,
   },
   {
     img: Chatbot,
     title: "AI Sign Language Chatbot",
-    description: `Practice sign language through interactive conversations with our AI chatbot that responds with gesture animations.`,
+    description: `Interact with our intelligent chatbot capable of understanding user queries in natural language and responding with accurate sign language gestures. This feature allows users to practice conversational skills, ask questions, or learn new phrases in an engaging and interactive way, bridging the gap between text and visual communication.`,
   },
   {
     img: Mobile,
     title: "Mobile Application",
-    description: `Access all features on your smartphone, translate speech, upload videos, or chat with the AI bot anytime.`,
+    description: `Experience the full suite of our features on your smartphone. Translate spoken language, type text, upload videos, or chat with the AI bot anytime, anywhere. The mobile app is designed for ease of use, portability, and seamless integration into daily communication, making accessibility convenient and effortless.`,
   },
 ];
 
-// Animation variants
-const parentVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.25 },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.95 },
-  show: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.8, ease: "easeOut" },
-  },
+const featureVariants = {
+  hidden: { opacity: 0, x: 50 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6 } },
 };
 
 export default function Features() {
   return (
-    <div className="relative w-full bg-gray-50 dark:bg-gray-900 overflow-hidden py-24 px-4 sm:px-6 lg:px-20">
-
-      {/* Intro Section */}
+    <div className="relative w-full bg-gray-50 dark:bg-gray-900 py-24 px-4 sm:px-6 lg:px-20">
+      {/* Section Header */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -68,55 +53,50 @@ export default function Features() {
         </p>
       </motion.div>
 
-      {/* GRID ANIMATION WRAPPER */}
-      <motion.div
-        variants={parentVariants}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-        className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-12"
-      >
-        {features.map((feature, index) => (
-          <motion.div
-            key={index}
-            variants={cardVariants}
-          
-            className="
-              relative bg-purple-100 dark:bg-gray-900/40 backdrop-blur-xl
-              border border-gray-200 dark:border-[#A044FF]/20
-              dark:before:absolute dark:before:inset-0 dark:before:rounded-3xl
-              dark:before:bg-gradient-to-br dark:before:from-[#6A3093]/10 
-              dark:before:to-[#A044FF]/10 dark:before:blur-2xl dark:before:opacity-60 before:-z-10
-              rounded-3xl p-8 flex flex-col items-center text-center
-              shadow-lg hover:shadow-2xl dark:shadow-[0_0_25px_rgba(160,68,255,0.15)]
-              hover:dark:shadow-[0_0_40px_rgba(160,68,255,0.35)]
-              transition-all duration-500 ease-in-out
-              hover:scale-105
-            "
-          >
-            <motion.img
-              src={feature.img}
-              alt={feature.title}
-              className="w-100 h-80 mb-4"
-              initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-            />
+      {/* Features Timeline */}
+      <div className="relative max-w-6xl mx-auto">
+        <div className="absolute top-0 left-1/2 w-1 bg-gradient-to-b from-[#6A3093] via-[#A044FF] to-[#BF5AE0] h-full transform -translate-x-1/2"></div>
 
-            <h2 className="text-3xl font-bold mb-3 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] bg-clip-text text-transparent">
-              {feature.title}
-            </h2>
+        {features.map((feature, index) => {
+          const isLeft = index % 2 === 0;
+          return (
+            <motion.div
+              key={index}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={featureVariants}
+              className={`mb-16 flex flex-col lg:flex-row items-center justify-between relative ${
+                isLeft ? "lg:flex-row" : "lg:flex-row-reverse"
+              }`}
+            >
+              {/* Feature Image */}
+              <div className="lg:w-1/2 flex justify-center mb-6 lg:mb-0">
+                <img
+                  src={feature.img}
+                  alt={feature.title}
+                  className="w-64 h-64 object-contain shadow-lg rounded-xl hover:scale-105 transition-transform duration-500"
+                />
+              </div>
 
-            <p className="text-gray-700 dark:text-gray-300">
-              {feature.description}
-            </p>
+              {/* Feature Text */}
+              <div className="lg:w-1/2 bg-white dark:bg-gray-800/50 backdrop-blur-md p-8 rounded-2xl shadow-lg">
+                <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] bg-clip-text text-transparent">
+                  {feature.title}
+                </h2>
+                <p className="text-gray-700 dark:text-gray-200 text-lg">
+                  {feature.description}
+                </p>
+              </div>
 
-            <div className="mt-4 w-22 h-1 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] rounded-full" />
-          </motion.div>
-        ))}
-      </motion.div>
+              {/* Timeline Dot */}
+              <div className="absolute left-1/2 top-8 lg:top-1/2 w-6 h-6 bg-gradient-to-tr from-[#6A3093] via-[#A044FF] to-[#BF5AE0] rounded-full transform -translate-x-1/2 -translate-y-1/2 shadow-xl"></div>
+            </motion.div>
+          );
+        })}
+      </div>
 
-      {/* Call To Action */}
+      {/* Call-to-Action */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -127,17 +107,16 @@ export default function Features() {
         <p className="text-gray-700 dark:text-gray-200 mb-6 text-lg sm:text-xl">
           Start your journey to accessible communication today.
         </p>
-
         <div className="flex justify-center gap-6 flex-wrap">
           <motion.button
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.1, boxShadow: "0 0 20px rgba(160,68,255,0.6)" }}
             className="px-6 py-3 rounded-full bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white font-semibold shadow-lg"
           >
             Download App
           </motion.button>
 
           <motion.button
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.1, boxShadow: "0 0 15px rgba(160,68,255,0.3)" }}
             className="px-6 py-3 rounded-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-500 text-gray-800 dark:text-gray-200 font-semibold shadow-lg"
           >
             Try Demo
