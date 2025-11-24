@@ -51,7 +51,7 @@ export default function Profile() {
     </div>
 
     {/* User Info Card */}
-    <div className="mt-83 p-8 bg-white dark:bg-[#10141F]/70 backdrop-blur-xl border border-[#A044FF]/30 rounded-3xl shadow-2xl text-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(160,68,255,0.4)]">
+    <div className="mt-83 p-8 bg-white dark:bg-[#10141F]/70 backdrop-blur-xl border border-[#A044FF] rounded-3xl shadow-2xl text-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(160,68,255,0.4)]">
       <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200 mb-2">
         {user.name}
       </h2>
