@@ -4,7 +4,8 @@ import Sign from "../assets/feature1.svg";
 import Avatar from "../assets/feature2.svg";
 import Chatbot from "../assets/feature3.svg";
 import Mobile from "../assets/feature4.svg";
-
+import Profile from "../assets/profile.svg"
+import Customize from "../assets/customize.svg"
 const features = [
   {
     img: Sign,
@@ -26,7 +27,18 @@ const features = [
     title: "Mobile Application",
     description: `Experience the full suite of our features on your smartphone. Translate spoken language, type text, upload videos, or chat with the AI bot anytime, anywhere. The mobile app is designed for ease of use, portability, and seamless integration into daily communication, making accessibility convenient and effortless.`,
   },
+  {
+    img: Profile, 
+    title: "Edit Profile & Personalization",
+    description: `Customize your personal experience with a fully editable profile. Users can update their name, email, password, communication preferences, and accessibility settings. This ensures a tailored environment where users can manage their identity, sync preferences across devices, and enjoy a personalized and secure translation experience.`,
+  },
+  {
+    img: Customize, 
+    title: "Accessibility Customization",
+    description: `Enhance usability through advanced accessibility controls. Users can adjust avatar animation speed,  customize color themes, enlarge handshape visuals, modify gesture clarity, activate captioning options. This feature ensures an inclusive experience for individuals with diverse accessibility needs.`,
+  },
 ];
+
 
 const featureVariants = {
   hidden: { opacity: 0, x: 50 },
@@ -64,7 +76,7 @@ export default function Features() {
               key={index}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
+             
               variants={featureVariants}
               className={`mb-16 flex flex-col lg:flex-row items-center justify-between relative ${
                 isLeft ? "lg:flex-row" : "lg:flex-row-reverse"

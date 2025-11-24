@@ -85,6 +85,7 @@ export default function About() {
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
+          
           transition={{ duration: 0.8, delay: 0.4 }}
           className="flex-1 flex justify-center lg:justify-end"
         >
