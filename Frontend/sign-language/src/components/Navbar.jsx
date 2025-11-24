@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { FaHandBackFist } from "react-icons/fa6";
 import { IoMdLogIn } from "react-icons/io";
 import { FaSun, FaMoon } from "react-icons/fa";
-import { Link ,Navigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("theme") === "dark"
   );
-//  const nav=Navigate();
+
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -19,6 +19,9 @@ export default function Navbar() {
     }
   }, [darkMode]);
 
+  const navLinkClass =
+    "relative px-2 py-1 transition-colors duration-300 group";
+
   return (
     <div
       className="
@@ -26,11 +29,11 @@ export default function Navbar() {
         bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl 
         border-b border-gray-200/30 
         shadow-md z-50
-        dark:border-b dark:border-[#6A3093]/60
+        dark:border-[#6A3093]/60
       "
     >
       {/* Logo */}
-      <Link
+      <NavLink
         to="/"
         className="
           flex items-center gap-3 text-3xl lg:text-4xl font-serif 
@@ -42,57 +45,95 @@ export default function Navbar() {
       >
         <FaHandBackFist className="text-4xl lg:text-5xl text-[#BF5AE0] dark:text-[#6A3093]" />
         LinguaSign
-      </Link>
+      </NavLink>
 
       {/* Nav Links */}
       <div className="hidden md:flex items-center gap-10 text-lg font-medium dark:text-gray-200 text-gray-700">
-        <Link
-          to="/"
-          className="relative group px-2 py-1 hover:text-[#6A3093] dark:hover:text-[#BF5AE0] transition-colors duration-300"
-        >
-          Home
-          <span
-            className="
-              absolute left-0 -bottom-1 w-0 h-0.5 
-              bg-gradient-to-r from-[#6A3093] to-[#BF5AE0] 
-              group-hover:w-full transition-all duration-300
-            "
-          ></span>
-        </Link>
 
-        <Link
-          to="/translate"
-          className="relative group px-2 py-1 hover:text-[#6A3093] dark:hover:text-[#BF5AE0] transition-colors duration-300"
-        >
-          Translate
-          <span
-            className="
-              absolute left-0 -bottom-1 w-0 h-0.5 
-              bg-gradient-to-r from-[#6A3093] to-[#BF5AE0] 
-              group-hover:w-full transition-all duration-300
-            "
-          ></span>
-        </Link>
+        {/* HOME */}
+   <NavLink
+  to="/"
+  className={({ isActive }) =>
+    `${navLinkClass} ${isActive ? "text-[#6A3093] dark:text-[#BF5AE0]" : ""}`
+  }
+>
+  {({ isActive }) => (
+    <>
+      Home
+      <span
+        className={`
+          absolute left-0 -bottom-1 h-0.5 
+          bg-gradient-to-r from-[#6A3093] to-[#BF5AE0]
+          transition-all duration-300
+          group-hover:w-full
+          ${isActive ? "w-full" : "w-0"}
+        `}
+      />
+    </>
+  )}
+</NavLink>
 
-        <Link
-          to="/profile"
-          className="relative group px-2 py-1 hover:text-[#6A3093] dark:hover:text-[#BF5AE0] transition-colors duration-300"
-        >
-          Profile
-          <span
-            className="
-              absolute left-0 -bottom-1 w-0 h-0.5 
-              bg-gradient-to-r from-[#6A3093] to-[#BF5AE0] 
-              group-hover:w-full transition-all duration-300
-            "
-          ></span>
-        </Link>
+
+        {/* TRANSLATE */}
+     {/* TRANSLATE */}
+<NavLink
+  to="/translate"
+  className={({ isActive }) =>
+    `${navLinkClass} ${
+      isActive ? "text-[#6A3093] dark:text-[#BF5AE0]" : ""
+    }`
+  }
+>
+  {({ isActive }) => (
+    <>
+      Translate
+      <span
+        className={`
+          absolute left-0 -bottom-1 h-0.5 
+          bg-gradient-to-r from-[#6A3093] to-[#BF5AE0]
+          transition-all duration-300
+          group-hover:w-full
+          ${isActive ? "w-full" : "w-0"}
+        `}
+      ></span>
+    </>
+  )}
+</NavLink>
+
+
+        {/* PROFILE */}
+{/* PROFILE */}
+<NavLink
+  to="/profile"
+  className={({ isActive }) =>
+    `${navLinkClass} ${
+      isActive ? "text-[#6A3093] dark:text-[#BF5AE0]" : ""
+    }`
+  }
+>
+  {({ isActive }) => (
+    <>
+      Profile
+      <span
+        className={`
+          absolute left-0 -bottom-1 h-0.5 
+          bg-gradient-to-r from-[#6A3093] to-[#BF5AE0]
+          transition-all duration-300
+          group-hover:w-full
+          ${isActive ? "w-full" : "w-0"}
+        `}
+      ></span>
+    </>
+  )}
+</NavLink>
+
+
       </div>
 
       {/* Right Section */}
       <div className="flex items-center gap-6">
         {/* Login Button */}
-        <Link
+        <NavLink
           to="/login"
           className="
             flex items-center gap-2 
@@ -105,7 +146,7 @@ export default function Navbar() {
         >
           Login
           <IoMdLogIn className="text-2xl" />
-        </Link>
+        </NavLink>
 
         {/* Dark Mode Switch */}
         <button
@@ -118,7 +159,7 @@ export default function Navbar() {
         >
           <div
             className={`
-              absolute w-6 h-6 rounded-full bg-white dark:bg-gray-900 
+              absolute w-6 h-6 rounded-full bg-white dark:bg-gray-900
               flex items-center justify-center shadow-md
               transition-transform duration-300
               ${darkMode ? "translate-x-7" : "translate-x-1"}
@@ -133,7 +174,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu Icon */}
+      {/* Mobile Menu */}
       <div className="md:hidden text-3xl text-gray-700 dark:text-gray-300 cursor-pointer">
         ☰
       </div>

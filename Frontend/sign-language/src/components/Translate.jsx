@@ -3,120 +3,159 @@ import { motion } from "framer-motion";
 import { FaMicrophone, FaCamera, FaSyncAlt } from "react-icons/fa";
 
 export default function Translate() {
-  const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
-  const options = ["Sign to text", "Text or audio to sign"];
+  const fadeUp = { hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } };
+  const options = ["Sign to Text", "Text / Audio to Sign"];
   const [selected, setSelected] = useState(options[0]);
 
-  // States
   const [textInput, setTextInput] = useState("");
-  const [video, setVideo] = useState(null);
   const videoRef = useRef(null);
 
-  const handleVideoRecord = () => {
-    alert("Camera recording started! (simulate for now)");
-    // Implement camera capture logic here
-  };
-
-  const handleAudioRecord = () => {
-    alert("Audio recording started! (simulate for now)");
-    // Implement audio capture logic here
-  };
+  const handleVideoRecord = () => alert("Camera recording started (simulated)");
+  const handleAudioRecord = () => alert("Audio recording started (simulated)");
 
   return (
-    <div className="w-full bg-gray-50 dark:bg-gray-900 py-24 px-4 sm:px-6 lg:px-20">
-      {/* Heading */}
+    <div className="w-full bg-gray-50 dark:bg-gray-900 py-28 px-4 sm:px-6 lg:px-20 min-h-screen">
+
+      {/* PAGE TITLE */}
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
         variants={fadeUp}
-        transition={{ duration: 0.8 }}
-        className="max-w-7xl mx-auto text-center mb-12"
+        transition={{ duration: 0.7 }}
+        viewport={{ once: true }}
+        className="max-w-6xl mx-auto text-center mb-16"
       >
-        <h2 className="text-4xl sm:text-5xl font-extrabold mb-4 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
-          Translate
+        <h2 className="
+          text-5xl sm:text-6xl font-extrabold mb-6 
+          bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
+          bg-clip-text text-transparent
+        ">
+          Translation Center
         </h2>
-        <div className="w-24 h-1 mx-auto mb-10 rounded-full bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF]"></div>
-        <p className="text-gray-700 dark:text-gray-200 text-lg sm:text-xl">
-          Record or type and translate in real time
+
+        <p className="text-gray-700 dark:text-gray-300 text-lg sm:text-xl max-w-2xl mx-auto">
+          Convert between <span className="font-semibold">Sign Language</span>, <span className="font-semibold">Text</span>, and <span className="font-semibold">Audio</span> — all in real time.
         </p>
       </motion.div>
 
-      {/* Options Buttons */}
-      <div className="flex gap-4 justify-center mb-12 flex-wrap">
+      {/* OPTION SWITCH */}
+      <div className="flex justify-center gap-4 mb-16 flex-wrap">
         {options.map((option) => (
           <button
             key={option}
             onClick={() => setSelected(option)}
-            className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-              selected === option
-                ? "bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white shadow-lg"
-                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:scale-105 transform transition"
-            }`}
+            className={`
+              px-8 py-3 rounded-full font-semibold transition-all duration-300 text-lg
+              ${selected === option
+                ? "bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white shadow-xl scale-105"
+                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600"}
+            `}
           >
             {option}
           </button>
         ))}
       </div>
 
-      {/* Content */}
+      {/* MAIN CONTENT */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="max-w-5xl mx-auto flex flex-col items-center gap-8"
+        transition={{ duration: 0.7 }}
+        className="max-w-5xl mx-auto"
       >
-        {/* Sign to Text */}
-        {selected === "Sign to text" && (
-          <div className="w-full flex flex-col items-center gap-4">
-            <h3 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Translate Sign Language to Text</h3>
-            
-            {/* Record Sign */}
-            <button
-              onClick={handleVideoRecord}
-              className="px-6 py-3 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white rounded-full shadow-lg hover:scale-105 transform transition duration-300 flex items-center gap-2"
-            >
-              <FaCamera /> Record Sign
-            </button>
+        {/* ----------------------- SIGN TO TEXT ----------------------- */}
+        {selected === "Sign to Text" && (
+          <div className="flex flex-col items-center gap-10">
 
-            {/* Placeholder for result */}
-            <div className="mt-6 w-full max-w-md h-60 bg-gray-200 dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-400 dark:text-gray-500 text-center">
-              Recognized text will appear here
+            <div className="w-full bg-white dark:bg-[#0F1420]/50 rounded-3xl p-10 shadow-xl border border-[#A044FF]/20 backdrop-blur-xl">
+              <h3 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] bg-clip-text text-transparent">
+                Sign Language → Text
+              </h3>
+
+              {/* Camera Button */}
+              <div className="flex justify-center">
+                <button
+                  onClick={handleVideoRecord}
+                  className="
+                    px-8 py-4 rounded-full flex items-center gap-3
+                    bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
+                    text-white shadow-lg hover:scale-105 active:scale-95 transition-all duration-300
+                  "
+                >
+                  <FaCamera className="text-xl" /> Start Recording
+                </button>
+              </div>
+
+              {/* Result */}
+              <div className="
+                mt-10 w-full h-64 rounded-2xl border border-gray-300 dark:border-gray-700
+                bg-gray-100 dark:bg-gray-800 flex items-center justify-center
+                text-gray-500 dark:text-gray-400 text-center tracking-wide text-lg
+              ">
+                Recognized text will appear here
+              </div>
             </div>
           </div>
         )}
 
-        {/* Text or Audio to Sign */}
-        {selected === "Text or audio to sign" && (
-          <div className="w-full flex flex-col items-center gap-4">
-            <h3 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Translate Text or Audio to Sign Language</h3>
-            
-            {/* Text Input */}
-            <textarea
-              rows={4}
-              value={textInput}
-              onChange={(e) => setTextInput(e.target.value)}
-              placeholder="Type your text here..."
-              className="w-full max-w-md p-4 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 shadow-lg focus:outline-none focus:ring-2 focus:ring-[#A044FF] resize-none"
-            />
+        {/* ------------------- TEXT / AUDIO TO SIGN ------------------- */}
+        {selected === "Text / Audio to Sign" && (
+          <div className="flex flex-col items-center gap-10">
 
-            {/* Audio Record */}
-            <button
-              onClick={handleAudioRecord}
-              className="px-6 py-3 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white rounded-full shadow-lg hover:scale-105 transform transition duration-300 flex items-center gap-2"
-            >
-              <FaMicrophone /> Record Audio
-            </button>
+            <div className="w-full bg-white dark:bg-[#0F1420]/50 rounded-3xl p-10 shadow-xl border border-[#A044FF]/20 backdrop-blur-xl">
 
-            {/* Avatar Preview */}
-            <div className="mt-6 w-full max-w-md h-60 bg-gray-200 dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-400 dark:text-gray-500 text-center">
-              Animated Sign Language Avatar Preview
+              <h3 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] bg-clip-text text-transparent">
+                Text / Audio → Sign Language
+              </h3>
+
+              {/* TEXT INPUT */}
+              <textarea
+                rows={4}
+                value={textInput}
+                onChange={(e) => setTextInput(e.target.value)}
+                placeholder="Type something to translate..."
+                className="
+                  w-full p-5 rounded-xl border border-gray-300 dark:border-gray-700
+                  bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-200
+                  shadow-md focus:outline-none focus:ring-2 focus:ring-[#A044FF] transition resize-none
+                  text-lg
+                "
+              />
+
+              {/* AUDIO RECORD */}
+              <div className="flex justify-center mt-6">
+                <button
+                  onClick={handleAudioRecord}
+                  className="
+                    px-8 py-4 rounded-full flex items-center gap-3
+                    bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
+                    text-white shadow-lg hover:scale-105 active:scale-95 transition-all duration-300
+                  "
+                >
+                  <FaMicrophone className="text-xl" /> Record Audio
+                </button>
+              </div>
+
+              {/* AVATAR PREVIEW */}
+              <div className="
+                mt-10 w-full h-64 rounded-2xl border border-gray-300 dark:border-gray-700
+                bg-gray-100 dark:bg-gray-800 flex items-center justify-center
+                text-gray-500 dark:text-gray-400 text-center text-lg tracking-wide
+              ">
+                Sign Language Avatar Preview
+              </div>
+
+              {/* CONVERT BUTTON */}
+              <div className="flex justify-center mt-6">
+                <button className="
+                  px-8 py-4 rounded-full flex items-center gap-3
+                  bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
+                  text-white shadow-lg hover:scale-105 active:scale-95 transition-all duration-300
+                ">
+                  <FaSyncAlt className="text-xl" /> Convert to Sign
+                </button>
+              </div>
             </div>
-
-            {/* Convert Button */}
-            <button className="mt-4 px-6 py-3 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white rounded-full shadow-lg hover:scale-105 transform transition duration-300 flex items-center gap-2">
-              <FaSyncAlt /> Convert to Sign
-            </button>
           </div>
         )}
       </motion.div>

@@ -56,7 +56,7 @@ export default function Home() {
       {/* MAIN CONTENT */}
       <div className="relative w-full flex flex-col-reverse lg:flex-row items-center justify-between px-8 lg:px-20 py-24 gap-10">
 
-        {/* 🟣 LEFT SECTION */}
+       
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -162,7 +162,7 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* 🟣 RIGHT SECTION – IMAGE */}
+      
         <motion.div
           variants={fade}
           initial="hidden"
