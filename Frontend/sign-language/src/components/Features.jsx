@@ -71,16 +71,16 @@ export default function Features() {
               }`}
             >
               {/* Feature Image */}
-              <div className="lg:w-1/2 flex justify-center mb-6 lg:mb-0">
+              <div className="lg:w-1/2 flex justify-center mb-6 lg:mb-0 ">
                 <img
                   src={feature.img}
                   alt={feature.title}
-                  className="w-64 h-64 object-contain shadow-lg rounded-xl hover:scale-105 transition-transform duration-500"
+                  className="w-80 h-80 object-contain shadow-lg rounded-xl hover:scale-105 transition-transform duration-500 "
                 />
               </div>
 
               {/* Feature Text */}
-              <div className="lg:w-1/2 bg-white dark:bg-gray-800/50 backdrop-blur-md p-8 rounded-2xl shadow-lg">
+              <div className="lg:w-1/2 bg-purple-100 dark:bg-gray-800/50 backdrop-blur-md p-8 rounded-2xl shadow-lg">
                 <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] bg-clip-text text-transparent">
                   {feature.title}
                 </h2>
