@@ -143,25 +143,10 @@ export default function Profile() {
             </p>
           </Card>
 
-          {/* USAGE STATISTICS CARD */}
-          <Card className="space-y-4">
-            <h3 className="flex items-center gap-2 text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">
-              <BarChart3 className="text-[#A044FF]" /> Usage Stats
-            </h3>
-            
-            <div className="flex justify-between items-center p-3 rounded-xl bg-gray-100 dark:bg-gray-800">
-              <span className="text-gray-600 dark:text-gray-400">Total Translations</span>
-              <span className="text-2xl font-bold text-purple-600 dark:text-pink-400">{usageStats.totalTranslations}</span>
-            </div>
-            
-            <div className="flex justify-between items-center p-3 rounded-xl bg-gray-100 dark:bg-gray-800">
-              <span className="text-gray-600 dark:text-gray-400">Current Streak (Days)</span>
-              <span className="text-2xl font-bold text-green-500">{usageStats.learningStreak} 🔥</span>
-            </div>
-          </Card>
+ 
         </div>
 
-        {/* ---------------- RIGHT COLUMN: EDIT PROFILE & SETTINGS ---------------- */}
+  
         <div className="lg:w-2/3 w-full space-y-8">
 
           {/* EDIT PERSONAL DETAILS */}
@@ -200,64 +185,8 @@ export default function Profile() {
             />
           </Card>
 
-          {/* APPLICATION SETTINGS */}
-          <Card className="space-y-6">
-            <h2 className="flex items-center gap-2 text-3xl font-bold 
-              bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
-              bg-clip-text text-transparent mb-4
-            ">
-              <Settings className="text-[#A044FF]" /> App Preferences
-            </h2>
 
-            {/* Preferred Language Dropdown */}
-            <div className="space-y-1">
-              <label htmlFor="preferredLanguage" className="font-semibold text-gray-800 dark:text-gray-200 block">
-                <Globe size={16} className="inline mr-1 text-purple-500" /> Preferred Sign Language
-              </label>
-              <select
-                id="preferredLanguage"
-                name="preferredLanguage"
-                value={user.preferredLanguage}
-                onChange={handleInputChange}
-                className="
-                  w-full p-3 rounded-xl bg-gray-100 dark:bg-gray-800 appearance-none
-                  border border-gray-300 dark:border-gray-700
-                  text-gray-900 dark:text-gray-200
-                  focus:outline-none focus:ring-2 focus:ring-[#A044FF]/80
-                  transition duration-200 cursor-pointer
-                "
-              >
-                <option value="ASL">American Sign Language (ASL)</option>
-                <option value="BSL">British Sign Language (BSL)</option>
-                <option value="JSL">Japanese Sign Language (JSL)</option>
-                <option value="Custom">Custom / Other</option>
-              </select>
-            </div>
-
-            {/* Theme Dropdown */}
-            <div className="space-y-1">
-              <label htmlFor="theme" className="font-semibold text-gray-800 dark:text-gray-200 block">
-                Theme
-              </label>
-              <select
-                id="theme"
-                name="theme"
-                value={user.theme}
-                onChange={handleInputChange}
-                className="
-                  w-full p-3 rounded-xl bg-gray-100 dark:bg-gray-800 appearance-none
-                  border border-gray-300 dark:border-gray-700
-                  text-gray-900 dark:text-gray-200
-                  focus:outline-none focus:ring-2 focus:ring-[#A044FF]/80
-                  transition duration-200 cursor-pointer
-                "
-              >
-                <option value="system">System Default</option>
-                <option value="light">Light Mode</option>
-                <option value="dark">Dark Mode (Midnight)</option>
-              </select>
-            </div>
-          </Card>
+         
 
           {/* Save Button (Separate card for visual weight) */}
           <motion.button
