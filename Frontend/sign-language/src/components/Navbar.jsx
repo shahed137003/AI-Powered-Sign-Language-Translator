@@ -55,8 +55,9 @@ export default function Navbar() {
         fixed top-0 left-0 w-full px-6 lg:px-16 py-4 flex items-center justify-between
         bg-white/50 dark:bg-[#0f0c29]/70 backdrop-blur-lg 
         border-b border-gray-200/40 
-        shadow-xl dark:shadow-2xl dark:shadow-purple-900/40 z-50
-        dark:border-purple-500/30 transition-colors duration-500
+        dark:shadow-2xl dark:shadow-purple-900/40 z-50
+        dark:border-purple-500/30 transition-colors duration-500 
+        shadow-2xl shadow-purple-900/35 
       "
     >
       {/* Logo */}

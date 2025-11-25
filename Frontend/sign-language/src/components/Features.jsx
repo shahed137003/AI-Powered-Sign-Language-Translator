@@ -49,8 +49,16 @@ export default function Features() {
   return (
     <div className="relative w-full bg-gray-50 dark:bg-[#0f0c29] py-24 px-6 lg:px-20 overflow-hidden transition-colors duration-500">
       
-      
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
+            <div className="absolute inset-0 dark:block hidden bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
+<div
+  className="
+    absolute inset-0 block dark:hidden 
+    bg-[radial-gradient(55%_45%_at_40%_20%,#ffb7e633,transparent_70%), 
+       radial-gradient(50%_50%_at_75%_75%,#e5b3ff33,transparent_75%)] 
+    backdrop-blur-[2px]
+  "
+></div>
+
       <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none" />
 
