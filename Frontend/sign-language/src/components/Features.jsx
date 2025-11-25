@@ -112,7 +112,7 @@ export default function Features() {
                  {/* Outer Ring */}
                  <div className="w-8 h-8 rounded-full border border-purple-500/30 bg-[#0f0c29] flex items-center justify-center shadow-[0_0_15px_rgba(160,68,255,0.4)]">
                     {/* Inner Dot */}
-                    <div className="w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] rounded-full"></div>
                  </div>
                  
                  {/* Connector Line to Card */}
