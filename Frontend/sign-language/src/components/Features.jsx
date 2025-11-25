@@ -6,7 +6,7 @@ import Chatbot from "../assets/feature3.svg";
 import Mobile from "../assets/feature4.svg";
 import Profile from "../assets/profile.svg";
 import Customize from "../assets/customize.svg";
-
+import Ai from "../assets/Ai.svg"
 const features = [
   {
     img: Sign,
@@ -38,6 +38,12 @@ const features = [
     title: "Accessibility Customization",
     description: `Enhance usability through advanced accessibility controls. Adjust avatar animation speed, customize color themes, enlarge handshape visuals, and modify gesture clarity for an inclusive experience.`,
   },
+  {
+  img: Ai, // <-- use any AI-themed icon you prefer
+  title: "AI-Powered Communication Engine",
+  description: `LinguaSign is built on advanced AI models that process speech, text, and gestures with exceptional accuracy. Our neural networks continuously learn from diverse signing styles, accents, and contexts—ensuring smarter, faster, and more natural communication every time you use the platform.`,
+},
+
 ];
 
 const featureVariants = {

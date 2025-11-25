@@ -103,7 +103,8 @@ export default function About() {
         </motion.div>
       </div>
 
-      <hr className="my-16 dark:border-gray-700 border-t-2 border-dashed" />
+
+
 
       {/* --- HOW TO USE SECTION --- */}
       <motion.h3
