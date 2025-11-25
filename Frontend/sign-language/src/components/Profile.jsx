@@ -165,16 +165,7 @@ export default function Profile() {
               onChange={handleInputChange}
             />
 
-            <InputField 
-              label="Email Address (Cannot be changed)"
-              type="email"
-              name="email"
-              value={user.email}
-              onChange={handleInputChange}
-              readOnly 
-              className="opacity-70 cursor-not-allowed"
-            />
-            
+          
             <InputField 
               label="New Password"
               type="password"

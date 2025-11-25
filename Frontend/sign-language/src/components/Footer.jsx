@@ -37,7 +37,7 @@ export default function Footer() {
         {/* 1. About Section */}
         <div>
           <h3 className="text-3xl font-extrabold mb-4">
-            <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
               LinguaSign
             </span>
           </h3>
@@ -110,7 +110,7 @@ export default function Footer() {
             />
             <button
               type="submit"
-              className="w-full px-6 py-3 rounded-xl bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white font-semibold shadow-lg shadow-purple-500/30 hover:scale-[1.01] transform transition duration-300"
+              className="w-full px-6 py-3 rounded-xl bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] text-white font-semibold shadow-lg shadow-purple-500/30 hover:scale-[1.01] transform transition duration-300"
             >
               Subscribe
             </button>

@@ -67,7 +67,7 @@ export default function Features() {
         </span>
         <h1 className="text-4xl md:text-5xl font-extrabold mb-6 text-gray-900 dark:text-white">
           Empower Communication with <br />
-          <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
             Sign Language AI
           </span>
         </h1>
@@ -112,7 +112,7 @@ export default function Features() {
                  {/* Outer Ring */}
                  <div className="w-8 h-8 rounded-full border border-purple-500/30 bg-[#0f0c29] flex items-center justify-center shadow-[0_0_15px_rgba(160,68,255,0.4)]">
                     {/* Inner Dot */}
-                    <div className="w-3 h-3 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] rounded-full"></div>
+                    <div className="w-3 h-3 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] rounded-full"></div>
                  </div>
                  
                  {/* Connector Line to Card */}
@@ -130,7 +130,7 @@ export default function Features() {
                  
                   <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-purple-500/10 to-transparent rounded-tr-2xl"></div>
 
-                  <h2 className="text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] bg-clip-text text-transparent">
+                  <h2 className="text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
                     {feature.title}
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
@@ -159,7 +159,7 @@ export default function Features() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold shadow-lg shadow-purple-500/40 hover:shadow-purple-500/60 transition-all"
+            className="px-8 py-3 rounded-full bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] text-white font-bold shadow-lg shadow-purple-500/40 hover:shadow-purple-500/60 transition-all"
           >
             Download App
           </motion.button>

@@ -68,7 +68,7 @@ export default function About() {
           className="flex-1 text-center lg:text-left space-y-4"
         >
           <h1 className="text-4xl sm:text-5xl font-extrabold mb-6 text-gray-900 dark:text-white">
-            <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
               AI-powered Communication
             </span>{" "}
             for Everyone
@@ -113,7 +113,7 @@ export default function About() {
         viewport={{ once: true }}
         className="text-3xl sm:text-4xl font-extrabold mb-16 text-center text-gray-900 dark:text-white"
       >
-        <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] bg-clip-text text-transparent">
+        <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
           How to Use
         </span>{" "}
         LinguaSign

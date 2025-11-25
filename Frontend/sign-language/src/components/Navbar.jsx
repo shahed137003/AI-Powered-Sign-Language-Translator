@@ -63,13 +63,13 @@ export default function Navbar() {
       <NavLink
         to="/"
         className="
-          flex items-center gap-3 text-3xl lg:text-4xl font-extrabold font-sans
+          flex items-center gap-3 text-3xl lg:text-4xl font-bold dark:from-[#6A3093] dark:to-[#A044FF]
           bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
-          bg-clip-text text-transparent 
+          bg-clip-text text-transparent  italic 
           hover:scale-[1.02] transition-transform duration-300
         "
       >
-        <FaHandBackFist className="text-4xl lg:text-5xl text-[#6A3093]  hover:rotate-6 transition-transform" />
+        <FaHandBackFist className="text-4xl lg:text-5xl dark:text-[#6A3093] text-[#BF5AE0]  hover:rotate-6 transition-transform" />
         LinguaSign
       </NavLink>
 
@@ -98,7 +98,7 @@ export default function Navbar() {
           to="/login"
           className="
             hidden sm:flex items-center gap-2 
-            bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
+            bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF]
             text-white text-lg px-6 py-2 rounded-full
             shadow-lg shadow-purple-500/40 hover:shadow-2xl hover:scale-105 active:scale-95
             transition-all duration-300 font-semibold
@@ -174,7 +174,7 @@ export default function Navbar() {
             to="/login"
             onClick={toggleMobileMenu}
             className="w-full py-3 mt-2 text-center text-xl font-semibold 
-                        bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white rounded-full 
+                        bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] text-white rounded-full 
                         shadow-md hover:opacity-90 transition-opacity"
           >
             Login
