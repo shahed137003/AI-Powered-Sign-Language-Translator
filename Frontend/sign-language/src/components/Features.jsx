@@ -127,10 +127,10 @@ export default function Features() {
                   shadow-xl dark:shadow-purple-900/10
                   hover:border-purple-500/50 transition-colors duration-300
                 ">
-                  {/* Decorative Corner Accent */}
+                 
                   <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-purple-500/10 to-transparent rounded-tr-2xl"></div>
 
-                  <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-800 dark:text-white">
+                  <h2 className="text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] bg-clip-text text-transparent">
                     {feature.title}
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
