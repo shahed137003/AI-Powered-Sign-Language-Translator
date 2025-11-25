@@ -129,7 +129,7 @@ export default function Translate() {
   // Common styling for content containers
   const contentBoxClasses = "w-full bg-white dark:bg-[#0f0c29]/70 rounded-3xl p-6 sm:p-10 shadow-2xl shadow-purple-900/10 dark:shadow-purple-900/30 border border-purple-500/20 backdrop-blur-lg transition-colors duration-500";
   const buttonBaseClasses = "px-8 py-4 rounded-full flex items-center gap-3 text-white font-bold shadow-lg transition-all duration-300";
-  const gradientButtonClasses = "bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 hover:scale-[1.03] active:scale-95 shadow-purple-700/50 dark:shadow-pink-500/30";
+  const gradientButtonClasses = "bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] hover:scale-[1.03] active:scale-95 shadow-purple-700/50 dark:shadow-pink-500/30";
   const iconButtonClasses = "w-20 h-20 rounded-full flex items-center justify-center text-white shadow-xl hover:scale-105 active:scale-90 transition-all duration-300";
   const focusRing = "focus:outline-none focus:ring-4 focus:ring-purple-500/50";
   const disabledClasses = "opacity-50 cursor-not-allowed";
@@ -193,7 +193,7 @@ export default function Translate() {
           <div className="flex flex-col items-center gap-10">
 
             <div className={contentBoxClasses}>
-              <h3 className="text-3xl font-extrabold text-center mb-10 bg-gradient-to-r from-purple-500 to-pink-400 bg-clip-text text-transparent">
+              <h3 className="text-3xl font-extrabold text-center mb-10 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] bg-clip-text text-transparent">
                 Sign Language → Text Recognition
               </h3>
 

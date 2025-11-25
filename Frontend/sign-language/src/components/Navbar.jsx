@@ -39,10 +39,10 @@ export default function Navbar() {
   const navLinkClass = "relative px-2 py-1 transition-all duration-300 group text-lg font-medium";
   
   // Custom active link underline style (neon glow)
-  const activeStyles = "text-purple-600 dark:text-pink-400 font-semibold";
+  const activeStyles = "text-purple-600  font-semibold";
   const underlineClass = (isActive) => `
     absolute left-0 -bottom-1 h-[3px] rounded-full
-    bg-gradient-to-r from-purple-500 to-indigo-500
+    bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
     transition-all duration-300
     group-hover:w-full
     ${isActive ? "w-full shadow-lg shadow-purple-500/50" : "w-0"}
@@ -69,7 +69,7 @@ export default function Navbar() {
           hover:scale-[1.02] transition-transform duration-300
         "
       >
-        <FaHandBackFist className="text-4xl lg:text-5xl text-[#6A3093] dark:text-[#BF5AE0] hover:rotate-6 transition-transform" />
+        <FaHandBackFist className="text-4xl lg:text-5xl text-[#6A3093]  hover:rotate-6 transition-transform" />
         LinguaSign
       </NavLink>
 
@@ -79,7 +79,7 @@ export default function Navbar() {
           <NavLink
             key={item.to}
             to={item.to}
-            className={({ isActive }) => `${navLinkClass} ${isActive ? activeStyles : "hover:text-purple-500 dark:hover:text-pink-300"}`}
+            className={({ isActive }) => `${navLinkClass} ${isActive ? activeStyles : "hover:text-purple-500"}`}
           >
             {({ isActive }) => (
               <>
@@ -98,7 +98,7 @@ export default function Navbar() {
           to="/login"
           className="
             hidden sm:flex items-center gap-2 
-            bg-gradient-to-r from-purple-600 to-indigo-600 
+            bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
             text-white text-lg px-6 py-2 rounded-full
             shadow-lg shadow-purple-500/40 hover:shadow-2xl hover:scale-105 active:scale-95
             transition-all duration-300 font-semibold
@@ -164,7 +164,7 @@ export default function Navbar() {
               className={({ isActive }) => `
                 w-full py-2 text-xl font-medium border-b border-gray-200 dark:border-gray-700
                 ${isActive ? activeStyles : "text-gray-700 dark:text-gray-200"}
-                hover:text-purple-500 dark:hover:text-pink-300 transition-colors
+                hover:text-purple-500  transition-colors
               `}
             >
               {item.name}
@@ -174,7 +174,7 @@ export default function Navbar() {
             to="/login"
             onClick={toggleMobileMenu}
             className="w-full py-3 mt-2 text-center text-xl font-semibold 
-                        bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-full 
+                        bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white rounded-full 
                         shadow-md hover:opacity-90 transition-opacity"
           >
             Login

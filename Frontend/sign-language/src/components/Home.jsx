@@ -54,7 +54,7 @@ export default function Home() {
 
       {/* 2. Ambient Color Blobs */}
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-600/20 dark:bg-purple-900/40 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-indigo-600/20 dark:bg-indigo-900/40 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-purple-600/20 dark:bg-purple-900/40 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute top-[20%] right-[10%] w-[300px] h-[300px] bg-pink-500/10 dark:bg-pink-900/20 rounded-full blur-[80px] pointer-events-none" />
 
       {/* --- MAIN CONTENT --- */}
@@ -146,7 +146,7 @@ export default function Home() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate("/translate")}
-              className="relative px-8 py-4 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-lg shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 overflow-hidden group"
+              className="relative px-8 py-4 rounded-full bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white font-bold text-lg shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 overflow-hidden group"
             >
               <span className="relative z-10 flex items-center gap-2">
                 Start Translating <TbHandLoveYou className="text-2xl" />
