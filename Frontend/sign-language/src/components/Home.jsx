@@ -206,7 +206,7 @@ export default function Home() {
     Start Translating <TbHandLoveYou className="text-2xl" />
   </span>
   
-  {/* The glass overlay effect */}
+  
   <div 
     className="
       absolute top-0 left-0 w-full h-full /* Ensures it covers the entire button */

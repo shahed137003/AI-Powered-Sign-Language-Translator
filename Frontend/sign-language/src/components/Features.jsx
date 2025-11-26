@@ -6,7 +6,7 @@ import Chatbot from "../assets/feature3.svg";
 import Mobile from "../assets/feature4.svg";
 import Profile from "../assets/profile.svg";
 import Customize from "../assets/customize.svg";
-import Ai from "../assets/Ai.svg"
+import Ai from "../assets/Ai2.svg"
 const features = [
   {
     img: Sign,
