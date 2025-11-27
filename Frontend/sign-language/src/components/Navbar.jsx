@@ -171,15 +171,37 @@ export default function Navbar() {
               {item.name}
             </NavLink>
           ))}
-          <NavLink
-            to="/login"
-            onClick={toggleMobileMenu}
-            className="w-full py-3 mt-2 text-center text-xl font-semibold 
-                        bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] text-white rounded-full 
-                        shadow-md hover:opacity-90 transition-opacity"
-          >
-            Login
-          </NavLink>
+     <NavLink
+  to="/login"
+  onClick={toggleMobileMenu}
+  className="
+    relative /* Essential: Position inner div */
+    overflow-hidden /* Essential: Clip sliding effect */
+    group /* Essential: Enable group-hover */
+    w-full py-3 mt-2 text-center text-xl font-semibold 
+    bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] text-white rounded-full 
+    shadow-md transition-all /* Use transition-all instead of opacity */
+    focus:outline-none focus:ring-4 focus:ring-purple-500/50
+  "
+>
+  {/* Ensure text is above the sliding overlay */}
+  <span className="relative z-10">
+    Login
+  </span>
+  
+  {/* The glass overlay effect */}
+  <div 
+    className="
+      absolute top-0 left-0 w-full h-full 
+      bg-white/20 
+      translate-y-full /* Start hidden below */
+      group-hover:translate-y-0 /* Slide up on hover */
+      transition-transform duration-300
+      z-0
+      rounded-full 
+    "
+  />
+</NavLink>
         </div>
       </div>
     </div>

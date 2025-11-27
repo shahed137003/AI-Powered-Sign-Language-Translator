@@ -358,6 +358,7 @@ export default function Translate() {
       <AnimatePresence>
         {message && <Toast message={message.text} type={message.type} />}
       </AnimatePresence>
+      
     </div>
   );
 }

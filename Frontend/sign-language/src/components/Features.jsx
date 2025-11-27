@@ -170,13 +170,39 @@ export default function Features() {
           Ready to break down communication barriers?
         </p>
         <div className="flex justify-center gap-6 flex-wrap">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-3 rounded-full bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] text-white font-bold shadow-lg shadow-purple-500/40 hover:shadow-purple-500/60 transition-all"
-          >
-            Download App
-          </motion.button>
+      <motion.button
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  className="
+    relative /* Essential for absolute positioning of inner div */
+    overflow-hidden /* Clips the inner div when it's outside the button */
+    group /* Enables group-hover effects on children */
+    px-8 py-3 rounded-full 
+    bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] 
+    text-white font-bold 
+    shadow-lg shadow-purple-500/40 hover:shadow-purple-500/60 
+    transition-all
+    focus:outline-none focus:ring-4 focus:ring-purple-500/50 /* Added for accessibility */
+  "
+>
+  {/* The main button text, ensure it's above the overlay with z-index */}
+  <span className="relative z-10">
+    Download App
+  </span>
+  
+  {/* The glass overlay effect */}
+  <div 
+    className="
+      absolute top-0 left-0 w-full h-full /* Covers the entire button */
+      bg-white/20 
+      translate-y-full /* Starts off-screen below the button */
+      group-hover:translate-y-0 /* Slides up on hover */
+      transition-transform duration-300 /* Smooth animation */
+      z-0 /* Keeps it behind the text */
+      rounded-full /* Matches the button's rounded shape */
+    "
+  />
+</motion.button>
 
           <motion.button
             whileHover={{ scale: 1.05 }}
