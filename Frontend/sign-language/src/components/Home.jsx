@@ -80,10 +80,10 @@ export default function Home() {
       </motion.div>
 
       {/* Background glows keep same layout */}
-      <div className="absolute inset-0 dark:block hidden bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
-      <div
+      <div className="absolute inset-0  bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
+      {/* <div
         className="absolute inset-0 block dark:hidden bg-[radial-gradient(55%_45%_at_40%_20%,#ffb7e633,transparent_70%), radial-gradient(50%_50%_at_75%_75%,#e5b3ff33,transparent_75%)] backdrop-blur-[2px]"
-      ></div>
+      ></div> */}
 
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-300/20 dark:bg-purple-900/40 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-purple-300/20 dark:bg-purple-900/40 rounded-full blur-[100px] pointer-events-none" />

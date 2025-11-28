@@ -1,8 +1,8 @@
 import React from 'react';
 import Mobile from '../assets/about.svg';
-import { FaMicrophone, FaVideo, FaRobot, FaShareAlt, FaMobileAlt,FaRunning ,FaHands } from "react-icons/fa";
+import { FaMicrophone, FaVideo, FaRobot, FaShareAlt, FaMobileAlt,FaRunning ,FaHands ,FaEye } from "react-icons/fa";
 import { motion } from "framer-motion";
-
+import { FaUserTie, FaLaptopCode, FaBrain, FaCode, FaUserAlt } from "react-icons/fa";
 export default function About() {
   
   // --- UPDATED DATA STRUCTURE (Kept) ---
@@ -59,8 +59,73 @@ export default function About() {
     }
   };
 
+   const team = [
+      {
+        name: "Shahd Mohamed",
+        role: "AI & Frontend Engineer",
+        icon: FaCode,
+        bio: "Expert in building intelligent, user-friendly interfaces and real-time AI-powered experiences."
+      },
+      {
+        name: "Demiana Ayman",
+        role: "AI & Backend Web Engineer",
+        icon: FaLaptopCode,
+        bio: "Specializes in backend systems, APIs, databases, and AI integration for scalable architectures."
+      },
+      {
+        name: "Kareem Reda",
+        role: "AI Engineer",
+        icon: FaBrain,
+        bio: "Focused on machine learning, model optimization, and advanced data-driven solutions."
+      },
+      {
+        name: "Yahya Aboamer",
+        role: "AI Engineer",
+        icon: FaCode,
+        bio: "Passionate about neural networks, deep learning applications, and system intelligence."
+      },
+      {
+        name: "Mariam Hany",
+        role: "AI & Frontend Engineer",
+        icon: FaBrain,
+        bio: "Combines design and AI to build seamless, accessible user experiences powered by smart technology."
+      },
+         {
+        name: "Hussam Elsayed",
+        role: "AI Engineer",
+        icon: FaUserAlt,
+        bio: "Passionate about neural networks, deep learning applications, and system intelligence."
+      }
+    ];
+
   return (
     <div className="w-full bg-gray-50 dark:bg-[#0f0c29] py-24 px-6 lg:px-20 relative overflow-hidden"> 
+<motion.div
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true }}
+  variants={fadeUp}
+  transition={{ duration: 0.8 }}
+  className="max-w-7xl mx-auto text-center mb-16 relative z-10"
+>
+  {/* Subheading */}
+  <span className="text-purple-600 dark:text-purple-400 font-bold tracking-widest uppercase text-sm mb-2 block">
+    Who We Are
+  </span>
+
+  {/* Main Title */}
+  <h2 className="text-4xl sm:text-5xl font-extrabold mb-4 text-gray-900 dark:text-white">
+    <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
+      About LinguaSign
+    </span>
+  </h2>
+
+  {/* Description */}
+  <p className="text-gray-600 dark:text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto">
+    Discover the vision behind LinguaSign — a cutting-edge platform designed to bridge communication 
+    between sign language users and the world through intelligent, inclusive technology.
+  </p>
+</motion.div>
 
       {/* 🌌 Decorative Floating Lights (Crucial for the blur effect to work) */}
       <motion.div 
@@ -150,36 +215,227 @@ export default function About() {
         </motion.div>
       </div>
 
+{/* --- OUR MISSION SECTION (PREMIUM VERSION) --- */}
+<div className="max-w-6xl mx-auto mt-32 mb-32 relative px-6">
+
+  {/* Ambient Glow */}
+  <motion.div 
+    animate={{ opacity: [0.15, 0.35, 0.15], scale: [1, 1.07, 1] }}
+    transition={{ duration: 7, repeat: Infinity }}
+    className="absolute top-0 left-1/2 -translate-x-1/2 w-[650px] h-[650px] 
+               bg-gradient-to-r from-[#A044FF] to-[#6A3093] 
+               opacity-30 rounded-full blur-[180px] z-0"
+  />
+
+  {/* Header */}
+<motion.h3
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.9 }}
+  viewport={{ once: true }}
+  className="flex items-center justify-center gap-4
+             text-center text-3xl sm:text-4xl font-extrabold mb-12
+             text-gray-900 dark:text-white tracking-tight"
+>
+  {/* Left Line */}
+  <motion.span
+    initial={{ opacity: 0, x: -20 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.6 }}
+    className="hidden sm:block w-12 h-[3px] 
+               bg-gradient-to-r from-transparent to-[#A044FF]
+               dark:to-[#A044FF] rounded-full"
+  />
+
+  {/* Title */}
+  <span
+    className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
+               dark:from-[#6A3093] dark:to-[#A044FF]
+               bg-clip-text text-transparent"
+  >
+    Our Mission
+  </span>
+
+  {/* Right Line */}
+  <motion.span
+    initial={{ opacity: 0, x: 20 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.6 }}
+    className="hidden sm:block w-12 h-[3px] 
+               bg-gradient-to-l from-transparent to-[#A044FF]
+               dark:to-[#A044FF] rounded-full"
+  />
+</motion.h3>
+
+
+  {/* Mission Card */}
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.9 }}
+    viewport={{ once: true }}
+    className="relative z-10 p-12 rounded-3xl shadow-[0_8px_40px_-10px_rgba(0,0,0,0.25)]
+               bg-gradient-to-br from-white/10 to-white/5 
+               dark:from-white/5 dark:to-white/0
+               backdrop-blur-2xl border border-white/20 text-center"
+  >
+    <p className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-gray-100">
+      Empowering Connection Through Intelligent Communication
+    </p>
+
+    <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mt-4 leading-relaxed max-w-3xl mx-auto">
+      At <span className="font-semibold text-purple-600 dark:text-purple-300">LinguaSign</span>, 
+      our mission is to build an inclusive world where communication is barrier-free.  
+      We combine advanced AI, gesture recognition, and expressive 3D animation to make
+      real-time sign language translation intuitive, accessible, and impactful for everyone.
+    </p>
+
+    <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mt-4 leading-relaxed max-w-3xl mx-auto">
+      We are committed to delivering technology that supports the Deaf and Hard-of-Hearing 
+      community while empowering educators, learners, and organizations with tools that
+      elevate accessibility and meaningful human connection.
+    </p>
+
+    {/* Floating Icon Wrapper */}
+    <motion.div
+      animate={{ y: [0, -10, 0] }}
+      transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+      className="mt-10 flex justify-center"
+    >
+      <div className="w-24 h-24 rounded-3xl 
+                      bg-gradient-to-br from-[#6A3093] to-[#A044FF]
+                      flex items-center justify-center shadow-xl 
+                      border border-white/20">
+        <FaHands className="text-4xl text-white" />
+      </div>
+    </motion.div>
+  </motion.div>
+
+</div>
+
+{/* --- OUR VISION SECTION --- */}
+<div className="max-w-6xl mx-auto mt-32 mb-32 relative px-6">
+
+  {/* Background Glow */}
+  <motion.div 
+    animate={{ opacity: [0.15, 0.35, 0.15], scale: [1, 1.06, 1] }}
+    transition={{ duration: 7, repeat: Infinity }}
+    className="absolute top-0 left-1/2 -translate-x-1/2 w-[650px] h-[650px] 
+               bg-gradient-to-r from-[#6A3093] to-[#A044FF]
+               opacity-30 rounded-full blur-[180px] z-0"
+  />
+
+{/* Header */}
+<motion.h3
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.9 }}
+  viewport={{ once: true }}
+  className="relative flex items-center justify-center gap-4
+             text-center text-3xl sm:text-4xl font-extrabold mb-12
+             text-gray-900 dark:text-white tracking-tight"
+>
+  {/* Left Line */}
+  <motion.span
+    initial={{ opacity: 0, x: -20 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.6 }}
+    className="hidden sm:block w-12 h-[3px] bg-gradient-to-r 
+               from-transparent to-[#A044FF] rounded-full"
+  />
+
+  {/* Title */} 
+  <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF]
+                  bg-clip-text text-transparent">
+    Our Vision
+  </span>
+
+  {/* Right Line */}
+  <motion.span
+    initial={{ opacity: 0, x: 20 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.6 }}
+    className="hidden sm:block w-12 h-[3px] bg-gradient-to-l
+               from-transparent to-[#A044FF] rounded-full"
+  />
+</motion.h3>
+
+
+  {/* Vision Card */}
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.9 }}
+    viewport={{ once: true }}
+    className="relative z-10 p-12 rounded-3xl shadow-[0_8px_40px_-10px_rgba(0,0,0,0.25)]
+               bg-gradient-to-br from-white/10 to-white/5 
+               dark:from-white/5 dark:to-white/0
+               backdrop-blur-2xl border border-white/20 text-center"
+  >
+    <p className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-gray-100">
+      A World Where Technology Speaks Every Language
+    </p>
+
+    <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mt-4 max-w-3xl mx-auto leading-relaxed">
+      Our vision is to become the global standard for AI-powered sign language translation, 
+      creating an ecosystem where communication flows smoothly across all communities. 
+      We aim to bridge the gap between spoken language and visual language, making 
+      accessibility a fundamental part of everyday life.
+    </p>
+
+    <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mt-4 max-w-3xl mx-auto leading-relaxed">
+      With cutting-edge machine learning, intuitive interfaces, and human-centered design, 
+      we strive to make technology more inclusive, empowering individuals and organizations 
+      to understand, collaborate, and thrive without communication barriers.
+    </p>
+
+    {/* Floating Icon */}
+    <motion.div
+      animate={{ y: [0, -10, 0] }}
+      transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+      className="mt-10 flex justify-center"
+    >
+      <div className="w-24 h-24 rounded-3xl 
+                      bg-gradient-to-br from-[#A044FF] to-[#6A3093]
+                      flex items-center justify-center shadow-xl 
+                      border border-white/20">
+        <FaEye className="text-4xl text-white" />
+      </div>
+    </motion.div>
+  </motion.div>
+
+</div>
+
 
       {/* --- CORE JOURNEY SECTION TITLE (Kept) --- */}
-      <motion.h3
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="relative text-center text-3xl sm:text-4xl font-extrabold mb-20 text-gray-900 dark:text-white"
-      >
-        {/* Left bar */}
-        <motion.span
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          className="absolute left-[30%] top-1/2 -translate-y-1/2 w-10 h-[3px] bg-gradient-to-r from-transparent to-[#A044FF] rounded-full"
-        />
+   <motion.h3
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8 }}
+  viewport={{ once: true }}
+  className="relative flex items-center justify-center gap-6 mb-20"
+>
+  {/* Left bar */}
+  <motion.span
+    initial={{ opacity: 0, x: -20 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.6 }}
+    className="hidden sm:block w-16 h-[3px] bg-gradient-to-r from-transparent to-[#A044FF] rounded-full"
+  />
 
-        {/* Text - New Title for clarity */}
-        <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
-          LinguaSign Journey
-        </span>
+  {/* Title */}
+  <span className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] bg-clip-text text-transparent dark:from-[#6A3093] dark:to-[#A044FF] text-center">
+    LinguaSign Journey
+  </span>
 
-        {/* Right bar */}
-        <motion.span
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          className="absolute right-[30%] top-1/2 -translate-y-1/2 w-10 h-[3px] bg-gradient-to-l from-transparent to-[#A044FF] rounded-full"
-        />
-      </motion.h3>
+  {/* Right bar */}
+  <motion.span
+    initial={{ opacity: 0, x: 20 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.6 }}
+    className="hidden sm:block w-16 h-[3px] bg-gradient-to-l from-transparent to-[#A044FF] rounded-full"
+  />
+</motion.h3>
 
 
       {/* CORE JOURNEY STEPS (Vertical Timeline using journeySteps) */}
@@ -277,6 +533,117 @@ export default function About() {
           ))}
         </div>
       </div>
+
+{/* --- TEAM SECTION --- */}
+<div className="max-w-7xl mx-auto mt-32 mb-32 px-6">
+
+  {/* Header */}
+<motion.h3
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8 }}
+  viewport={{ once: true }}
+  className="relative flex items-center justify-center gap-4 
+             text-center text-3xl sm:text-4xl font-extrabold mb-16 
+             text-gray-900 dark:text-white tracking-tight"
+>
+  {/* Left Line */}
+  <motion.span
+    initial={{ opacity: 0, x: -20 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.6 }}
+    className="hidden sm:block w-12 h-[3px] bg-gradient-to-r 
+               from-transparent to-[#A044FF] rounded-full"
+  />
+
+  {/* Title */}
+  <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]  dark:from-[#6A3093] dark:to-[#A044FF]
+                  bg-clip-text text-transparent">
+    Meet Our Team
+  </span>
+
+  {/* Right Line */}
+  <motion.span
+    initial={{ opacity: 0, x: 20 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.6 }}
+    className="hidden sm:block w-12 h-[3px] bg-gradient-to-l 
+               from-transparent to-[#A044FF] rounded-full"
+  />
+</motion.h3>
+
+  {/* Team Grid */}
+<div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-14 py-16">
+
+  {team.map((person, index) => {
+    const Icon = person.icon;
+
+    return (
+      <motion.div
+        key={index}
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: index * 0.1 }}
+        viewport={{ once: true }}
+        whileHover={{
+          rotateX: 8,
+          rotateY: -8,
+          scale: 1.05,
+          transition: { duration: 0.4 }
+        }}
+        className="
+          group relative p-8 rounded-3xl 
+          bg-white dark:bg-white/5
+          border border-gray-200 dark:border-white/10
+          shadow-xl hover:shadow-2xl 
+          backdrop-blur-xl 
+          transform-gpu cursor-pointer
+        "
+      >
+        {/* Gradient Background Glow */}
+        <div className="
+          absolute inset-0 rounded-3xl 
+          bg-gradient-to-br from-[#A044FF20] to-[#6A309320]
+          blur-2xl opacity-0 group-hover:opacity-100 
+          transition-all duration-500
+        " />
+
+        {/* Icon */}
+        <div className="
+          w-20 h-20 mx-auto -mt-14 mb-6 rounded-2xl
+          bg-gradient-to-br from-[#A044FF] to-[#6A3093]
+          flex items-center justify-center shadow-xl
+          animate-floating relative z-10
+        ">
+          <Icon className="text-4xl text-white" />
+        </div>
+
+        {/* Name */}
+        <h4 className="relative z-10 text-2xl font-bold text-gray-900 dark:text-white text-center">
+          {person.name}
+        </h4>
+
+        {/* Role */}
+        <p className="relative z-10 mt-1 text-center text-[#A044FF] font-semibold">
+          {person.role}
+        </p>
+
+        {/* Bio */}
+        <p className="relative z-10 mt-4 text-sm text-gray-700 dark:text-gray-300 leading-relaxed text-center">
+          {person.bio}
+        </p>
+      </motion.div>
+    );
+  })}
+
+</div>
+
+
+
+
+
+</div>
+
 
     </div>
   );

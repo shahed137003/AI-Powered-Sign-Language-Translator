@@ -33,6 +33,7 @@ export default function Navbar() {
     { name: "Home", to: "/" },
     { name: "Translate", to: "/translate" },
     { name: "Profile", to: "/profile" },
+     { name: "Contact Us", to: "/contactus" },
   ];
 
   // Base classes for NavLinks

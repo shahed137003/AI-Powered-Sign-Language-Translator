@@ -28,7 +28,7 @@ function App() {
               <Home />
               <Features />
               <About />
-              <Contact />
+    
             </>
           }
         />
@@ -37,6 +37,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+          <Route path="/contactus" element={<Contact />} />
         <Route path="/chatbot" element={<Chatbot />} />
       </Routes>
 
