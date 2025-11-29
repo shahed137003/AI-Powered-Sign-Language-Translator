@@ -1,37 +1,62 @@
-@keyframes floating-slow {
-  0% { transform: translateY(0px) translateX(0px); }
-  50% { transform: translateY(25px) translateX(15px); }
-  100% { transform: translateY(0px) translateX(0px); }
+/* =========================================================
+   CUSTOM BLOB ANIMATIONS FOR HOME/FEATURES COMPONENTS
+   This replaces the setup normally found in tailwind.config.js
+   ========================================================= */
+
+@keyframes blob-slow {
+  0%, 100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  33% {
+    transform: translate(25%, -20%) scale(1.1);
+  }
+  66% {
+    transform: translate(-15%, 30%) scale(0.9);
+  }
 }
 
-@keyframes floating-medium {
-  0% { transform: translateY(0px) translateX(0px); }
-  50% { transform: translateY(-25px) translateX(-15px); }
-  100% { transform: translateY(0px) translateX(0px); }
+@keyframes blob-medium {
+  0%, 100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  40% {
+    transform: translate(-30%, 15%) scale(0.95);
+  }
+  80% {
+    transform: translate(20%, -25%) scale(1.05);
+  }
 }
 
-@keyframes pulse-smooth {
-  0%, 100% { opacity: 0.55; }
-  50% { opacity: 0.95; }
+/* Note: 'blob-fast' initial state starts centered (-50%, -50%) 
+   because of the 'transform -translate-x-1/2 -translate-y-1/2' class 
+   applied in the React component. */
+@keyframes blob-fast {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  25% {
+    transform: translate(-40%, -40%) scale(1.02);
+  }
+  50% {
+    transform: translate(-60%, -65%) scale(0.98);
+  }
+  75% {
+    transform: translate(-45%, -30%) scale(1.01);
+  }
 }
 
-.animate-floating-slow {
-  animation: floating-slow 10s ease-in-out infinite;
+/* ---------------------------------------------------------
+   Tailwind's Utility Classes for Animation (Manual Definition)
+   We link the keyframes to the animation duration/repeat properties.
+   --------------------------------------------------------- */
+.animate-blob-slow {
+  animation: blob-slow 35s infinite ease-in-out alternate;
 }
 
-.animate-floating-medium {
-  animation: floating-medium 12s ease-in-out infinite;
+.animate-blob-medium {
+  animation: blob-medium 25s infinite ease-in-out alternate-reverse;
 }
 
-.animate-pulse-smooth {
-  animation: pulse-smooth 8s ease-in-out infinite;
-}
-
-@keyframes softFloat {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-  100% { transform: translateY(0); }
-}
-.animate-softFloat {
-  animation: softFloat 5s ease-in-out infinite;
+.animate-blob-fast {
+  animation: blob-fast 18s infinite ease-in-out alternate;
 }
