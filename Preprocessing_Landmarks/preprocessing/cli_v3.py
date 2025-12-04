@@ -9,6 +9,28 @@ from .io_utils import iter_npy_files, load_keypoints_npy, save_npy
 from .pipeline_v3 import preprocess_sequence_global
 
 
+def fix_length_to_target(x: np.ndarray, target_len: int) -> np.ndarray:
+    """
+    Ensure sequence has exactly target_len frames on axis 0 by trimming or padding.
+
+    - If shorter: pad by repeating the last frame.
+    - If longer: trim to the first target_len frames.
+    """
+    if x.ndim != 2 or x.shape[1] != FEATURE_DIM:
+        raise ValueError(f"Expected shape (T,{FEATURE_DIM}), got {x.shape}")
+
+    t = x.shape[0]
+    if t == target_len:
+        return x
+    if t > target_len:
+        return x[:target_len]
+
+    pad_len = target_len - t
+    last = x[-1:, :]
+    pad = np.repeat(last, pad_len, axis=0)
+    return np.concatenate([x, pad], axis=0)
+
+
 def build_argparser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(
         description="v3: global-mean root+scale + keepwrists + tiered hand fill + optional OneEuro smoothing."
@@ -63,6 +85,14 @@ def build_argparser() -> argparse.ArgumentParser:
                     help="Shuffle file order before processing (default: off)")
     ap.add_argument("--seed", type=int, default=123,
                     help="Seed used only if --shuffle is set")
+
+    ap.add_argument(
+        "--target-frames",
+        type=int,
+        default=None,
+        help="If set, trim or pad each sequence on time axis to this many frames (e.g., 96)."
+    )
+
     return ap
 
 
@@ -108,6 +138,8 @@ def main() -> None:
             raise SystemExit(f"Expected shape (T,{FEATURE_DIM}), got {x.shape}")
 
         y = run_one(x)
+        if args.target_frames is not None:
+            y = fix_length_to_target(y, args.target_frames)
         save_npy(Path(args.output_npy), y)
         print("Saved:", args.output_npy)
         return
@@ -139,6 +171,14 @@ def main() -> None:
             continue
 
         y = run_one(x)
+        if args.target_frames is not None:
+            try:
+                y = fix_length_to_target(y, args.target_frames)
+            except ValueError as e:
+                print(f"Skipping (bad shape after preprocess): {in_path} ({e})")
+                skipped += 1
+                continue
+
         save_npy(out_path, y)
 
         n += 1
@@ -149,3 +189,4 @@ def main() -> None:
 
     print("Done. Processed:", n, "Skipped:", skipped)
     print("Output root:", out_root)
+
