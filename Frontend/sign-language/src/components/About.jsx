@@ -3,6 +3,7 @@ import Mobile from '../assets/about.svg';
 import { FaMicrophone, FaVideo, FaRobot, FaShareAlt, FaMobileAlt,FaRunning ,FaHands ,FaEye } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { FaUserTie, FaLaptopCode, FaBrain, FaCode, FaUserAlt } from "react-icons/fa";
+import RotatingEarth from './nurui/rotating-earth';
 export default function About() {
   
   // --- UPDATED DATA STRUCTURE (Kept) ---
@@ -100,6 +101,64 @@ export default function About() {
 
   return (
     <div className="w-full bg-gray-50 dark:bg-[#0f0c29] py-24 px-6 lg:px-20 relative overflow-hidden"> 
+    <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.45 }}
+        transition={{ duration: 2 }}
+        className="pointer-events-none absolute inset-0 z-0"
+    >
+        {Array.from({ length: 15 }).map((_, i) => (
+            <motion.div
+                key={i}
+                initial={{ y: 0, opacity: 0 }}
+                animate={{
+                    y: [-10, 10, -10],
+                    opacity: [0.4, 0.9, 0.4],
+                }}
+                transition={{
+                    duration: 6 + i,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                }}
+                className="absolute w-2 h-2 bg-purple-400/40 rounded-full blur-sm"
+                style={{
+                    top: `${Math.random() * 90}%`,
+                    left: `${Math.random() * 90}%`,
+                }}
+            />
+        ))}
+    </motion.div>
+
+    {/* 2. CUSTOM ABSTRACT/GEOMETRIC TEXTURE (Replaced the Grid) */}
+    {/* This layer provides the dense, curved, abstract feel of the professional background. */}
+    <div className="absolute inset-0 pointer-events-none z-0 opacity-20 dark:opacity-40">
+        <svg viewBox="0 0 100 100" className="w-full h-full">
+            {/* Dark abstract waves/lines (using a soft gradient fill) */}
+            <defs>
+                <linearGradient id="abstractGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style={{stopColor: "#4B0082", stopOpacity: 0.4}} />
+                    <stop offset="100%" style={{stopColor: "#2E0854", stopOpacity: 0.2}} />
+                </linearGradient>
+            </defs>
+            {/* Example of a few large, abstract shapes to give texture */}
+            <path d="M0 50 C 20 60, 40 40, 60 55 C 80 70, 100 45, 100 45 L 100 100 L 0 100 Z" fill="url(#abstractGradient)" />
+            <path d="M0 0 C 30 15, 70 5, 100 20 L 100 0 Z" fill="rgba(160, 68, 255, 0.1)" />
+            <path d="M0 80 C 40 70, 70 95, 100 85 L 100 100 L 0 100 Z" fill="rgba(110, 38, 175, 0.15)" />
+        </svg>
+    </div>
+
+    {/* 3. BACKGROUND GLOWS/BLURS (Kept for light and color) */}
+    {/* Note: Kept your existing glow classes and added z-0 for stacking order. */}
+    <motion.div 
+        animate={{ opacity: [0.4, 0.7, 0.4], scale: [1, 1.1, 1] }}
+        transition={{ duration: 6, repeat: Infinity }}
+        className="absolute top-0 right-0 w-[450px] h-[450px] bg-purple-600/20 rounded-full blur-[140px] pointer-events-none z-0"
+    />
+    <motion.div 
+        animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.05, 1] }}
+        transition={{ duration: 7, repeat: Infinity }}
+        className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-purple-600/20 rounded-full blur-[140px] pointer-events-none z-0"
+    />
 <motion.div
   initial="hidden"
   whileInView="visible"
@@ -108,6 +167,7 @@ export default function About() {
   transition={{ duration: 0.8 }}
   className="max-w-7xl mx-auto text-center mb-16 relative z-10"
 >
+
   {/* Subheading */}
   <span className="text-purple-600 dark:text-purple-400 font-bold tracking-widest uppercase text-sm mb-2 block">
     Who We Are
@@ -314,100 +374,145 @@ export default function About() {
 </div>
 
 {/* --- OUR VISION SECTION --- */}
-<div className="max-w-6xl mx-auto mt-32 mb-32 relative px-6">
 
-  {/* Background Glow */}
-  <motion.div 
-    animate={{ opacity: [0.15, 0.35, 0.15], scale: [1, 1.06, 1] }}
-    transition={{ duration: 7, repeat: Infinity }}
-    className="absolute top-0 left-1/2 -translate-x-1/2 w-[650px] h-[650px] 
-               bg-gradient-to-r from-[#6A3093] to-[#A044FF]
-               opacity-30 rounded-full blur-[180px] z-0"
-  />
+<div className="relative py-24 px-6 lg:px-12 xl:px-20 max-w-7xl mx-auto">
 
-{/* Header */}
-<motion.h3
-  initial={{ opacity: 0, y: 20 }}
+  {/* Section Grid: Column order is now reversed for large screens (lg:order-2 and lg:order-1) */}
+  <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+    {/* LEFT — Rotating Globe (Large Screen Order: 1) */}
+    {/* This makes the visual impact the first thing the user sees */}
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 1 }}
+      viewport={{ once: true }}
+      className="flex justify-center lg:justify-start lg:order-1" // Aligned to start on large screens
+    >
+      <div className="w-full max-w-[420px] xl:max-w-[480px]">
+        <RotatingEarth />
+      </div>
+    </motion.div>
+
+    {/* RIGHT — Vision Title + Card (Large Screen Order: 2) */}
+    <div className="lg:order-2">
+
+      {/* Section Header: Ensure alignment is consistent with the new layout */}
+      <motion.h3
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9 }}
+        viewport={{ once: true }}
+        className="relative flex items-center justify-center lg:justify-start gap-4 // Left-aligned on large screens
+                   text-3xl sm:text-4xl font-extrabold mb-12
+                   text-gray-900 dark:text-white tracking-tight"
+      >
+        {/* Left Line */}
+        <motion.span
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          className="hidden sm:block w-12 h-[3px] bg-gradient-to-r 
+                     from-transparent to-[#A044FF] rounded-full"
+        />
+
+        <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
+                        dark:from-[#6A3093] dark:to-[#A044FF]
+                        bg-clip-text text-transparent">
+          Our Vision
+        </span>
+
+        {/* Right Line - Removed for the left-aligned header (start line is enough) */}
+        {/* If you prefer both lines, keep the next motion.span tag: */}
+        {/* <motion.span
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          className="hidden sm:block w-12 h-[3px] bg-gradient-to-l
+                     from-transparent to-[#A044FF] rounded-full"
+        /> */}
+      </motion.h3>
+
+      {/* Vision Card (Kept professional styling) */}
+      <motion.div
+  initial={{ opacity: 0, y: 40 }}
   whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.9 }}
+  transition={{ duration: 0.9, ease: "easeOut" }}
   viewport={{ once: true }}
-  className="relative flex items-center justify-center gap-4
-             text-center text-3xl sm:text-4xl font-extrabold mb-12
-             text-gray-900 dark:text-white tracking-tight"
+  whileHover={{ y: -6 }}
+  className="relative z-10 p-10 rounded-3xl
+             bg-gradient-to-br from-white/15 via-white/10 to-white/5
+             dark:from-white/10 dark:via-white/5 dark:to-white/0
+             backdrop-blur-2xl
+             border border-white/20
+             shadow-[0_12px_50px_-12px_rgba(160,68,255,0.35)]
+             hover:shadow-[0_18px_70px_-15px_rgba(160,68,255,0.55)]
+             transition-all duration-500
+             text-center lg:text-left
+             overflow-hidden group"
 >
-  {/* Left Line */}
-  <motion.span
-    initial={{ opacity: 0, x: -20 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.6 }}
-    className="hidden sm:block w-12 h-[3px] bg-gradient-to-r 
-               from-transparent to-[#A044FF] rounded-full"
-  />
+  {/* Ambient Glow */}
+  <div className="absolute -top-20 -right-20 w-64 h-64 
+                  bg-purple-500/20 rounded-full blur-[120px]
+                  opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-  {/* Title */} 
-  <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF]
-                  bg-clip-text text-transparent">
-    Our Vision
-  </span>
-
-  {/* Right Line */}
-  <motion.span
-    initial={{ opacity: 0, x: 20 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.6 }}
-    className="hidden sm:block w-12 h-[3px] bg-gradient-to-l
-               from-transparent to-[#A044FF] rounded-full"
-  />
-</motion.h3>
-
-
-  {/* Vision Card */}
+  {/* Floating Accent Line */}
   <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.9 }}
-    viewport={{ once: true }}
-    className="relative z-10 p-12 rounded-3xl shadow-[0_8px_40px_-10px_rgba(0,0,0,0.25)]
-               bg-gradient-to-br from-white/10 to-white/5 
-               dark:from-white/5 dark:to-white/0
-               backdrop-blur-2xl border border-white/20 text-center"
+    animate={{ scaleX: [0.7, 1, 0.7] }}
+    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+    className="absolute top-0 left-0 w-full h-[2px]
+               bg-gradient-to-r from-transparent via-[#A044FF] to-transparent"
+  />
+
+  {/* Title */}
+  <p className="text-xl sm:text-2xl font-extrabold
+                bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
+                bg-clip-text text-transparent">
+    A World Where Technology Speaks Every Language
+  </p>
+
+  {/* Divider */}
+  <div className="w-16 h-[3px] mx-auto lg:mx-0 my-4
+                  bg-gradient-to-r from-[#6A3093] to-[#A044FF] rounded-full" />
+
+  {/* Text */}
+  <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300
+                leading-relaxed">
+    Our vision is to become the global standard for
+    <span className="font-semibold text-purple-600 dark:text-purple-300">
+      {" "}AI-powered sign language translation
+    </span>,
+    creating an ecosystem where communication flows smoothly across all communities.
+  </p>
+
+  <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300
+                mt-4 leading-relaxed">
+    With cutting-edge machine learning, intuitive interfaces, and
+    human-centered design, we strive to make technology more inclusive—
+    empowering individuals and organizations to collaborate without barriers.
+  </p>
+
+  {/* Icon Accent */}
+  {/* <motion.div
+    animate={{ y: [0, -8, 0] }}
+    transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+    className="mt-8 flex justify-center lg:justify-start"
   >
-    <p className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-gray-100">
-      A World Where Technology Speaks Every Language
-    </p>
+    <div className="w-14 h-14 rounded-2xl
+                    bg-gradient-to-br from-[#6A3093] to-[#A044FF]
+                    flex items-center justify-center
+                    shadow-lg border border-white/20">
+      <span className="text-white text-xl font-bold">∞</span>
+    </div>
+  </motion.div> */}
+</motion.div>
 
-    <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mt-4 max-w-3xl mx-auto leading-relaxed">
-      Our vision is to become the global standard for AI-powered sign language translation, 
-      creating an ecosystem where communication flows smoothly across all communities. 
-      We aim to bridge the gap between spoken language and visual language, making 
-      accessibility a fundamental part of everyday life.
-    </p>
+    </div>
 
-    <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mt-4 max-w-3xl mx-auto leading-relaxed">
-      With cutting-edge machine learning, intuitive interfaces, and human-centered design, 
-      we strive to make technology more inclusive, empowering individuals and organizations 
-      to understand, collaborate, and thrive without communication barriers.
-    </p>
-
-    {/* Floating Icon */}
-    <motion.div
-      animate={{ y: [0, -10, 0] }}
-      transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-      className="mt-10 flex justify-center"
-    >
-      <div className="w-24 h-24 rounded-3xl 
-                      bg-gradient-to-br from-[#A044FF] to-[#6A3093]
-                      flex items-center justify-center shadow-xl 
-                      border border-white/20">
-        <FaEye className="text-4xl text-white" />
-      </div>
-    </motion.div>
-  </motion.div>
-
+  </div>
 </div>
 
-
-      {/* --- CORE JOURNEY SECTION TITLE (Kept) --- */}
+      {/* --- CORE JOURNEY SECTION TITLE --- */}
    <motion.h3
   initial={{ opacity: 0, y: 20 }}
   whileInView={{ opacity: 1, y: 0 }}
@@ -537,44 +642,42 @@ export default function About() {
 {/* --- TEAM SECTION --- */}
 <div className="max-w-7xl mx-auto mt-32 mb-32 px-6">
 
-  {/* Header */}
-<motion.h3
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8 }}
-  viewport={{ once: true }}
-  className="relative flex items-center justify-center gap-4 
-             text-center text-3xl sm:text-4xl font-extrabold mb-16 
-             text-gray-900 dark:text-white tracking-tight"
->
-  {/* Left Line */}
-  <motion.span
-    initial={{ opacity: 0, x: -20 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.6 }}
-    className="hidden sm:block w-12 h-[3px] bg-gradient-to-r 
-               from-transparent to-[#A044FF] rounded-full"
-  />
+    {/* Header (FIXED: Added the opening motion.h3 tag) */}
+    <motion.h3
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="relative flex items-center justify-center gap-4 
+                         text-center text-3xl sm:text-4xl font-extrabold mb-16 
+                         text-gray-900 dark:text-white tracking-tight"
+    >
+        {/* Left Line */}
+        <motion.span
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="hidden sm:block w-12 h-[3px] bg-gradient-to-r 
+                           from-transparent to-[#A044FF] rounded-full"
+        />
 
-  {/* Title */}
-  <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]  dark:from-[#6A3093] dark:to-[#A044FF]
-                  bg-clip-text text-transparent">
-    Meet Our Team
-  </span>
+        {/* Title */}
+        <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]  dark:from-[#6A3093] dark:to-[#A044FF]
+                              bg-clip-text text-transparent">
+                Meet Our Team
+        </span>
 
-  {/* Right Line */}
-  <motion.span
-    initial={{ opacity: 0, x: 20 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.6 }}
-    className="hidden sm:block w-12 h-[3px] bg-gradient-to-l 
-               from-transparent to-[#A044FF] rounded-full"
-  />
-</motion.h3>
+        {/* Right Line */}
+        <motion.span
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="hidden sm:block w-12 h-[3px] bg-gradient-to-l 
+                           from-transparent to-[#A044FF] rounded-full"
+        />
+    </motion.h3>
 
-  {/* Team Grid */}
-<div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-14 py-16">
-
+ <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 py-8">
   {team.map((person, index) => {
     const Icon = person.icon;
 
@@ -586,62 +689,48 @@ export default function About() {
         transition={{ duration: 0.6, delay: index * 0.1 }}
         viewport={{ once: true }}
         whileHover={{
-          rotateX: 8,
-          rotateY: -8,
-          scale: 1.05,
-          transition: { duration: 0.4 }
+          scale: 1.02,
+          y: -5,
+          transition: { type: "spring", stiffness: 300, damping: 20 },
         }}
-        className="
-          group relative p-8 rounded-3xl 
-          bg-white dark:bg-white/5
-          border border-gray-200 dark:border-white/10
-          shadow-xl hover:shadow-2xl 
-          backdrop-blur-xl 
-          transform-gpu cursor-pointer
-        "
+        className="group relative p-6 sm:p-8 rounded-2xl
+                   bg-white/5 dark:bg-white/5
+                   border border-gray-200/10 dark:border-white/10
+                   shadow-lg hover:shadow-2xl hover:shadow-purple-900/40
+                   backdrop-blur-lg transition-all duration-300"
       >
-        {/* Gradient Background Glow */}
-        <div className="
-          absolute inset-0 rounded-3xl 
-          bg-gradient-to-br from-[#A044FF20] to-[#6A309320]
-          blur-2xl opacity-0 group-hover:opacity-100 
-          transition-all duration-500
-        " />
+        {/* Bottom glow */}
+        <div className="absolute bottom-0 left-0 w-full h-1
+                        bg-gradient-to-r from-transparent via-[#A044FF] to-transparent
+                        translate-y-full group-hover:translate-y-0
+                        transition-transform duration-500" />
 
         {/* Icon */}
-        <div className="
-          w-20 h-20 mx-auto -mt-14 mb-6 rounded-2xl
-          bg-gradient-to-br from-[#A044FF] to-[#6A3093]
-          flex items-center justify-center shadow-xl
-          animate-floating relative z-10
-        ">
-          <Icon className="text-4xl text-white" />
+        <div className="w-16 h-16 mx-auto mb-6 rounded-xl
+                        bg-gradient-to-br from-[#A044FF] to-[#6A3093]
+                        flex items-center justify-center shadow-lg
+                        group-hover:scale-110 transition">
+          <Icon className="text-3xl text-white" />
         </div>
 
-        {/* Name */}
-        <h4 className="relative z-10 text-2xl font-bold text-gray-900 dark:text-white text-center">
+        <h4 className="text-xl font-bold text-center text-gray-900 dark:text-white">
           {person.name}
         </h4>
 
-        {/* Role */}
-        <p className="relative z-10 mt-1 text-center text-[#A044FF] font-semibold">
+        <p className="mt-1 text-center text-purple-400 font-semibold text-sm">
           {person.role}
         </p>
 
-        {/* Bio */}
-        <p className="relative z-10 mt-4 text-sm text-gray-700 dark:text-gray-300 leading-relaxed text-center">
+        <p className="mt-4 text-sm text-gray-700 dark:text-gray-300 text-center leading-relaxed">
           {person.bio}
         </p>
       </motion.div>
     );
   })}
-
 </div>
 
 
-
-
-
+{/* Closing div for the max-w-7xl container */}
 </div>
 
 

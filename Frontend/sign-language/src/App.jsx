@@ -12,7 +12,7 @@ import Profile from "./components/Profile";
 import Login from "./components/Login";
 import Chatbot from "./components/Chatbot";
 import Register from "./components/Register";
-
+import HelloHand3D from "./components/HelloHand3D";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -28,6 +28,7 @@ function App() {
               <Home />
               <Features />
               <About />
+                <Footer />
     
             </>
           }
@@ -39,9 +40,10 @@ function App() {
         <Route path="/register" element={<Register />} />
           <Route path="/contactus" element={<Contact />} />
         <Route path="/chatbot" element={<Chatbot />} />
+        
       </Routes>
 
-      <Footer />
+    
     </>
   );
 }

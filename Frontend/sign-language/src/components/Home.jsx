@@ -45,49 +45,16 @@ export default function Home() {
   };
 
   return (
-    <div
-      className="relative w-full min-h-screen bg-gray-50 dark:bg-[#0f0c29] 
-      overflow-hidden selection:bg-purple-500 selection:text-white 
-      transition-colors duration-500"
-    >
-      {/* FLOATING PARTICLES */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.45 }}
-        transition={{ duration: 2 }}
-        className="pointer-events-none"
-      >
-        {Array.from({ length: 15 }).map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ y: 0, opacity: 0 }}
-            animate={{
-              y: [-10, 10, -10],
-              opacity: [0.4, 0.9, 0.4],
-            }}
-            transition={{
-              duration: 6 + i,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute w-2 h-2 bg-purple-400/40 rounded-full blur-sm"
-            style={{
-              top: `${Math.random() * 90}%`,
-              left: `${Math.random() * 90}%`,
-            }}
-          ></motion.div>
-        ))}
-      </motion.div>
+    <div className="relative w-full min-h-screen bg-gray-50 dark:bg-[#0f0c29] overflow-hidden selection:bg-purple-500 selection:text-white transition-colors duration-500">
 
-      {/* Background glows keep same layout */}
-      <div className="absolute inset-0  bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
-      {/* <div
-        className="absolute inset-0 block dark:hidden bg-[radial-gradient(55%_45%_at_40%_20%,#ffb7e633,transparent_70%), radial-gradient(50%_50%_at_75%_75%,#e5b3ff33,transparent_75%)] backdrop-blur-[2px]"
-      ></div> */}
+   
+      {/* Background grid */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
 
+      {/* Background glows */}
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-300/20 dark:bg-purple-900/40 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-purple-300/20 dark:bg-purple-900/40 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute top-[20%] right-[10%] w-[300px] h-[300px] bg-pink-300/20 dark:bg-pink-900/20 rounded-full blur-[80px] pointer-events-none" />
+      {/* <div className="absolute top-[20%] right-[10%] w-[300px] h-[300px] bg-pink-300/20 dark:bg-pink-900/20 rounded-full blur-[80px] pointer-events-none" /> */}
 
       {/* MAIN CONTENT */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 py-12 lg:py-20 flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-20">
@@ -112,7 +79,7 @@ export default function Home() {
             AI Integrated v2.0
           </motion.div>
 
-          {/* HEADLINE WITH TYPEWRITER EFFECT */}
+          {/* HEADLINE */}
           <motion.h1
             initial="hidden"
             animate="show"
@@ -133,9 +100,7 @@ export default function Home() {
               animate={{ width: "100%" }}
               initial={{ width: 0 }}
               transition={{ duration: 1.3, ease: "easeOut", delay: 0.3 }}
-              className="block overflow-hidden whitespace-nowrap 
-                text-transparent bg-clip-text 
-                bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]"
+              className="block overflow-hidden whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]"
             >
               Sign Language
             </motion.span>
@@ -181,7 +146,9 @@ export default function Home() {
                 { icon: <BsRobot />, text: "AI Gesture Recognition" },
                 { icon: <BsMicFill />, text: "Speech-to-Text" },
                 { icon: <FaMobileAlt />, text: "Mobile & Web Ready" },
+                { icon: <TbHandLoveYou />, text: "Customizable Avatars" },
               ].map((item, i) => (
+
                 <motion.div
                   key={i}
                   variants={fadeUp}
@@ -214,10 +181,7 @@ export default function Home() {
               <span className="relative z-10 flex items-center gap-2">
                 Start Translating <TbHandLoveYou className="text-2xl" />
               </span>
-
-              <div
-                className="absolute top-0 left-0 w-full h-full bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-0 rounded-full"
-              />
+              <div className="absolute top-0 left-0 w-full h-full bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-0 rounded-full" />
             </motion.button>
 
             <motion.button
@@ -227,19 +191,20 @@ export default function Home() {
               onClick={() => navigate("/chatbot")}
               className="px-8 py-4 rounded-full font-bold text-lg text-gray-800 dark:text-white border-2 border-gray-300 dark:border-gray-700 hover:border-purple-500 bg-white/70 dark:bg-transparent hover:bg-gray-100 dark:hover:bg-white/5 shadow-sm hover:shadow-md transition-all flex items-center gap-2"
             >
-              <BsRobot className="text-xl" /> Chatbot
+              <BsRobot className="text-xl" />
+              Chatbot
             </motion.button>
           </div>
         </motion.div>
 
-        {/* RIGHT COLUMN (Hero Animation Only, no redesign) */}
+        {/* RIGHT COLUMN */}
         <motion.div
           variants={fade}
           initial="hidden"
           animate="show"
           className="w-full lg:w-1/2 relative flex justify-center lg:justify-end"
         >
-          {/* Soft orbit lines remain the same */}
+          {/* Orbit Lines */}
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
@@ -252,12 +217,10 @@ export default function Home() {
             className="absolute inset-0 m-auto w-[60%] h-[60%] border border-indigo-500/20 rounded-full md:w-[300px] md:h-[300px]"
           />
 
-       
+          {/* Hero Image */}
           <img
             src={isDark ? HeroDark : Hero}
             alt="Hero"
-           
-         
             className="relative z-10 w-full max-w-md lg:max-w-full drop-shadow-2xl"
           />
 
@@ -278,12 +241,7 @@ export default function Home() {
           {/* Floating Translation Badge */}
           <motion.div
             animate={{ y: [0, 12, 0] }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
             className="absolute bottom-10 left-0 lg:left-[-20px] z-20"
           >
             <div className="backdrop-blur-md bg-white/90 dark:bg-gray-800/90 border border-purple-200 dark:border-purple-700 px-6 py-3 rounded-full shadow-xl">
@@ -293,6 +251,7 @@ export default function Home() {
             </div>
           </motion.div>
         </motion.div>
+
       </div>
     </div>
   );

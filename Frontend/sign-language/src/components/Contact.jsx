@@ -38,6 +38,7 @@ export default function Contact() {
     <div className="w-full bg-gray-50 dark:bg-[#0f0c29] py-24 px-6 lg:px-20 relative overflow-hidden transition-colors duration-500">
       
       {/* Background Glows */}
+      
       <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none" />
 
       {/* --- HEADER --- */}
