@@ -15,6 +15,8 @@ import Register from "./components/Register";
 import HelloHand3D from "./components/HelloHand3D";
 import { Routes, Route } from "react-router-dom";
 
+import ForgetPassword from "./components/ForgetPassword";
+import ResetPassword from "./components/ResetPassword";
 function App() {
   return (
     <>
@@ -38,9 +40,10 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-          <Route path="/contactus" element={<Contact />} />
+        <Route path="/contactus" element={<Contact />} />
         <Route path="/chatbot" element={<Chatbot />} />
-        
+        <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
 
     

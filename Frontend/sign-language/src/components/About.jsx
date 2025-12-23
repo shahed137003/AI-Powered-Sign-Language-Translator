@@ -435,78 +435,33 @@ export default function About() {
 
       {/* Vision Card (Kept professional styling) */}
       <motion.div
-  initial={{ opacity: 0, y: 40 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.9, ease: "easeOut" }}
-  viewport={{ once: true }}
-  whileHover={{ y: -6 }}
-  className="relative z-10 p-10 rounded-3xl
-             bg-gradient-to-br from-white/15 via-white/10 to-white/5
-             dark:from-white/10 dark:via-white/5 dark:to-white/0
-             backdrop-blur-2xl
-             border border-white/20
-             shadow-[0_12px_50px_-12px_rgba(160,68,255,0.35)]
-             hover:shadow-[0_18px_70px_-15px_rgba(160,68,255,0.55)]
-             transition-all duration-500
-             text-center lg:text-left
-             overflow-hidden group"
->
-  {/* Ambient Glow */}
-  <div className="absolute -top-20 -right-20 w-64 h-64 
-                  bg-purple-500/20 rounded-full blur-[120px]
-                  opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9 }}
+        viewport={{ once: true }}
+        className="relative z-10 p-10 rounded-3xl shadow-[0_8px_40px_-10px_rgba(0,0,0,0.25)]
+                   bg-gradient-to-br from-white/10 to-white/5 
+                   dark:from-white/5 dark:to-white/0
+                   backdrop-blur-2xl border border-white/20 text-center lg:text-left" // Ensure card text remains left-aligned on large screens
+      >
+        <p className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-gray-100">
+          A World Where Technology Speaks Every Language
+        </p>
 
-  {/* Floating Accent Line */}
-  <motion.div
-    animate={{ scaleX: [0.7, 1, 0.7] }}
-    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-    className="absolute top-0 left-0 w-full h-[2px]
-               bg-gradient-to-r from-transparent via-[#A044FF] to-transparent"
-  />
+        <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mt-4 leading-relaxed">
+          Our vision is to become the global standard for AI-powered sign language translation,
+          creating an ecosystem where communication flows smoothly across all communities.
+        </p>
 
-  {/* Title */}
-  <p className="text-xl sm:text-2xl font-extrabold
-                bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
-                bg-clip-text text-transparent">
-    A World Where Technology Speaks Every Language
-  </p>
+        <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mt-4 leading-relaxed">
+          With cutting-edge machine learning, intuitive interfaces, and human-centered design,
+          we strive to make technology more inclusive, empowering individuals and organizations
+          to understand, collaborate, and thrive without communication barriers.
+        </p>
 
-  {/* Divider */}
-  <div className="w-16 h-[3px] mx-auto lg:mx-0 my-4
-                  bg-gradient-to-r from-[#6A3093] to-[#A044FF] rounded-full" />
-
-  {/* Text */}
-  <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300
-                leading-relaxed">
-    Our vision is to become the global standard for
-    <span className="font-semibold text-purple-600 dark:text-purple-300">
-      {" "}AI-powered sign language translation
-    </span>,
-    creating an ecosystem where communication flows smoothly across all communities.
-  </p>
-
-  <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300
-                mt-4 leading-relaxed">
-    With cutting-edge machine learning, intuitive interfaces, and
-    human-centered design, we strive to make technology more inclusive—
-    empowering individuals and organizations to collaborate without barriers.
-  </p>
-
-  {/* Icon Accent */}
-  {/* <motion.div
-    animate={{ y: [0, -8, 0] }}
-    transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-    className="mt-8 flex justify-center lg:justify-start"
-  >
-    <div className="w-14 h-14 rounded-2xl
-                    bg-gradient-to-br from-[#6A3093] to-[#A044FF]
-                    flex items-center justify-center
-                    shadow-lg border border-white/20">
-      <span className="text-white text-xl font-bold">∞</span>
-    </div>
-  </motion.div> */}
-</motion.div>
-
+        {/* Floating Icon - (You might want to place the previously suggested FaEye here for professional appeal) */}
+        
+      </motion.div>
     </div>
 
   </div>
@@ -677,57 +632,73 @@ export default function About() {
         />
     </motion.h3>
 
- <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 py-8">
-  {team.map((person, index) => {
-    const Icon = person.icon;
+    {/* Team Grid */}
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 py-8">
 
-    return (
-      <motion.div
-        key={index}
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: index * 0.1 }}
-        viewport={{ once: true }}
-        whileHover={{
-          scale: 1.02,
-          y: -5,
-          transition: { type: "spring", stiffness: 300, damping: 20 },
-        }}
-        className="group relative p-6 sm:p-8 rounded-2xl
-                   bg-white/5 dark:bg-white/5
-                   border border-gray-200/10 dark:border-white/10
-                   shadow-lg hover:shadow-2xl hover:shadow-purple-900/40
-                   backdrop-blur-lg transition-all duration-300"
-      >
-        {/* Bottom glow */}
-        <div className="absolute bottom-0 left-0 w-full h-1
+        {/* The map function is correct, assuming 'team' array is available in scope */}
+        {/* The JSX structure inside the map is also correct and uses the professional styling */}
+        {team.map((person, index) => {
+            const Icon = person.icon;
+
+            return (
+                <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    whileHover={{
+                        scale: 1.02, // Subtle lift
+                        y: -5,
+                        transition: { type: "spring", stiffness: 300, damping: 20 }
+                    }}
+                    className="
+                        group relative p-6 sm:p-8 rounded-xl lg:rounded-2xl // Reduced radius for sleekness
+                        bg-white/5 dark:bg-white/5 // Glass background
+                        border border-gray-200/10 dark:border-white/10
+                        shadow-lg hover:shadow-2xl hover:shadow-purple-900/40 // Shadow emphasis on hover
+                        backdrop-blur-lg // Main glass effect
+                        transition-all duration-300 cursor-pointer overflow-hidden
+                    "
+                >
+                    {/* --- UPDATED: BOTTOM BORDER GLOW ON HOVER --- */}
+                    <div className="
+                        absolute bottom-0 left-0 w-full h-1
                         bg-gradient-to-r from-transparent via-[#A044FF] to-transparent
-                        translate-y-full group-hover:translate-y-0
-                        transition-transform duration-500" />
-
-        {/* Icon */}
-        <div className="w-16 h-16 mx-auto mb-6 rounded-xl
+                        transform translate-y-full group-hover:translate-y-0
+                        transition-transform duration-500
+                    " />
+                    
+                    {/* --- UPDATED: ICON CONTAINER (Integrated) --- */}
+                    <div className="
+                        w-16 h-16 mx-auto mb-6 rounded-xl // Smaller, integrated icon
                         bg-gradient-to-br from-[#A044FF] to-[#6A3093]
                         flex items-center justify-center shadow-lg
-                        group-hover:scale-110 transition">
-          <Icon className="text-3xl text-white" />
-        </div>
+                        relative z-10 transition-all duration-300
+                        group-hover:scale-110 // Icon pops slightly on hover
+                    ">
+                        <Icon className="text-3xl text-white" />
+                    </div>
 
-        <h4 className="text-xl font-bold text-center text-gray-900 dark:text-white">
-          {person.name}
-        </h4>
+                    {/* Name */}
+                    <h4 className="relative z-10 text-xl font-bold text-gray-900 dark:text-white text-center">
+                        {person.name}
+                    </h4>
 
-        <p className="mt-1 text-center text-purple-400 font-semibold text-sm">
-          {person.role}
-        </p>
+                    {/* Role */}
+                    <p className="relative z-10 mt-1 text-center text-purple-400 font-semibold text-sm"> 
+                        {person.role}
+                    </p>
 
-        <p className="mt-4 text-sm text-gray-700 dark:text-gray-300 text-center leading-relaxed">
-          {person.bio}
-        </p>
-      </motion.div>
-    );
-  })}
-</div>
+                    {/* Bio */}
+                    <p className="relative z-10 mt-4 text-sm text-gray-700 dark:text-gray-300 leading-relaxed text-center">
+                        {person.bio}
+                    </p>
+                </motion.div>
+            );
+        })}
+
+    </div>
 
 
 {/* Closing div for the max-w-7xl container */}

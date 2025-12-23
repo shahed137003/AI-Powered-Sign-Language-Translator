@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 
 export default function RotatingEarth({
   width = 600,
-  height = 700,
+  height = 600,
   className = "",
 }) {
   const canvasRef = useRef(null);

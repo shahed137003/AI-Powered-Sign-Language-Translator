@@ -47,7 +47,35 @@ export default function Home() {
   return (
     <div className="relative w-full min-h-screen bg-gray-50 dark:bg-[#0f0c29] overflow-hidden selection:bg-purple-500 selection:text-white transition-colors duration-500">
 
-   
+      {/* FLOATING PARTICLES */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.45 }}
+        transition={{ duration: 2 }}
+        className="pointer-events-none"
+      >
+        {Array.from({ length: 15 }).map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ y: 0, opacity: 0 }}
+            animate={{
+              y: [-10, 10, -10],
+              opacity: [0.4, 0.9, 0.4],
+            }}
+            transition={{
+              duration: 6 + i,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute w-2 h-2 bg-purple-400/40 rounded-full blur-sm"
+            style={{
+              top: `${Math.random() * 90}%`,
+              left: `${Math.random() * 90}%`,
+            }}
+          />
+        ))}
+      </motion.div>
+
       {/* Background grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
 
