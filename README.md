@@ -86,11 +86,6 @@ This approach eliminates the dependency on pre-recorded videos or animated avata
 
 ## Datasets
 
-### Arabic Sign Language (ArSL)
-- Arabic Sign Language Alphabet Dataset (Kaggle)  
-- Arabic Sign Language Data (Kaggle)  
-- Augmented Arabic Sign Language Dataset (Kaggle)
-
 ### American Sign Language (ASL)
 - MS-ASL (Microsoft Large-Scale ASL Dataset)  
 - ASL Dataset (Kaggle)
