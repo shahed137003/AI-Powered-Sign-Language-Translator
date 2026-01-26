@@ -1,136 +1,168 @@
 # AI-Powered Skeleton-Based Sign Language Translation System
 
-## Overview
+## 1. Introduction
 
-Millions of deaf and hard-of-hearing individuals face persistent communication barriers in education, healthcare, and daily life. This project presents an **AI-powered, multilingual sign language translation platform** that enables **real-time, bidirectional translation** between **sign languages** and **spoken/written languages**.
+Millions of deaf and hard-of-hearing individuals face persistent communication barriers in education, healthcare, and daily life. This project presents an **AI-powered, multilingual sign language translation platform** that enables **real-time, bidirectional translation** between **sign languages** and **spoken or written languages**.
 
-Unlike traditional avatar-based or video-retrieval systems, this solution adopts a **skeleton-based motion synthesis approach**, directly generating **2D/3D skeletal sign gestures** from text, speech, or video. This design significantly reduces computational overhead, improves scalability, and supports research-oriented extensions in human motion generation and sign language processing.
+Unlike traditional avatar-based or video-retrieval systems, the proposed solution adopts a **skeleton-based motion synthesis approach**, directly generating **2D/3D skeletal sign gestures** from text, speech, or video. This significantly reduces computational overhead, improves scalability, and supports research-oriented extensions in sign language understanding and human motion generation.
 
 ---
 
-## Key Features
+## 2. Project Objectives
 
-### Core Functionality
+- Develop a robust **pose-based sign language translation system**.
+- Enable **real-time, bidirectional translation** between sign and spoken languages.
+- Improve generalization across signers, environments, and camera setups.
+- Reduce reliance on raw RGB video using compact landmark-based representations.
+- Support multilingual sign and spoken language translation.
+- Provide an extensible framework for research and real-world accessibility applications.
+
+---
+
+## 3. Key Features
+
+### 3.1 Core Functionality
+
 - **Real-Time Camera Translation**  
-  Captures live sign language gestures via a camera and translates them into text or synthesized speech.
+  Captures live sign gestures via camera and translates them into text or synthesized speech.
 
 - **Video-Based Translation**  
-  Translates pre-recorded or uploaded videos (including online sources) into skeleton-based sign motion.
-
-- **Multilingual Support**  
-  Supports multiple sign languages (e.g., ASL, ArSL) and spoken languages (e.g., Arabic, English).
+  Processes uploaded or pre-recorded videos to generate translated outputs.
 
 - **Speech-to-Sign Translation**  
-  Converts spoken language into AI-generated skeleton-based sign animations in real time.
+  Converts spoken input into skeleton-based sign motion sequences.
 
-### Advanced Capabilities
-- **AI-Driven Sign Language Chatbot**  
-  An interactive assistant that communicates using animated skeleton signing, enabling practice and learning.
+- **Multilingual Support**  
+  Supports multiple sign languages (e.g., ASL, ArSL) and spoken languages (e.g., English, Arabic).
+
+### 3.2 Advanced Capabilities
+
+- **AI-Powered Sign Language Chatbot**  
+  Interactive assistant that responds using animated skeletal signing.
 
 - **Offline Mode**  
-  Lightweight TensorFlow Lite models enable operation in low-connectivity environments.
+  Lightweight models deployed using TensorFlow Lite for low-connectivity environments.
 
 - **Accessibility Toolkit**  
-  Customizable sign speed, visual contrast, vibration feedback, and text-to-speech options for inclusive use.
+  Adjustable sign speed, visual contrast, vibration feedback, and text-to-speech options.
 
 ---
 
-## System Architecture
+## 4. System Architecture
 
-<p align="center">
-  <img src="user Experience.png" alt="System Architecture Diagram" width="800"/>
-</p>
-
-The system integrates gesture recognition, speech recognition, natural language processing, and motion synthesis into a unified skeleton-based pipeline.
+The system follows a modular, end-to-end pipeline integrating perception, language understanding, and motion synthesis.
 
 ### Processing Pipeline
-1. **Input Sources**: Camera, microphone, text, or video  
-2. **AI Processing**: Gesture recognition, speech-to-text, and NLP  
-3. **Translation Engine**: Seq2Seq Transformer for text-to-gloss conversion  
-4. **Motion Generation**: Gloss-to-pose sequence using GANs or Transformers  
-5. **Visualization**: 2D/3D skeleton animation (MediaPipe, Matplotlib, or Three.js)  
-6. **Web Interface**: React and Tailwind CSS front-end  
+
+1. **Input Sources**  
+   Camera, microphone, text input, or uploaded video.
+
+2. **Pose & Audio Extraction**  
+   - Body, hand, and face landmarks using MediaPipe or OpenPose  
+   - Speech transcription using ASR models
+
+3. **Language Processing**  
+   Spoken or written language translated into sign gloss using Transformer-based models.
+
+4. **Motion Generation**  
+   Gloss-to-pose sequence generation using Transformers or GAN-based architectures.
+
+5. **Visualization**  
+   2D/3D skeletal animation using MediaPipe rendering, Matplotlib, or Three.js.
+
+6. **User Interface**  
+   Web-based front end built with React and Tailwind CSS.
 
 ---
 
-## Methodology
+## 5. Methodology
 
-1. **Data Preprocessing**  
-   Extract 2D/3D body and hand landmarks using MediaPipe or OpenPose from sign language datasets.
+### 5.1 Pose-Based Representation
 
-2. **Model Training**  
-   Train Transformer-based or GAN-based architectures (e.g., Pose2Sign, SignGAN) to generate pose sequences from gloss representations.
+The system operates on **pose landmarks** rather than raw RGB frames, providing:
+- Robustness to lighting and background variation
+- Compact and efficient data representation
+- Improved generalization across signers
 
-3. **Text-to-Gloss Translation**  
-   Apply Seq2Seq or Transformer-based NLP models (e.g., BERT-based encoders) to adapt spoken language grammar into sign language gloss.
+### 5.2 Preprocessing Strategy
 
-4. **Skeleton Motion Visualization**  
-   Render generated pose sequences using Matplotlib, MediaPipe rendering, or WebGL-based frameworks such as Three.js.
+A **Global-Mean Normalization with Robust Hand Handling** pipeline is used:
+- Validity-aware landmark filtering
+- Sequence-level root and scale computation
+- Global normalization across pose, face, and hands
+- Hand swap correction and distance gating
+- Conservative wrist-relative gap filling
+- Optional temporal smoothing and resampling
 
-This approach eliminates the dependency on pre-recorded videos or animated avatars by directly synthesizing skeletal motion trajectories.
+### 5.3 Model Training
+
+- **Recognition (ISLR)**  
+  Models evaluated include:
+  - 1D CNN (baseline)
+  - LSTM
+  - Temporal Convolutional Networks (TCN)
+  - Transformer-based models
+  - ST-GCN and ensemble models
+
+- **Generation**  
+  Gloss-to-pose synthesis using Transformer and GAN-based architectures.
 
 ---
 
-## Tools and Technologies
+## 6. Tools and Technologies
 
-| Category | Technologies |
-|--------|-------------|
-| Gesture Recognition | MediaPipe, OpenCV, OpenPose |
-| Machine Learning | TensorFlow, PyTorch, Transformers, SignGAN, Pose2Sign |
-| Speech Recognition | Whisper, Wav2Vec 2.0, Google Speech-to-Text |
+| Category | Tools |
+|-------|------|
+| Pose Extraction | MediaPipe, OpenPose, OpenCV |
+| Machine Learning | TensorFlow, PyTorch |
+| Speech Recognition | Whisper, Wav2Vec 2.0 |
+| Motion Generation | Transformers, GANs |
 | Visualization | Matplotlib, Three.js, WebGL |
 | Front-End | React, Tailwind CSS |
-| Back-End | Python, Flask or Django |
+| Back-End | Python, Flask / Django |
 
 ---
 
-## Datasets
+## 7. Datasets
 
-### American Sign Language (ASL)
-- MS-ASL (Microsoft Large-Scale ASL Dataset)  
-- ASL Dataset (Kaggle)
+### Sign Language Datasets
 
-### Pose and Sentence-Level Datasets
-- **PHOENIX-2014T** (Sentence-level sign language with gloss and pose data)  
-- **YouTube-ASL** (Large-scale conversational sign language dataset)
+- **MS-ASL** – Large-scale real-world ASL dataset  
+- **WLASL** – Word-level ASL dataset  
+- **PHOENIX-2014T** – Sentence-level sign language dataset  
+- **YouTube-ASL** – Conversational sign language dataset  
 
----
-
-## User Workflow
-
-1. **Home Interface**  
-   Users select between live translation, video upload, or accessibility settings.
-
-2. **Live Translation Mode**  
-   Users perform signs in front of a camera and receive real-time text or speech output.
-
-3. **Speech-to-Sign Mode**  
-   Spoken input is converted into skeleton-based sign language animation.
-
-4. **Video Upload Mode**  
-   Uploaded videos are processed to extract speech or text and generate corresponding sign motion.
-
-5. **Accessibility Settings**  
-   Users customize visualization parameters such as skeleton color, motion speed, and feedback options.
+Efficient streaming pipelines are used to avoid storing large raw video files.
 
 ---
 
-## Future Enhancements
+## 8. User Workflow
 
-- Integration of advanced text-to-pose models (e.g., Text2Pose, SignFlow) for smoother motion generation  
-- Expansion to sentence-level translation using PHOENIX-2014T  
-- Cross-sign-language translation (e.g., ASL to BSL)  
-- Augmented reality-based visualization for immersive sign representation  
-- Exploration of self-supervised and multimodal learning approaches for pose generation  
-
----
-
-## Project Vision
-
-The goal of this project is to develop a scalable, inclusive, and multilingual accessibility platform that leverages **AI-driven skeleton motion synthesis** to bridge communication gaps between deaf and hearing individuals, while advancing research in sign language translation and human motion generation.
+1. Select translation mode from the home interface.
+2. Perform live sign input or provide speech/text.
+3. System processes input and generates translated output.
+4. Results are displayed as text, speech, or skeleton-based sign animation.
+5. Accessibility settings allow user customization.
 
 ---
 
-## License
+## 9. Future Work
 
-This project is licensed under the **MIT License**. See the `LICENSE` file for more details.
+- Sentence-level sign translation with advanced datasets.
+- Cross-sign-language translation (e.g., ASL ↔ BSL).
+- Augmented Reality (AR)–based visualization.
+- Self-supervised and multimodal learning approaches.
+- Improved text-to-pose motion realism.
+
+---
+
+## 10. Project Vision
+
+This project aims to deliver a **scalable, inclusive, and research-driven sign language translation platform** that leverages **AI-based skeleton motion synthesis** to bridge communication gaps and advance sign language technology.
+
+---
+
+## 11. License
+
+This project is licensed under the **MIT License**.  
+See the `LICENSE` file for details.
