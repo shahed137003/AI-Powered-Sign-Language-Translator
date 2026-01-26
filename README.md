@@ -119,7 +119,7 @@ A **Global-Mean Normalization with Robust Hand Handling** pipeline is used:
 | Motion Generation | Transformers, GANs |
 | Visualization | Matplotlib, Three.js, WebGL |
 | Front-End | React, Tailwind CSS |
-| Back-End | Python, Flask / Django |
+| Back-End |Node.js |
 
 ---
 
