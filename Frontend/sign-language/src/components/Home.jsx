@@ -390,7 +390,7 @@ useEffect(() => {
               {/* Image Frame */}
               <div className="relative  transition-all duration-500">
                 <img
-                  src={isDark ? HeroDark : Hero}
+                  src={Hero}
                   alt="LinguaSign Premium AI Translator Interface"
                   className="w-full transform transition-transform duration-700"
                 />
