@@ -10,7 +10,7 @@ from .constants import (
     LEG_IDXS, CRITICAL_POSE_IDXS,
 )
 from .geometry import in_unit_xy, reasonable_xy, valid_points_xyz
-from .hands import fix_swap_and_gate_hands, fill_hand_gaps_wrist_relative_tiered
+from .hands import fix_swap_and_gate_hands, fill_hand_gaps_wrist_relative_tiered, trim_edge_filler_frames
 from .normalize import compute_global_root, compute_global_scale
 from .smoothing import smooth_points_over_time
 
@@ -55,6 +55,9 @@ def preprocess_sequence_global(
     y = seq.astype(np.float32, copy=True)
     if y.ndim != 2 or y.shape[1] != FEATURE_DIM:
         raise ValueError(f"Expected shape (T,{FEATURE_DIM}), got {y.shape}")
+
+    # Trim edge-only filler frames where both hands are out of frame.
+    y = trim_edge_filler_frames(y, margin=2, eps=eps)
 
     pose = y[:, :POSE_SIZE].reshape(-1, POSE_LANDMARKS, POSE_VALS)
     face = y[:, POSE_SIZE:POSE_SIZE + FACE_SIZE].reshape(-1, FACE_LANDMARKS, FACE_VALS)
