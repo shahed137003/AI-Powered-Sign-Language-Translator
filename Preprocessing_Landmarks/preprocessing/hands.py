@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
+from .constants import POSE_SIZE, FACE_SIZE, HAND_SIZE, HAND_LANDMARKS, HAND_VALS, FEATURE_DIM
 from .geometry import is_valid_wrist, dist2
 
 
@@ -16,6 +17,50 @@ def hand_centroid(hand_t: np.ndarray, eps: float = 1e-8):
     if not np.any(m):
         return None
     return hand_t[m].mean(axis=0)
+
+
+
+def trim_edge_filler_frames(
+    seq: np.ndarray,
+    margin: int = 2,
+    eps: float = 1e-8,
+) -> np.ndarray:
+    """Trim leading/trailing frames where BOTH hands are absent.
+
+    Intended target: isolated-SLR clips with idle start/end where hands are out of frame.
+    The trim is edge-only; missing hands in the middle are preserved.
+
+    Input/Output: (T, 438) with FEATURE_DIM consistency.
+    """
+    if seq.ndim != 2 or seq.shape[1] != FEATURE_DIM:
+        raise ValueError(f"Expected shape (T,{FEATURE_DIM}), got {seq.shape}")
+
+    T = int(seq.shape[0])
+    if T == 0:
+        return seq
+    if margin < 0:
+        raise ValueError("margin must be >= 0")
+
+    # Extract hands in raw feature space.
+    lh = seq[:, POSE_SIZE + FACE_SIZE : POSE_SIZE + FACE_SIZE + HAND_SIZE].reshape(T, HAND_LANDMARKS, HAND_VALS)
+    rh = seq[:, POSE_SIZE + FACE_SIZE + HAND_SIZE :].reshape(T, HAND_LANDMARKS, HAND_VALS)
+
+    # A frame is 'active' if either hand has at least 1 non-zero landmark.
+    l_present = np.array([frame_valid_hand(lh[t], min_pts=1, eps=eps) for t in range(T)], dtype=bool)
+    r_present = np.array([frame_valid_hand(rh[t], min_pts=1, eps=eps) for t in range(T)], dtype=bool)
+    active = l_present | r_present
+
+    idx = np.where(active)[0]
+    if idx.size == 0:
+        # No usable hand frames -> keep original sequence (avoid empty output).
+        return seq
+
+    start = max(0, int(idx[0]) - int(margin))
+    end = min(T - 1, int(idx[-1]) + int(margin))
+
+    if start == 0 and end == T - 1:
+        return seq
+    return seq[start : end + 1]
 
 
 # ----------------------------
