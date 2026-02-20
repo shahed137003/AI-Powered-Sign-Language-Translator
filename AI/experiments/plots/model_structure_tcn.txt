@@ -1,0 +1,42 @@
+
+==================================================
+        TEMPORAL CONVOLUTIONAL NETWORK
+==================================================
+
+Input: Shape: (Batch, 438, 157)
+
+Temporal Blocks:
+
+  ┌─ Block 1
+  │  Conv1: 438 → 192 | k=3 | dilation=1
+  │  Conv2: 192 → 192 | k=3 | dilation=1
+  │  Residual: Conv1x1
+  └────────────────────────
+
+  ┌─ Block 2
+  │  Conv1: 192 → 192 | k=3 | dilation=2
+  │  Conv2: 192 → 192 | k=3 | dilation=2
+  │  Residual: Identity
+  └────────────────────────
+
+  ┌─ Block 3
+  │  Conv1: 192 → 192 | k=3 | dilation=4
+  │  Conv2: 192 → 192 | k=3 | dilation=4
+  │  Residual: Identity
+  └────────────────────────
+
+  ┌─ Block 4
+  │  Conv1: 192 → 192 | k=3 | dilation=8
+  │  Conv2: 192 → 192 | k=3 | dilation=8
+  │  Residual: Identity
+  └────────────────────────
+
+Masked Global Average Pooling
+  Output: (Batch, 192)
+
+Fully Connected:
+  Linear: 192 → 146
+
+--------------------------------------------------
+Total Parameters: 1,143,506
+==================================================
