@@ -1,10 +1,19 @@
 import React, { useState } from "react";
-<<<<<<< HEAD
-import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from "react-icons/fa";
-=======
-import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram, FaEnvelope, FaUser } from "react-icons/fa";
->>>>>>> e251330 (Add frontend, backend, and ai_service)
+import { 
+  FaFacebookF, 
+  FaTwitter, 
+  FaLinkedinIn, 
+  FaInstagram, 
+  FaEnvelope, 
+  FaUser, 
+  FaPhone,
+  FaMapMarkerAlt,
+  FaPaperPlane,
+  FaRegClock
+} from "react-icons/fa";
 import { motion } from "framer-motion";
+import { TbSparkles, TbMailForward, TbMessage2, TbPhoneCall } from "react-icons/tb";
+import { FiSend } from "react-icons/fi";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -14,6 +23,7 @@ export default function Contact() {
   });
 
   const [success, setSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,295 +31,369 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-<<<<<<< HEAD
-    console.log("Message sent:", formData);
-=======
-    // In a real application, you would send this data to a server here.
-    console.log("Message sent:", formData); 
->>>>>>> e251330 (Add frontend, backend, and ai_service)
-    setSuccess(true);
-    setFormData({ name: "", email: "", message: "" });
-    setTimeout(() => setSuccess(false), 4000);
+    setIsLoading(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      console.log("Message sent:", formData); 
+      setSuccess(true);
+      setFormData({ name: "", email: "", message: "" });
+      setIsLoading(false);
+      setTimeout(() => setSuccess(false), 4000);
+    }, 1500);
   };
 
   // Motion variants
-<<<<<<< HEAD
-  const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
-
-  return (
-    <div className="w-full bg-gray-50 dark:bg-gray-900 py-24 px-4 sm:px-6 lg:px-20">
-=======
-  const fadeUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } };
+  const fadeUp = { 
+    hidden: { opacity: 0, y: 30 }, 
+    visible: { opacity: 1, y: 0 } 
+  };
 
   const socialLinks = [
-    { icon: FaFacebookF, href: "https://facebook.com", color: "#3b5998" },
-    { icon: FaTwitter, href: "https://twitter.com", color: "#1da1f2" },
-    { icon: FaLinkedinIn, href: "https://linkedin.com", color: "#0077b5" },
-    { icon: FaInstagram, href: "https://instagram.com", color: "#e4405f" },
+    { icon: FaFacebookF, href: "https://facebook.com", color: "#3b5998", label: "Facebook" },
+    { icon: FaTwitter, href: "https://twitter.com", color: "#1da1f2", label: "Twitter" },
+    { icon: FaLinkedinIn, href: "https://linkedin.com", color: "#0077b5", label: "LinkedIn" },
+    { icon: FaInstagram, href: "https://instagram.com", color: "#e4405f", label: "Instagram" },
+  ];
+
+  const contactInfo = [
+    { icon: FaEnvelope, title: "Email Support", value: "support@linguasign.io", color: "from-purple-500 to-pink-500" },
+    { icon: FaPhone, title: "Phone Support", value: "+1 (555) 123-4567", color: "from-blue-500 to-cyan-500" },
+    { icon: FaMapMarkerAlt, title: "Headquarters", value: "San Francisco, CA", color: "from-green-500 to-emerald-500" },
+    { icon: FaRegClock, title: "Business Hours", value: "Mon-Fri, 9AM-6PM PST", color: "from-orange-500 to-yellow-500" },
   ];
 
   return (
-    <div className="w-full bg-gray-50 dark:bg-[#0f0c29] py-24 px-6 lg:px-20 relative overflow-hidden transition-colors duration-500">
+    <div className="w-full min-h-screen py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-purple-50/60 dark:from-[#0a0518] dark:via-[#110a2e] dark:to-[#1e0f5c]">
       
-      {/* Background Glows */}
-      
-      <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none" />
+      {/* Premium Geometric Grid */}
+      <div className="absolute inset-0 opacity-40 dark:opacity-60 pointer-events-none">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(90deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px),
+            linear-gradient(180deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '40px 40px'
+        }} />
+      </div>
 
-      {/* --- HEADER --- */}
->>>>>>> e251330 (Add frontend, backend, and ai_service)
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeUp}
-        transition={{ duration: 0.8 }}
-<<<<<<< HEAD
-        className="max-w-7xl mx-auto text-center mb-12"
-      >
-        <h2 className="text-4xl sm:text-5xl font-extrabold mb-4 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
-          Contact Us
-        </h2>
-        <div className="w-24 h-1 mx-auto mb-10 rounded-full bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF]"></div>
-        <p className="text-gray-700 dark:text-gray-200 text-lg sm:text-xl">
-          Have a question or want to get in touch? Send us a message or reach out via social media. We’d love to hear from you!
-        </p>
-      </motion.div>
+      {/* Animated glows */}
+      <motion.div 
+        animate={{ 
+          x: [0, 50, 0],
+          y: [0, 30, 0]
+        }}
+        transition={{ 
+          duration: 20, 
+          repeat: Infinity, 
+          ease: "linear" 
+        }}
+        className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-gradient-to-r from-purple-600/10 via-pink-600/10 to-indigo-600/10 rounded-full blur-[120px]"
+      />
+      <motion.div 
+        animate={{ 
+          x: [0, -40, 0],
+          y: [0, -20, 0]
+        }}
+        transition={{ 
+          duration: 25, 
+          repeat: Infinity, 
+          ease: "linear" 
+        }}
+        className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-gradient-to-r from-indigo-600/10 via-purple-600/10 to-pink-600/10 rounded-full blur-[100px]"
+      />
 
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12">
-=======
-        className="max-w-7xl mx-auto text-center mb-16 relative z-10"
-      >
-        <span className="text-purple-600 dark:text-purple-400 font-bold tracking-widest uppercase text-sm mb-2 block">
-            Get in Touch
-        </span>
-        <h2 className="text-4xl sm:text-5xl font-extrabold mb-4 text-gray-900 dark:text-white">
-          <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
-            Contact Us
-          </span>
-        </h2>
-        <p className="text-gray-600 dark:text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto">
-          Have a question or want to get in touch? Send us a secure message or reach out via social media.
-        </p>
-      </motion.div>
+      {/* Floating particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(15)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-purple-500/20 rounded-full"
+            initial={{ 
+              x: Math.random() * 100 + 'vw', 
+              y: Math.random() * 100 + 'vh',
+              scale: 0 
+            }}
+            animate={{ 
+              y: [null, -20, 20, -15],
+              x: [null, 15, -15, 10],
+              scale: [0, 1, 1, 0],
+              opacity: [0, 0.5, 0.5, 0]
+            }}
+            transition={{ 
+              duration: Math.random() * 8 + 15,
+              repeat: Infinity,
+              ease: "linear",
+              delay: Math.random() * 3
+            }}
+          />
+        ))}
+      </div>
 
-      {/* --- CONTACT GRID --- */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
-        
->>>>>>> e251330 (Add frontend, backend, and ai_service)
-        {/* Contact Form */}
-        <motion.form
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          onSubmit={handleSubmit}
-<<<<<<< HEAD
-          className="flex-1 bg-purple-50 dark:bg-gray-800/40 backdrop-blur-lg border border-white/30 dark:border-gray-600 p-8 rounded-3xl shadow-2xl flex flex-col gap-6 hover:shadow-3xl transition duration-500 transform hover:-translate-y-1"
-        >
-=======
-          className="p-8 lg:p-10 dark:bg-[#1a163a]/60 backdrop-blur-xl border border-gray-200 dark:border-purple-500/20 rounded-3xl shadow-xl flex flex-col gap-6 
-            transition duration-500 hover:shadow-purple-900/40"
-        >
-          <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Send a Message</h3>
-          
->>>>>>> e251330 (Add frontend, backend, and ai_service)
-          {/* Name Input */}
-          <div className="relative">
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              placeholder="Your Name"
-<<<<<<< HEAD
-              className="w-full p-4 pl-12 border border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#A044FF] placeholder-transparent peer bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200"
-            />
-            <label className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 text-sm peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-[#6A3093] peer-focus:text-sm transition-all">
-=======
-              className="w-full p-4 pl-12 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-transparent peer bg-white/70 dark:bg-gray-700/50 text-gray-900 dark:text-gray-200 transition-colors"
-            />
-            <FaUser className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-400 peer-focus:text-purple-600 transition-colors" />
-            <label className="absolute left-12 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 text-base peer-placeholder-shown:top-1/2 peer-focus:top-3 peer-focus:text-purple-600 peer-focus:dark:text-purple-400 peer-focus:text-sm transition-all pointer-events-none">
->>>>>>> e251330 (Add frontend, backend, and ai_service)
-              Your Name
-            </label>
-          </div>
-
-          {/* Email Input */}
-          <div className="relative">
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              placeholder="Your Email"
-<<<<<<< HEAD
-              className="w-full p-4 pl-12 border border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#A044FF] placeholder-transparent peer bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200"
-            />
-            <label className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 text-sm peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-[#6A3093] peer-focus:text-sm transition-all">
-=======
-              className="w-full p-4 pl-12 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-transparent peer bg-white/70 dark:bg-gray-700/50 text-gray-900 dark:text-gray-200 transition-colors"
-            />
-            <FaEnvelope className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-400 peer-focus:text-purple-600 transition-colors" />
-             <label className="absolute left-12 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 text-base peer-placeholder-shown:top-1/2 peer-focus:top-3 peer-focus:text-purple-600 peer-focus:dark:text-purple-400 peer-focus:text-sm transition-all pointer-events-none">
->>>>>>> e251330 (Add frontend, backend, and ai_service)
-              Your Email
-            </label>
-          </div>
-
-          {/* Message Input */}
-          <div className="relative">
-            <textarea
-              name="message"
-              rows="6"
-              value={formData.message}
-              onChange={handleChange}
-              required
-              placeholder="Your Message"
-<<<<<<< HEAD
-              className="w-full p-4 pt-6 border border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#A044FF] placeholder-transparent peer resize-none bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200"
-            ></textarea>
-            <label className="absolute left-4 top-3 text-gray-500 dark:text-gray-400 text-sm peer-placeholder-shown:top-6 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-3 peer-focus:text-[#6A3093] peer-focus:text-sm transition-all">
-=======
-              className="w-full p-4 pt-10 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-transparent peer resize-none bg-white/70 dark:bg-gray-700/50 text-gray-900 dark:text-gray-200 transition-colors"
-            ></textarea>
-            <label className="absolute left-4 top-3 text-gray-500 dark:text-gray-400 text-base peer-placeholder-shown:top-6 peer-focus:top-3 peer-focus:text-purple-600 peer-focus:dark:text-purple-400 peer-focus:text-sm transition-all pointer-events-none">
->>>>>>> e251330 (Add frontend, backend, and ai_service)
-              Your Message
-            </label>
-          </div>
-
-          {/* Submit Button */}
-          <motion.button
-            type="submit"
-<<<<<<< HEAD
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            className="px-6 py-3 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] text-white font-semibold rounded-full shadow-xl transform transition duration-300"
-=======
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            className="px-6 py-4 bg-gradient-to-r from-[#6A3093] to-[#A044FF]  text-white font-bold rounded-full shadow-lg shadow-purple-500/40 transform transition duration-300"
->>>>>>> e251330 (Add frontend, backend, and ai_service)
-          >
-            Send Message
-          </motion.button>
-
-          {/* Success Message */}
-          {success && (
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-<<<<<<< HEAD
-              className="text-green-500 dark:text-green-400 text-center mt-4 animate-pulse"
-            >
-              Your message has been sent successfully!
-=======
-              className="text-green-500 dark:text-green-400 text-center mt-2 font-medium"
-            >
-              Your message has been sent successfully! We'll be in touch soon.
->>>>>>> e251330 (Add frontend, backend, and ai_service)
-            </motion.p>
-          )}
-        </motion.form>
-
-<<<<<<< HEAD
-        {/* Social Links */}
-=======
-        {/* Social Links & Info */}
->>>>>>> e251330 (Add frontend, backend, and ai_service)
+      {/* Header */}
+      <div className="relative z-10 max-w-7xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-<<<<<<< HEAD
-          className="flex-1 flex flex-col items-center lg:items-start justify-center gap-6"
+          variants={fadeUp}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-20"
         >
-          <h3 className="text-2xl font-semibold text-[#6A3093] mb-4">Follow Us</h3>
-          <p className="text-gray-700 dark:text-gray-200 mb-4 text-center lg:text-left">
-            Connect with us on social media for updates, tips, and news.
-          </p>
-          <div className="flex gap-4">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
-               className="p-4 bg-purple-50 dark:bg-gray-700 rounded-full shadow-lg hover:bg-[#3b5998] hover:text-white transition duration-300">
-              <FaFacebookF />
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
-               className="p-4 bg-purple-50 dark:bg-gray-700 rounded-full shadow-lg hover:bg-[#1da1f2] hover:text-white transition duration-300">
-              <FaTwitter />
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-               className="p-4 bg-purple-50 dark:bg-gray-700 rounded-full shadow-lg hover:bg-[#0077b5] hover:text-white transition duration-300">
-              <FaLinkedinIn />
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-               className="p-4 bg-purple-50 dark:bg-gray-700 rounded-full shadow-lg hover:bg-[#e4405f] hover:text-white transition duration-300">
-              <FaInstagram />
-            </a>
-=======
-          className="flex flex-col gap-6 lg:justify-start lg:pt-10"
-        >
-          {/* General Info */}
-          <div className="space-y-4">
-              <h3 className="text-3xl font-bold text-gray-900 dark:text-white">Other Ways to Connect</h3>
-              
-              <div className="text-lg text-gray-700 dark:text-gray-300">
-                <p className="font-semibold text-purple-500 dark:text-purple-400">Email Support</p>
-                <p>support@linguasign.io</p>
-              </div>
-
-              <div className="text-lg text-gray-700 dark:text-gray-300">
-                <p className="font-semibold text-purple-500 dark:text-purple-400">Press & Media</p>
-                <p>press@linguasign.io</p>
-              </div>
-          </div>
-          
-          {/* Social Icons */}
-          <div className="mt-6">
-            <h3 className="text-2xl font-semibold text-purple-600 dark:text-purple-400 mb-4">Follow Our Journey</h3>
-            <div className="flex gap-4">
-              {socialLinks.map((link, index) => (
-                <motion.a
-                  key={index}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.15, rotate: 5 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="p-4 rounded-full shadow-lg transition duration-300 
-                             bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                  style={{ 
-                    // Dynamic hover effect using inline style to simulate neon glow
-                    boxShadow: `0 0 10px ${link.color}30`,
-                    "--hover-color": link.color 
-                  }}
-                  onMouseOver={(e) => {
-                     e.currentTarget.style.color = link.color;
-                     e.currentTarget.style.boxShadow = `0 0 15px ${link.color}90`;
-                  }}
-                  onMouseOut={(e) => {
-                     e.currentTarget.style.color = '';
-                     e.currentTarget.style.boxShadow = `0 0 10px ${link.color}30`;
-                  }}
-                >
-                  <link.icon className="text-xl" />
-                </motion.a>
-              ))}
+          {/* Premium Badge */}
+          <motion.div
+            whileHover={{ scale: 1.05, rotate: 1 }}
+            className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-purple-500/15 via-purple-400/10 to-purple-300/10 border border-purple-200/60 dark:border-purple-700/60 backdrop-blur-xl shadow-lg shadow-purple-500/10 relative overflow-hidden group mb-8"
+          >
+            <div className="relative">
+              <span className="absolute animate-ping inline-flex h-3.5 w-3.5 rounded-full bg-purple-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-gradient-to-r from-purple-500 to-purple-400" />
             </div>
->>>>>>> e251330 (Add frontend, backend, and ai_service)
-          </div>
+            <span className="text-sm font-bold bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400 bg-clip-text text-transparent">
+              Get in Touch
+            </span>
+            <TbSparkles className="text-purple-500 ml-1" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/0 via-purple-400/10 to-purple-500/0 group-hover:via-purple-400/20 transition-all duration-500" />
+          </motion.div>
+
+          <motion.h1
+            variants={fadeUp}
+            className="font-extrabold text-4xl sm:text-5xl lg:text-[43px] leading-tight mb-6"
+          >
+            <span className="block text-gray-900 dark:text-white">
+              Let's Start a Conversation
+            </span>
+            <span className="block bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
+              Contact Our Team
+            </span>
+          </motion.h1>
+          
+          <motion.p
+            variants={fadeUp}
+            className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed"
+          >
+            Have questions, ideas, or want to collaborate? We're here to help you bridge the communication gap.
+          </motion.p>
+
+          {/* Decorative Elements */}
+          <motion.div
+            variants={fadeUp}
+            className="flex items-center justify-center gap-8 mt-10"
+          >
+            <div className="w-12 h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent rounded-full" />
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="w-6 h-6 rounded-full border-2 border-purple-400/50"
+            />
+            <div className="w-12 h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent rounded-full" />
+          </motion.div>
         </motion.div>
+
+        {/* Contact Grid */}
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
+          
+          {/* Contact Information Cards */}
+          <div className="lg:col-span-1 space-y-6">
+            {contactInfo.map((info, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ y: -5, scale: 1.02 }}
+                className="group relative"
+              >
+                <div className="absolute -inset-0.5 bg-gradient-to-r rounded-2xl blur opacity-0 group-hover:opacity-30 transition-opacity duration-500"
+                  style={{ background: `linear-gradient(to right, ${info.color})` }}
+                />
+                <div className="relative p-6 rounded-2xl bg-gradient-to-br from-white/80 to-white/60 dark:from-white/10 dark:to-white/5 backdrop-blur-xl border border-purple-200/50 dark:border-purple-500/20 shadow-lg shadow-purple-100/20 dark:shadow-purple-900/20">
+                  <div className="flex items-start gap-4">
+                    <div className={`p-3 rounded-xl bg-gradient-to-br ${info.color}/10`}>
+                      <info.icon className="text-2xl text-purple-600 dark:text-purple-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-gray-900 dark:text-white mb-1">{info.title}</h3>
+                      <p className="text-gray-600 dark:text-gray-300">{info.value}</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+
+            {/* Social Links */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="pt-6"
+            >
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                <TbMessage2 className="text-purple-600" />
+                Follow Our Journey
+              </h3>
+              <div className="flex gap-3 flex-wrap">
+                {socialLinks.map((link, index) => (
+                  <motion.a
+                    key={index}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.1, y: -3 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="group relative"
+                  >
+                    <div className="absolute -inset-1 rounded-full blur opacity-0 group-hover:opacity-30 transition-opacity duration-300"
+                      style={{ backgroundColor: link.color }}
+                    />
+                    <div className="relative p-3 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-300/50 dark:border-gray-700/50 shadow-lg group-hover:shadow-xl transition-all duration-300"
+                      style={{ 
+                        color: link.color,
+                        boxShadow: `0 4px 14px 0 ${link.color}20`
+                      }}
+                    >
+                      <link.icon className="text-xl" />
+                      <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                        {link.label}
+                      </span>
+                    </div>
+                  </motion.a>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Contact Form */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-2"
+          >
+            <div className="relative group">
+              {/* Form Glow */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-indigo-500/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              {/* Main Form Card */}
+              <div className="relative p-8 lg:p-10 rounded-3xl bg-gradient-to-br from-white/80 to-white/60 dark:from-white/10 dark:to-white/5 backdrop-blur-xl border border-purple-200/50 dark:border-purple-500/20 shadow-2xl shadow-purple-100/30 dark:shadow-purple-900/30">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="p-2 rounded-lg bg-gradient-to-r from-purple-500/10 to-pink-500/10">
+                    <TbMailForward className="text-2xl text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <h3 className="text-3xl font-bold text-gray-900 dark:text-white">
+                    Send Us a Message
+                  </h3>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Name Input */}
+                  <div className="relative group/input">
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500/0 via-purple-400/0 to-purple-300/0 group-hover/input:via-purple-400/10 group-hover/input:opacity-100 opacity-0 rounded-xl transition-all duration-300" />
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 dark:text-purple-500">
+                        <FaUser size={18} />
+                      </span>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/70 dark:bg-gray-800/50 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all duration-300"
+                        placeholder="Your Name"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Email Input */}
+                  <div className="relative group/input">
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500/0 via-purple-400/0 to-purple-300/0 group-hover/input:via-purple-400/10 group-hover/input:opacity-100 opacity-0 rounded-xl transition-all duration-300" />
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 dark:text-purple-500">
+                        <FaEnvelope size={18} />
+                      </span>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/70 dark:bg-gray-800/50 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500/50 transition-all duration-300"
+                        placeholder="Your Email"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Message Input */}
+                  <div className="relative group/input">
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500/0 via-purple-400/0 to-purple-300/0 group-hover/input:via-purple-400/10 group-hover/input:opacity-100 opacity-0 rounded-xl transition-all duration-300" />
+                    <div className="relative">
+                      <textarea
+                        name="message"
+                        rows="6"
+                        value={formData.message}
+                        onChange={handleChange}
+                        required
+                        className="w-full p-4 rounded-xl bg-white/70 dark:bg-gray-800/50 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500/50 resize-none transition-all duration-300"
+                        placeholder="Your Message"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Submit Button */}
+                  <motion.button
+                    type="submit"
+                    disabled={isLoading}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full py-4 rounded-xl font-bold text-lg text-white bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 transition-all duration-300 relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                    <div className="relative z-10 flex items-center justify-center gap-3">
+                      {isLoading ? (
+                        <>
+                          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          <span>Sending...</span>
+                        </>
+                      ) : (
+                        <>
+                          <FiSend size={20} />
+                          <span>Send Message</span>
+                        
+                        </>
+                      )}
+                    </div>
+                  </motion.button>
+
+                  {/* Success Message */}
+                  {success && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="p-4 rounded-xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 dark:border-emerald-500/20"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center">
+                          <FaPaperPlane className="text-white" size={18} />
+                        </div>
+                        <div>
+                          <p className="font-semibold text-green-700 dark:text-green-400">Message Sent!</p>
+                          <p className="text-sm text-green-600 dark:text-green-300">
+                            Thank you for reaching out. We'll respond within 24 hours.
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </form>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </div>
   );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> e251330 (Add frontend, backend, and ai_service)

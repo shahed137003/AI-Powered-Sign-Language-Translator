@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-
-export default function Chatbot() {
-  return (
-    <div>Chatbot</div>
-  )
-}
-=======
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
@@ -610,4 +601,3 @@ export default function Chatbot() {
     </div>
   );
 }
->>>>>>> e251330 (Add frontend, backend, and ai_service)

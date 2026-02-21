@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-
-export default function Login() {
-  return (
-    <div>Login</div>
-  )
-}
-=======
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from "../context/useAuth";
@@ -489,4 +480,3 @@ export default function Login() {
     </div>
   );
 }
->>>>>>> e251330 (Add frontend, backend, and ai_service)

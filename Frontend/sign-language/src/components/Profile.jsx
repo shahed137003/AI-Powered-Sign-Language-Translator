@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-
-export default function Profile() {
-  return (
-    <div>Profile</div>
-  )
-}
-=======
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { 
@@ -498,4 +489,3 @@ export default function Profile() {
     </div>
   );
 }
->>>>>>> e251330 (Add frontend, backend, and ai_service)

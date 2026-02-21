@@ -1,60 +1,3 @@
-<<<<<<< HEAD
-import React, { useState, useRef } from "react";
-import { motion } from "framer-motion";
-import { FaMicrophone, FaCamera, FaSyncAlt } from "react-icons/fa";
-
-export default function Translate() {
-  const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
-  const options = ["Sign to text", "Text or audio to sign"];
-  const [selected, setSelected] = useState(options[0]);
-
-  // States
-  const [textInput, setTextInput] = useState("");
-  const [video, setVideo] = useState(null);
-  const videoRef = useRef(null);
-
-  const handleVideoRecord = () => {
-    alert("Camera recording started! (simulate for now)");
-    // Implement camera capture logic here
-  };
-
-  const handleAudioRecord = () => {
-    alert("Audio recording started! (simulate for now)");
-    // Implement audio capture logic here
-  };
-
-  return (
-    <div className="w-full bg-gray-50 dark:bg-gray-900 py-24 px-4 sm:px-6 lg:px-20">
-      {/* Heading */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeUp}
-        transition={{ duration: 0.8 }}
-        className="max-w-7xl mx-auto text-center mb-12"
-      >
-        <h2 className="text-4xl sm:text-5xl font-extrabold mb-4 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
-          Translate
-        </h2>
-        <div className="w-24 h-1 mx-auto mb-10 rounded-full bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF]"></div>
-        <p className="text-gray-700 dark:text-gray-200 text-lg sm:text-xl">
-          Record or type and translate in real time
-        </p>
-      </motion.div>
-
-      {/* Options Buttons */}
-      <div className="flex gap-4 justify-center mb-12 flex-wrap">
-        {options.map((option) => (
-          <button
-            key={option}
-            onClick={() => setSelected(option)}
-            className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-              selected === option
-                ? "bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white shadow-lg"
-                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:scale-105 transform transition"
-            }`}
-=======
 import React, { useState, useRef, useCallback ,useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaMicrophone, FaCamera, FaSyncAlt, FaSpinner, FaStopCircle, FaVideo, FaVolumeUp } from "react-icons/fa";
@@ -108,7 +51,9 @@ export default function Translate() {
   const [isTranslating, setIsTranslating] = useState(false);
   const [message, setMessage] = useState(null);
   const [recordingType, setRecordingType] = useState(null); // 'camera' or 'mic'
-  
+  const [videoSrc, setVideoSrc] = useState(null); // ← New state for video source
+  const [videoQueue, setVideoQueue] = useState([]);
+  const [currentVideo, setCurrentVideo] = useState(null); 
   // Ref for video element (simulated video feed)
   const videoRef = useRef(null); 
   const canvasRef = useRef(null);
@@ -412,18 +357,33 @@ useEffect(() => {
 
   // --- Text Conversion Handler ---
   const handleConvertText = () => {
-    if (!textInput.trim()) {
-      showMessage("Please enter text or record audio first.", 'error');
-      return;
-    }
-    setIsTranslating(true);
-    showMessage(`Translating "${textInput.substring(0, 20)}..." to sign language...`, 'info');
+    if (!textInput.trim()) return;
 
-    // Simulate conversion time
-    setTimeout(() => {
-      setIsTranslating(false);
-      showMessage("Text-to-Sign conversion complete! Watch the avatar.", 'success');
-    }, 4000);
+  // Split and map words
+  const words = textInput
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .split(/\s+/);
+  const paths = words.map(word => `/videos/${word}.mp4`);
+
+    setVideoQueue(paths);       // Queue of videos
+    setCurrentVideo(paths[0]);  // Start with the first video
+    setIsTranslating(true);
+    // if (!textInput.trim()) {
+    //   showMessage("Please enter text or record audio first.", 'error');
+    //   return;
+    // }
+    // setIsTranslating(true);
+    // showMessage(`Translating "${textInput.substring(0, 20)}..." to sign language...`, 'info');
+    // const word = textInput.trim().toLowerCase(); 
+    // const videoPath = `/videos/${word}.mp4`; // videos folder in public
+    // setVideoSrc(videoPath); // set video to play
+    // // Simulate conversion time
+    // setTimeout(() => {
+    //   setIsTranslating(false);
+    //   showMessage("Text-to-Sign conversion complete! Watch the avatar.", 'success');
+    // }, 1000);
   };
 
   // Switch tab cleanup
@@ -485,38 +445,12 @@ useEffect(() => {
                 : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600"}
               ${(isRecording || isTranslating) && disabledClasses}
             `}
->>>>>>> e251330 (Add frontend, backend, and ai_service)
           >
             {option}
           </button>
         ))}
       </div>
 
-<<<<<<< HEAD
-      {/* Content */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="max-w-5xl mx-auto flex flex-col items-center gap-8"
-      >
-        {/* Sign to Text */}
-        {selected === "Sign to text" && (
-          <div className="w-full flex flex-col items-center gap-4">
-            <h3 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Translate Sign Language to Text</h3>
-            
-            {/* Record Sign */}
-            <button
-              onClick={handleVideoRecord}
-              className="px-6 py-3 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white rounded-full shadow-lg hover:scale-105 transform transition duration-300 flex items-center gap-2"
-            >
-              <FaCamera /> Record Sign
-            </button>
-
-            {/* Placeholder for result */}
-            <div className="mt-6 w-full max-w-md h-60 bg-gray-200 dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-400 dark:text-gray-500 text-center">
-              Recognized text will appear here
-=======
       {/* MAIN CONTENT */}
       <motion.div
         key={selected}
@@ -626,50 +560,10 @@ useEffect(() => {
                     )}
                  </div>
               </div>
->>>>>>> e251330 (Add frontend, backend, and ai_service)
             </div>
           </div>
         )}
 
-<<<<<<< HEAD
-        {/* Text or Audio to Sign */}
-        {selected === "Text or audio to sign" && (
-          <div className="w-full flex flex-col items-center gap-4">
-            <h3 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Translate Text or Audio to Sign Language</h3>
-            
-            {/* Text Input */}
-            <textarea
-              rows={4}
-              value={textInput}
-              onChange={(e) => setTextInput(e.target.value)}
-              placeholder="Type your text here..."
-              className="w-full max-w-md p-4 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 shadow-lg focus:outline-none focus:ring-2 focus:ring-[#A044FF] resize-none"
-            />
-
-            {/* Audio Record */}
-            <button
-              onClick={handleAudioRecord}
-              className="px-6 py-3 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white rounded-full shadow-lg hover:scale-105 transform transition duration-300 flex items-center gap-2"
-            >
-              <FaMicrophone /> Record Audio
-            </button>
-
-            {/* Avatar Preview */}
-            <div className="mt-6 w-full max-w-md h-60 bg-gray-200 dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-400 dark:text-gray-500 text-center">
-              Animated Sign Language Avatar Preview
-            </div>
-
-            {/* Convert Button */}
-            <button className="mt-4 px-6 py-3 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white rounded-full shadow-lg hover:scale-105 transform transition duration-300 flex items-center gap-2">
-              <FaSyncAlt /> Convert to Sign
-            </button>
-          </div>
-        )}
-      </motion.div>
-    </div>
-  );
-}
-=======
         {/* ------------------- TEXT / AUDIO TO SIGN ------------------- */}
         {selected === "Text / Audio to Sign" && (
           <div className="flex flex-col items-center gap-10">
@@ -741,12 +635,56 @@ useEffect(() => {
                 bg-gray-100 dark:bg-gray-800 shadow-inner flex flex-col items-center justify-center
                 text-gray-500 dark:text-gray-400 text-center text-lg tracking-wide
               ">
-                <img 
+                {/* <img 
                     src={`https://placehold.co/150x200/4c3093/ffffff?text=3D+Avatar`} 
                     alt="Sign Language Avatar Placeholder" 
                     className="rounded-lg mb-3"
+                /> */}
+                {/* <p>Sign Language Avatar Preview</p> */}
+                {currentVideo ? (
+                <video
+                  key={currentVideo}
+                  src={currentVideo}
+                  autoPlay
+                  muted
+                  className="rounded-lg w-full h-full object-contain mb-3"
+                  onEnded={() => {
+                    const nextIndex = videoQueue.indexOf(currentVideo) + 1;
+                    if (nextIndex < videoQueue.length) {
+                      setCurrentVideo(videoQueue[nextIndex]);
+                    } else {
+                      setCurrentVideo(null);   // finished all videos
+                      setVideoQueue([]);   
+                      setIsTranslating(false); // stop translation animation
+                    }
+                  }}
+                  onError={() => {
+                    // Video not found → show placeholder message
+                    console.warn(`Video not found: ${currentVideo}`);
+                    showMessage(`No sign available for "${textInput.split(" ")[videoQueue.indexOf(currentVideo)]}"`, 'warning');
+                    
+                    // Move to next video or stop
+                    const nextIndex = videoQueue.indexOf(currentVideo) + 1;
+                    if (nextIndex < videoQueue.length) {
+                      setCurrentVideo(videoQueue[nextIndex]);
+                    } else {
+                      setCurrentVideo(null);
+                      setVideoQueue([]); 
+                      setIsTranslating(false);
+                    }
+                  }}
                 />
-                <p>Sign Language Avatar Preview</p>
+              ) : (
+                <>
+                  <img 
+                    src={`https://placehold.co/150x200/4c3093/ffffff?text=3D+Avatar`} 
+                    alt="Sign Language Avatar Placeholder" 
+                    className="rounded-lg mb-3"
+                  />
+                  <p>No sign available or translation finished</p>
+                </>
+              )}
+                              
                 {isTranslating && <p className="mt-2 text-purple-500 flex items-center gap-2"><FaSpinner className="animate-spin"/> Animating...</p>}
               </div>
             </div>
@@ -762,4 +700,3 @@ useEffect(() => {
     </div>
   );
 }
->>>>>>> e251330 (Add frontend, backend, and ai_service)

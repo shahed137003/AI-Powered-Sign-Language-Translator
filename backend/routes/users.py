@@ -39,8 +39,8 @@ def get_user_by_id(
     db:Session = Depends(get_db),
     current_user :User = Depends(get_current_user)
 ):
-    if current_user.role != UserRole.admin:
-        raise HTTPException(status_code=403,detail="Admins only")
+    # if current_user.role != UserRole.admin:
+    #     raise HTTPException(status_code=403,detail="Admins only")
     return UserController.get_user_by_id(db,user_id)
 
 # Admin only - get user by username
@@ -60,8 +60,8 @@ def get_all_users(
     db:Session = Depends(get_db),
     current_user :User = Depends(get_current_user)
 ):
-    if current_user.role != UserRole.admin:
-        raise HTTPException(status_code=403,detail="Admins only")
+    # if current_user.role != UserRole.admin:
+    #     raise HTTPException(status_code=403,detail="Admins only")
     return UserController.get_all_users(db)
 
 # user can edit his name 
@@ -76,3 +76,9 @@ def update_profile(
     db.commit()
     db.refresh(current_user)
     return current_user
+
+@router.get("/check-username/{username}")
+def check_username_exists(username: str, db: Session = Depends(get_db)):
+    """Check if a username exists in the system"""
+    user = db.query(User).filter(User.username == username).first()
+    return {"exists": user is not None, "username": username}
