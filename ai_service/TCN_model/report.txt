@@ -1,0 +1,7 @@
+Scanning directory: F:\Demiana Ayman\small data\landmarks with sw mask
+Found 5844 valid sequences.
+Training on 146 classes.
+Loading best model for Final Testing...
+Loading best model for Final Testing...
+FINAL TEST ACCURACY: 87.18%
+=======================================================================
