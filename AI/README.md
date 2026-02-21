@@ -184,9 +184,7 @@ For each model, the following are automatically saved:
 * Later, you can merge training/eval scripts into **generic scripts** for multiple models.
 
 ---
-Perfect, Mariam 😎 — here’s a simple **diagram you can add to the README** showing what your friends need to **create vs reuse** when adding a new model. You can place it under a section like **“Adding a New Model”**.
 
----
 
 ## **🖼️ Visual Guide: Adding a New Model**
 
