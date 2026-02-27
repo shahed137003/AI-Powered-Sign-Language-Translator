@@ -5,3 +5,23 @@ Loading best model for Final Testing...
 Loading best model for Final Testing...
 FINAL TEST ACCURACY: 87.18%
 =======================================================================
+Scanning directory: F:\Demiana Ayman\small data\Landmarks before
+Total valid files: 5568
+Unique labels: 146
+After filtering:
+Files: 5568
+Classes: 146
+Training on 146 classes
+Starting RAW training...
+Evaluating best RAW model...
+FINAL RAW TEST ACCURACY: 85.46%
+======================================================================
+Raw Data Pipeline (Summary)
+Temporal Interpolation: The code uses linear interpolation to "stretch" or "squeeze" every raw sequence into exactly 157 frames. This ensures the raw data matches the fixed input requirements of the model architecture.
+
+Dimensional Alignment: It trims raw features to a fixed 438-dimension vector, stripping away extra noise so the model receives a clean, consistent data shape.
+
+Adaptive-Padding: Within the TCN blocks, the code uses adaptive-padding based on the dilation factor. This keeps the data length consistent as it moves through the layers, preventing the model from "losing" information at the edges of the sign.
+
+Adaptive Learning: The training process uses the AdamW optimizer, which automatically adjusts the learning rate for each parameter. This "adaptive" approach allows the model to find the best weights quickly, reaching 85.46% accuracy on raw, uncleaned data.
+====================================================================
