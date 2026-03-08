@@ -531,6 +531,27 @@ export default function ChatPage() {
   const wsRef = useRef(null);
 
   const currentUsername = user?.email?.split('@')[0] || '';
+  const token = localStorage.getItem('token');
+
+  // Fetch current user ID
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/users/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setCurrentUserId(response.data.id);
+      } catch (error) {
+        console.error("Error fetching current user:", error);
+      }
+    };
+
+    if (isAuthenticated && token) {
+      fetchCurrentUser();
+    }
+  }, [isAuthenticated, token]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -549,28 +570,28 @@ export default function ChatPage() {
 
   // Load conversations from localStorage on mount
   useEffect(() => {
-    if (currentUsername && isAuthenticated) {
-      const savedConversations = JSON.parse(localStorage.getItem(`conversations_${currentUsername}`) || '[]');
-      
-      // Sort by last message time (most recent first)
-      const sortedConversations = savedConversations.sort((a, b) => 
-        new Date(b.last_message_time) - new Date(a.last_message_time)
+    if (currentUsername && isAuthenticated && currentUserId) {
+      const savedConversations = JSON.parse(
+        localStorage.getItem(`conversations_${currentUsername}`) || '[]'
       );
-      
+
+      const sortedConversations = savedConversations.sort(
+        (a, b) => new Date(b.last_message_time) - new Date(a.last_message_time)
+      );
+
       setConversations(sortedConversations);
-      
-      // If there are conversations, load the most recent one
+
       if (sortedConversations.length > 0 && !activeConversation) {
         const mostRecent = sortedConversations[0];
         setActiveConversation(mostRecent);
         loadChatHistory(mostRecent.other_username || mostRecent.username);
       }
     }
-  }, [currentUsername, isAuthenticated]);
+  }, [currentUsername, isAuthenticated, currentUserId]);
 
   // WebSocket connection
   useEffect(() => {
-    if (currentUsername && isAuthenticated) {
+    if (currentUsername && isAuthenticated && token) {
       connectWebSocket();
       return () => {
         if (wsRef.current) {
@@ -578,69 +599,77 @@ export default function ChatPage() {
         }
       };
     }
-  }, [currentUsername, isAuthenticated]);
+  }, [currentUsername, isAuthenticated, token]);
 
   const connectWebSocket = () => {
-    try {
-      const ws = new WebSocket(`ws://localhost:8000/ws/chat/${currentUsername}`);
-      
-      ws.onopen = () => {
-        console.log('✅ WebSocket connected');
-        setWsConnected(true);
-        wsRef.current = ws;
-      };
+    if (!token) return;
 
-      ws.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        console.log('📩 Received:', data);
+    const ws = new WebSocket(
+      `ws://localhost:8000/ws/chat?token=${token}`
+    );
+
+    ws.onopen = () => {
+      console.log("✅ WebSocket connected");
+      setWsConnected(true);
+      wsRef.current = ws;
+    };
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      console.log("📩 Received:", data);
+
+      // Check if it's an error message
+      if (data.error) {
+        console.error("WebSocket error:", data.error);
+        return;
+      }
+
+      // Add message to state
+      setMessages((prev) => {
+        // Check if message already exists (prevent duplicates)
+        const exists = prev.some(msg => msg.id === data.id);
+        if (exists) return prev;
         
-        // Handle incoming message
-        if (data.from && data.from !== currentUsername) {
-          // Only add if we're in the correct conversation
-          if (activeConversation && 
-              (data.from === activeConversation.other_username || 
-               data.from === activeConversation.username)) {
-            
-            const newMessage = {
-              id: Date.now(),
-              text: data.message,
-              isOwn: false,
-              time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-              status: 'delivered',
-              type: 'text'
-            };
-            
-            setMessages(prev => [...prev, newMessage]);
-          }
-          
-          // Update conversations list
-          updateConversationFromMessage(data.from, data.message);
-        }
-        
-        // Handle typing indicator
-        if (data.typing !== undefined && data.from && data.from !== currentUsername) {
-          if (activeConversation && 
-              (data.from === activeConversation.other_username || 
-               data.from === activeConversation.username)) {
-            setOtherUserTyping(data.typing);
-          }
-        }
-      };
+        return [
+          ...prev,
+          {
+            id: data.id,
+            text: data.content,
+            isOwn: data.sender_id === currentUserId,
+            time: new Date(data.created_at).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+            status: 'delivered',
+            type: 'text'
+          },
+        ];
+      });
 
-      ws.onclose = () => {
-        console.log('❌ WebSocket disconnected');
-        setWsConnected(false);
-        wsRef.current = null;
-        setTimeout(connectWebSocket, 3000);
-      };
+      // Update conversation list
+      if (data.sender_id !== currentUserId) {
+        // Find the sender username from somewhere or make another API call
+        // For now, we'll just update with a placeholder
+        updateConversationFromMessage("User", data.content);
+      }
+    };
 
-      ws.onerror = (error) => {
-        console.error('WebSocket error:', error);
-        setWsConnected(false);
-      };
-    } catch (error) {
-      console.error('WebSocket connection error:', error);
-    }
+    ws.onclose = () => {
+      console.log("❌ WebSocket closed");
+      setWsConnected(false);
+      wsRef.current = null;
+      // Try to reconnect after 3 seconds
+      setTimeout(() => {
+        if (currentUsername && isAuthenticated) {
+          connectWebSocket();
+        }
+      }, 3000);
+    };
+
+    ws.onerror = (err) => {
+      console.error("WebSocket error:", err);
+      setWsConnected(false);
+    };
   };
 
   const updateConversationFromMessage = (otherUsername, message) => {
@@ -698,60 +727,29 @@ export default function ChatPage() {
   };
 
   const loadChatHistory = async (otherUsername) => {
-    if (!currentUsername || !otherUsername) return;
+    if (!currentUsername || !otherUsername || !currentUserId || !token) return;
     
     setLoading(true);
     try {
       const response = await axios.get(
-        `${API_URL}/chat/history/${currentUsername}/${otherUsername}`
+        `${API_URL}/chat/history/${otherUsername}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
       
       console.log('Chat history:', response.data);
-      
-      // If we don't have the user ID yet and there are messages,
-      // try to find our ID from the messages where sender is current user
-      let userId = currentUserId;
-      
-      if (!userId && response.data.length > 0) {
-        // Look for a message where the sender is the current user
-        // Since we don't have the ID, we need to make an assumption
-        // The first message in history might be from either user
-        // Let's try to get the ID from the first message where the sender username matches
-        // But since we don't have sender username in the response, we'll use a different approach
-        
-        // For now, let's get the IDs of both users from the first message
-        const firstMsg = response.data[0];
-        const secondMsg = response.data.length > 1 ? response.data[1] : null;
-        
-        // The current user ID is either firstMsg.sender_id or firstMsg.receiver_id
-        // We need to determine which one is us
-        // We can store both possibilities and try to determine from context
-        const possibleIds = [firstMsg.sender_id, firstMsg.receiver_id];
-        
-        // Store both IDs and we'll determine later based on message patterns
-        localStorage.setItem('possible_user_ids', JSON.stringify(possibleIds));
-        
-        // For now, let's assume the first message's sender is the other user
-        // and we are the receiver (common in chat history)
-        userId = firstMsg.receiver_id;
-        setCurrentUserId(userId);
-        localStorage.setItem('userId', userId);
-      }
-      
-      const formattedMessages = response.data.map(msg => {
-        // If we have a user ID, use it to determine ownership
-        const isOwn = userId ? msg.sender_id === userId : false;
-        
-        return {
-          id: msg.id,
-          text: msg.content,
-          isOwn: isOwn,
-          time: new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          status: 'read',
-          type: 'text'
-        };
-      });
-      
+      const formattedMessages = response.data.map(msg => ({
+        id: msg.id,
+        text: msg.content,
+        isOwn: msg.sender_id === currentUserId,
+        time: new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        status: 'read',
+        type: 'text'
+      }));
+
       setMessages(formattedMessages);
       
       // Save to conversations
@@ -786,7 +784,7 @@ export default function ChatPage() {
       text: text,
       isOwn: true,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      status: 'sent',
+      status: 'sending',
       type: 'text'
     };
     

@@ -29,9 +29,28 @@ def create_admin(
 @router.post("/login")
 def login(credentials:LogicSchema,db:Session=Depends(get_db)):
     user= authenticate_user(db,credentials.email,credentials.password,User)
-    token = create_access_token({"sub":user.email,"role":user.role})
-    return {"access_token":token,"token_type":"bearer","role":user.role}
-  
+    token = create_access_token({
+        "sub":user.email,
+        "id":user.id,
+        "role":user.role
+    })
+    return {
+        "access_token":token,
+        "token_type":"bearer",
+        "user":{
+            "id":user.id,
+            "username":user.username,
+            "email":user.email,
+            "role":user.role
+        }
+    }
+
+
+# get current user info (critcal for frontend)
+@router.get("/me",response_model=UserOut)
+def get_current_user_info(current_user:User = Depends(get_current_user)):
+    return current_user
+
 # Admin only - get user by ID
 @router.get("/get-by-id/{user_id}",response_model=UserOut)
 def get_user_by_id(
@@ -43,16 +62,27 @@ def get_user_by_id(
     #     raise HTTPException(status_code=403,detail="Admins only")
     return UserController.get_user_by_id(db,user_id)
 
-# Admin only - get user by username
-@router.post("/get-by-username/{username}",response_model=UserOut)
+# get user by username
+@router.get("/get-by-username/{username}",response_model=UserOut)
 def get_user_by_username(
     username:str,
     db:Session = Depends(get_db),
     current_user:User = Depends(get_current_user)
 ):
-    if current_user.role != UserRole.admin:
-        raise HTTPException(status_code=403,detail="Admins only")
     return UserController.get_user_by_username(db,username)
+
+# search users(for finding people to chat with)
+@router.get("/search/{query}",response_model=list[UserOut])
+def search_users(
+    query:str,
+    db:Session = Depends(get_db),
+    current_user:User = Depends(get_current_user)
+):
+    users = db.query(User).filter(
+        (User.username.ilike(f"%{query}%")) | 
+        (User.email.ilike(f"%{query}%"))
+    ).limit(10).all()
+    return users
 
 # Admin only - get all users 
 @router.get("/all",response_model=list[UserOut])
@@ -82,3 +112,11 @@ def check_username_exists(username: str, db: Session = Depends(get_db)):
     """Check if a username exists in the system"""
     user = db.query(User).filter(User.username == username).first()
     return {"exists": user is not None, "username": username}
+
+@router.get("/chat-users",response_model=list[UserOut])
+def get_chat_users(
+    db:Session = Depends(get_db),
+    current_user :User = Depends(get_current_user)
+):
+    users = db.query(User).filter(User.id != current_user.id).all()
+    return users

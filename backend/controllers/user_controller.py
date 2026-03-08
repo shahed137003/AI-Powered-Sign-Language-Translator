@@ -41,7 +41,7 @@ class UserController:
         db.refresh(new_admin)
         return new_admin
     
-    # Get user by ID (admin only)
+    # Get user by ID 
     @staticmethod
     def get_user_by_id(db, user_id:int):
         user = db.query(User).filter(User.id == user_id).first()
@@ -49,14 +49,16 @@ class UserController:
             raise HTTPException(status_code=404,detail="User not found")
         return user
     
-    # Get user by username (admin only)
+    # Get user by username
+    @staticmethod
     def get_user_by_username(db,username:str):
         user = db.query(User).filter(User.username==username).first()
         if not user:
             raise HTTPException(status_code=404,detail="User not found")
         return user
     
-    # Get all users (admin only)
+    # Get all users
+    @staticmethod
     def get_all_users(db):
         return db.query(User).all()
         

@@ -1,177 +1,104 @@
 import cv2
 import numpy as np
 import base64
-import mediapipe as mp
-import tensorflow as tf
-import joblib
+import torch
+import sys
+import itertools
 from collections import deque
-import time
-MODEL_PATH = "../ai/models/final_model.keras"
-ENCODER_PATH = "../ai/models/label_encoder.joblib"
+from typing import Dict
+from fastapi import WebSocket
+
+# --- IMPORT YOUR PYTORCH TCN & UTILS ---
+from asl_utils import config, preprocess_sequence_global, hybrid_frame_strategy
+from train_model import TCN, FEATURE_DIM
+
+# --- SAFE MEDIAPIPE IMPORT ---
+import mediapipe as mp
+try:
+    from mediapipe.solutions import holistic as mp_holistic
+    from mediapipe.solutions import face_mesh as mp_face_mesh
+    from mediapipe.solutions import drawing_utils as mp_drawing
+except (ImportError, AttributeError):
+    from mediapipe.python.solutions import holistic as mp_holistic
+    from mediapipe.python.solutions import face_mesh as mp_face_mesh
+    from mediapipe.python.solutions import drawing_utils as mp_drawing
+
+# --- SETUP FACE INDICES ---
+FACEMESH_LIPS = set(itertools.chain(*mp_face_mesh.FACEMESH_LIPS))
+FACEMESH_LEFT_EYEBROW = set(itertools.chain(*mp_face_mesh.FACEMESH_LEFT_EYEBROW))
+FACEMESH_RIGHT_EYEBROW = set(itertools.chain(*mp_face_mesh.FACEMESH_RIGHT_EYEBROW))
+RELEVANT_FACE_INDICES = list(FACEMESH_LIPS | FACEMESH_LEFT_EYEBROW | FACEMESH_RIGHT_EYEBROW)
+RELEVANT_FACE_INDICES.sort()
+
+# --- LOAD PYTORCH MODEL ---
+DEVICE = "cpu"
+MODEL_PATH = "tcn_best_cpu.pth"
+LABEL_PATH = "label_encoder.npy"
 
 try:
-    model = tf.keras.models.load_model(MODEL_PATH, compile=False)
-    print("✓ Model loaded successfully")
-    label_encoder = joblib.load(ENCODER_PATH)
-    print("✓ Label encoder loaded successfully")
-    print(f"Classes (first 10): {label_encoder.classes_[:10]}")
+    LABELS = np.load(LABEL_PATH, allow_pickle=True)
+    num_classes = len(LABELS)
+    model = TCN(num_classes).to(DEVICE)
+    model.load_state_dict(torch.load(MODEL_PATH, map_location=DEVICE))
+    model.eval()
+    print("✅ PyTorch TCN Model loaded successfully!")
 except Exception as e:
-    print(f"✗ Error: {e}")
-    raise
+    print(f"❌ Error loading model: {e}")
+    print("Make sure tcn_best_cpu.pth and label_encoder.npy are in the ai_service folder.")
+    sys.exit(1)
 
-FRAME_LEN = 96
-
-# Initialize MediaPipe Drawing Utils
-mp_drawing = mp.solutions.drawing_utils
-mp_holistic = mp.solutions.holistic
-
-def extract_keypoints(results):
-    pose = (
-        np.array([[lm.x, lm.y, lm.z, lm.visibility]
-                  for lm in results.pose_landmarks.landmark])
-        if results.pose_landmarks
-        else np.zeros((33, 4))
-    )
-
-    lh = (
-        np.array([[lm.x, lm.y, lm.z]
-                  for lm in results.left_hand_landmarks.landmark])
-        if results.left_hand_landmarks
-        else np.zeros((21, 3))
-    )
-
-    rh = (
-        np.array([[lm.x, lm.y, lm.z]
-                  for lm in results.right_hand_landmarks.landmark])
-        if results.right_hand_landmarks
-        else np.zeros((21, 3))
-    )
-
-    face = (
-        np.array([[lm.x, lm.y, lm.z]
-                  for lm in results.face_landmarks.landmark[:60]])
-        if results.face_landmarks
-        else np.zeros((60, 3))
-    )
-
-    return np.concatenate([
-        pose.flatten(),   # 132
-        lh.flatten(),     # 63
-        rh.flatten(),     # 63
-        face.flatten()    # 180
-    ])
 
 class SignToTextService:
-    def __init__(self):
-        self.sequence = deque(maxlen=FRAME_LEN)
-        # Direct instantiation
-        self.holistic = mp.solutions.holistic.Holistic(
-            min_detection_confidence=0.3,
-            min_tracking_confidence=0.3
-        )
-    
-    def process_frame(self, base64_image: str):
-        print("📩 Frame received, sequence length:", len(self.sequence))
-        try:
-            if "," in base64_image:
-                base64_image = base64_image.split(",")[1]
-            
-            image_bytes = base64.b64decode(base64_image)
-            np_arr = np.frombuffer(image_bytes, np.uint8)
-            frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-            
-            if frame is None:
-                print("❌ Error: Frame decoded is None (Empty image)")
-                return {"status": "error", "text": "Empty Frame"}
-            
-            # 2. Process with MediaPipe
-            rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            rgb = cv2.flip(rgb, 1)
-            results = self.holistic.process(rgb)
-            
-            # --- DEBUGGING: CHECK IF LANDMARKS EXIST ---
-            has_any_landmark = (
-                results.pose_landmarks or
-                results.left_hand_landmarks or
-                results.right_hand_landmarks or
-                results.face_landmarks
-            )
+    TARGET_FRAMES = 157
+    MIN_FRAMES = 20
 
-            if not has_any_landmark:
-                print("⚠️ No landmarks at all")
-                self.sequence.append(np.zeros(438, dtype=np.float32))
+    def __init__(self, model, labels, device):
+        self.model = model
+        self.labels = labels
+        self.device = device
+        self.sequence = []
 
-                frames_collected = len(self.sequence)
-                progress_percentage = (frames_collected / FRAME_LEN) * 100
+    def reset(self):
+        self.sequence = []
 
-                return {
-                    "status": "collecting",
-                    "text": f"Waiting for movement... {frames_collected}/{FRAME_LEN}",
-                    "confidence": 0.0,
-                    "progress": progress_percentage,
-                    "frames_collected": frames_collected
-                }
-            if len(self.sequence) == 0 and has_any_landmark:
-                cv2.imwrite("debug_ws_frame.jpg", frame)
-                print("📸 Saved debug_ws_frame.jpg")
+    def process_keypoints(self, keypoints: list):
+        """Accepts a flat list/array of keypoints from frontend."""
+        kp_array = np.array(keypoints)
+        self.sequence.append(kp_array)
 
-            # --- VISUALIZATION: DRAW LANDMARKS & SAVE TEST IMAGE ---
-            # Only save the first valid frame to verify it looks right
-            if len(self.sequence) == 0:
-                debug_image = frame.copy()
-                mp_drawing.draw_landmarks(debug_image, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
-                mp_drawing.draw_landmarks(debug_image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
-                mp_drawing.draw_landmarks(debug_image, results.pose_landmarks, mp_holistic.POSE_CONNECTIONS)
-                
-                # Save to disk to check manually
-                cv2.imwrite(f"debug_frame_{int(time.time())}.jpg", debug_image)
-                print(f"📸 Debug image saved as debug_frame_{int(time.time())}.jpg")
-            
-            keypoints = extract_keypoints(results)
-            print(
-                f"📐 KP shape: {keypoints.shape} | "
-                f"Sum: {np.sum(keypoints):.2f} | "
-                f"Pose: {bool(results.pose_landmarks)} | "
-                f"LH: {bool(results.left_hand_landmarks)} | "
-                f"RH: {bool(results.right_hand_landmarks)}"
-            )
-            print("📦 Sequence length BEFORE:", len(self.sequence))
-            self.sequence.append(keypoints)
-            print("📦 Sequence length AFTER:", len(self.sequence))
-            
-            frames_collected = len(self.sequence)
-            progress_percentage = (frames_collected / FRAME_LEN) * 100
-            
-            if frames_collected == FRAME_LEN:
-                x = np.expand_dims(list(self.sequence), axis=0)
-                
-                # x = np.expand_dims(np.array(self.sequence), axis=0)
-                
-                print("🧠 Model input shape:", x.shape)
-                probs = model.predict(x, verbose=0)[0]
-                idx = int(np.argmax(probs))
-                confidence = float(probs[idx])
-                
-                return {
-                    "text": label_encoder.inverse_transform([idx])[0],
-                    "confidence": confidence,
-                    "progress": 100,
-                    "frames_collected": frames_collected
-                }
-            
-            # Return progress information when collecting frames
-            return {
-                "text": f"Collecting frames: {frames_collected}/{FRAME_LEN}",
-                "confidence": 0.0,
-                "progress": progress_percentage,
-                "frames_collected": frames_collected
-            }
-            
-        except Exception as e:
-            print(f"Error in process_frame: {e}")
-            return {
-                "text": "error",
-                "confidence": 0.0,
-                "progress": 0,
-                "frames_collected": 0
-            }
+        if len(self.sequence) >= self.TARGET_FRAMES:
+            return self.predict_sequence()
+
+        return {
+            "status": "collecting",
+            "frames_collected": len(self.sequence),
+            "progress": int((len(self.sequence) / self.TARGET_FRAMES) * 100)
+        }
+
+    def predict_sequence(self):
+        if len(self.sequence) < self.MIN_FRAMES:
+            return {"text": "Too short", "confidence": 0.0}
+
+        raw_sequence = np.array(self.sequence)
+        cleaned = preprocess_sequence_global(raw_sequence)
+        sequences, masks, metadata = hybrid_frame_strategy(cleaned, len(self.sequence))
+
+        all_probs = []
+        for seq, mask in zip(sequences, masks):
+            x = torch.from_numpy(seq).float().unsqueeze(0).transpose(1, 2).to(self.device)
+            m = torch.from_numpy(mask).float().unsqueeze(0).to(self.device)
+            with torch.no_grad():
+                logits = self.model(x, m)
+                probs = torch.softmax(logits, dim=1)
+                all_probs.append(probs[0].cpu().numpy())
+
+        if len(all_probs) == 0:
+            return {"text": "Invalid sequence", "confidence": 0.0}
+
+        mean_probs = np.mean(np.stack(all_probs), axis=0)
+        top_idx = int(np.argmax(mean_probs))
+        confidence = float(mean_probs[top_idx])
+        predicted_word = self.labels[top_idx]
+
+        self.sequence = []
+        return {"text": predicted_word, "confidence": confidence}

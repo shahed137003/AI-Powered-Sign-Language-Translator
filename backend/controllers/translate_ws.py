@@ -15,25 +15,19 @@ async def sign_to_text(websocket: WebSocket):
 
             async def frontend_to_ai():
                 while True:
-                    frame = await websocket.receive_text()
-                    print("📤 Forwarding frame to AI")
-                    await ai_ws.send(frame)
+                    message = await websocket.receive_text()
+                    # Just forward JSON
+                    await ai_ws.send(message)
 
             async def ai_to_frontend():
-
                 while True:
                     result = await ai_ws.recv()
-                    print("📥 AI response:", result[:80])
                     await websocket.send_text(result)
 
-            await asyncio.gather(
-                frontend_to_ai(),
-                ai_to_frontend()
-            )
+            await asyncio.gather(frontend_to_ai(), ai_to_frontend())
 
     except WebSocketDisconnect:
         print("🔴 Frontend disconnected")
-
     except Exception as e:
         print("💥 Backend WS error:", e)
 # async def sign_to_text(websocket: WebSocket):

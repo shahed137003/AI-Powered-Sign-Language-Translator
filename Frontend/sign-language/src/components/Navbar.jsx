@@ -171,7 +171,7 @@ export default function Navbar() {
           <span className="
             text-2xl sm:text-3xl font-bold italic
             bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] 
-           
+            
             bg-clip-text text-transparent 
             drop-shadow-sm
             group-hover:drop-shadow-lg
@@ -204,22 +204,27 @@ export default function Navbar() {
                 }
               `}
             >
-              <span className="text-lg opacity-80">{item.icon}</span>
-              {item.name}
-              
-              {/* Active indicator */}
-              {({ isActive }) => isActive && (
-                <motion.div
-                  layoutId="activeIndicator"
-                  className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 h-1 rounded-full bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]"
-                  initial={{ width: 0 }}
-                  animate={{ width: 32 }}
-                  transition={{ duration: 0.3 }}
-                />
+              {/* MODIFIED HERE: Wrapped all children inside the render prop function */}
+              {({ isActive }) => (
+                <>
+                  <span className="text-lg opacity-80">{item.icon}</span>
+                  {item.name}
+                  
+                  {/* Active indicator */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeIndicator"
+                      className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 h-1 rounded-full bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]"
+                      initial={{ width: 0 }}
+                      animate={{ width: 32 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  )}
+                  
+                  {/* Hover glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-400/0 to-purple-500/0 rounded-xl group-hover:via-purple-400/5 group-hover:opacity-100 opacity-0 transition-all duration-300" />
+                </>
               )}
-              
-              {/* Hover glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-400/0 to-purple-500/0 rounded-xl group-hover:via-purple-400/5 group-hover:opacity-100 opacity-0 transition-all duration-300" />
             </NavLink>
           </motion.div>
         ))}
@@ -502,16 +507,21 @@ export default function Navbar() {
                       }
                     `}
                   >
-                    <span className={`
-                      text-xl transition-transform duration-300
-                      group-hover:scale-110
-                      ${isActive ? "text-purple-600 dark:text-purple-400" : ""}
-                    `}>
-                      {item.icon}
-                    </span>
-                    {item.name}
-                    {({ isActive }) => isActive && (
-                      <div className="ml-auto w-2 h-2 rounded-full bg-gradient-to-r from-[#6A3093] to-[#A044FF]" />
+                    {/* MODIFIED HERE: Wrapped all children inside the render prop function */}
+                    {({ isActive }) => (
+                      <>
+                        <span className={`
+                          text-xl transition-transform duration-300
+                          group-hover:scale-110
+                          ${isActive ? "text-purple-600 dark:text-purple-400" : ""}
+                        `}>
+                          {item.icon}
+                        </span>
+                        {item.name}
+                        {isActive && (
+                          <div className="ml-auto w-2 h-2 rounded-full bg-gradient-to-r from-[#6A3093] to-[#A044FF]" />
+                        )}
+                      </>
                     )}
                   </NavLink>
                 </motion.div>

@@ -90,64 +90,50 @@ holistic = mp_holistic.Holistic(
 )
 
 # ==============================
-# 3. WEBCAM LOOP
+# 3. WEBCAM LOOP (AUTO-SENSE)
 # ==============================
 cap = cv2.VideoCapture(0)
 buffer = []
 recording = False
-current_prediction = "Waiting..."
+current_prediction = "Waiting for hands..."
 
-print("\n--- INSTRUCTIONS ---")
-print("Press 'R' to Start Recording a sign")
-print("Press 'E' to End Recording and Predict")
+# Auto-sensing parameters
+HAND_MISSING_THRESHOLD = 10  # Number of frames to wait before finishing recording
+frames_since_hand_seen = 0
+
+print("\n--- AUTO-SENSE MODE ---")
+print("Show your hands to start recording.")
+print("Remove hands to trigger prediction.")
 print("Press 'Q' to Quit\n")
 
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret: break
 
-    # Flip horizontally for selfie-view
     frame = cv2.flip(frame, 1)
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     rgb.flags.writeable = False
     results = holistic.process(rgb)
     
-    # --- VISUALIZE KEYPOINTS ON FRAME ---
-    # Draw face mesh
+    # Check if any hand is visible
+    hand_visible = results.left_hand_landmarks or results.right_hand_landmarks
+    
     if results.face_landmarks:
         mp_drawing.draw_landmarks(
-            frame,
-            results.face_landmarks,
-            mp_face_mesh.FACEMESH_TESSELATION,
+            frame, results.face_landmarks, mp_face_mesh.FACEMESH_TESSELATION,
             landmark_drawing_spec=None,
             connection_drawing_spec=mp_drawing_styles.get_default_face_mesh_tesselation_style()
         )
-    # Draw pose
+        
     if results.pose_landmarks:
-        mp_drawing.draw_landmarks(
-            frame,
-            results.pose_landmarks,
-            mp_holistic.POSE_CONNECTIONS,
-            landmark_drawing_spec=mp_drawing_styles.get_default_pose_landmarks_style()
-        )
-    # Draw left hand
+        mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_holistic.POSE_CONNECTIONS)
+            
     if results.left_hand_landmarks:
-        mp_drawing.draw_landmarks(
-            frame,
-            results.left_hand_landmarks,
-            mp_holistic.HAND_CONNECTIONS,
-            landmark_drawing_spec=mp_drawing_styles.get_default_hand_landmarks_style()
-        )
-    # Draw right hand
+        mp_drawing.draw_landmarks(frame, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
     if results.right_hand_landmarks:
-        mp_drawing.draw_landmarks(
-            frame,
-            results.right_hand_landmarks,
-            mp_holistic.HAND_CONNECTIONS,
-            landmark_drawing_spec=mp_drawing_styles.get_default_hand_landmarks_style()
-        )
+        mp_drawing.draw_landmarks(frame, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
 
-    # --- Extract exact same landmarks for AI model ---
+    # --- EXTRACT KEYPOINTS ---
     pose = np.array([[lm.x, lm.y, lm.z, lm.visibility] for lm in results.pose_landmarks.landmark]).flatten() if results.pose_landmarks else np.zeros(33 * 4)
     lh = np.array([[lm.x, lm.y, lm.z] for lm in results.left_hand_landmarks.landmark]).flatten() if results.left_hand_landmarks else np.zeros(21 * 3)
     rh = np.array([[lm.x, lm.y, lm.z] for lm in results.right_hand_landmarks.landmark]).flatten() if results.right_hand_landmarks else np.zeros(21 * 3)
@@ -160,62 +146,60 @@ while cap.isOpened():
 
     final_kp = np.concatenate([pose, face, lh, rh])
 
-    if recording:
+    # --- AUTO-RECORDING LOGIC ---
+    if hand_visible:
+        if not recording:
+            print("Hand detected! Recording...")
+            buffer = [] # Clear old data
+            recording = True
+        
         buffer.append(final_kp)
+        frames_since_hand_seen = 0
         cv2.putText(frame, "RECORDING...", (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
     
-    # Display Prediction
-    cv2.putText(frame, f"Prediction: {current_prediction}", (20, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
-    cv2.imshow("ASL Webcam", frame)
+    elif recording:
+        # Hands are gone, but we were recording. Start the countdown.
+        frames_since_hand_seen += 1
+        buffer.append(final_kp) # Keep recording during the grace period
+        
+        cv2.putText(frame, f"Finishing in {HAND_MISSING_THRESHOLD - frames_since_hand_seen}", (20, 40), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2)
+
+        if frames_since_hand_seen >= HAND_MISSING_THRESHOLD:
+            # TRIGGER PREDICTION
+            recording = False
+            original_length = len(buffer)
+            
+            if original_length > 10: # Only predict if it wasn't just a glitch
+                print(f"Processing {original_length} frames...")
+                raw_sequence = np.array(buffer)
+                cleaned = preprocess_sequence_global(raw_sequence)
+                sequences, masks, metadata = hybrid_frame_strategy(cleaned, original_length)
+
+                all_probs = []
+                for seq, mask in zip(sequences, masks):
+                    if seq.shape != (config.TARGET_FRAMES, config.FEATURE_DIM): continue
+                    x = torch.from_numpy(seq).float().unsqueeze(0).transpose(1, 2).to(DEVICE)
+                    m = torch.from_numpy(mask).float().unsqueeze(0).to(DEVICE)
+                    with torch.no_grad():
+                        logits = model(x, m)
+                        all_probs.append(torch.softmax(logits, dim=1)[0].cpu().numpy())
+
+                if len(all_probs) > 0:
+                    mean_probs = np.mean(np.stack(all_probs), axis=0)
+                    top_idx = np.argmax(mean_probs)
+                    current_prediction = f"{LABELS[top_idx]} ({mean_probs[top_idx]*100:.1f}%)"
+                else:
+                    current_prediction = "Error"
+            else:
+                current_prediction = "Too short!"
+
+    # UI Overlay
+    cv2.rectangle(frame, (0, 0), (640, 40) if not recording else (0,0), (0,0,0), -1) # Dark header
+    cv2.putText(frame, f"Last Sign: {current_prediction}", (20, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+    cv2.imshow("ASL Auto-Sense", frame)
     
-    key = cv2.waitKey(1) & 0xFF
-
-    if key == ord('r'):
-        buffer = []
-        recording = True
-        current_prediction = "Recording..."
-
-    if key == ord('e'):
-        recording = False
-        original_length = len(buffer)
-        
-        if original_length < 5:
-            current_prediction = "Too short!"
-            continue
-
-        print(f"\nProcessing {original_length} frames...")
-        
-        # 1. Exact Preprocessing from friend's code
-        raw_sequence = np.array(buffer)
-        cleaned = preprocess_sequence_global(raw_sequence)
-
-        # 2. Padding/Truncation Strategy
-        sequences, masks, metadata = hybrid_frame_strategy(cleaned, original_length)
-
-        # 3. Model Inference
-        all_probs = []
-        for seq, mask in zip(sequences, masks):
-            if seq.shape != (config.TARGET_FRAMES, config.FEATURE_DIM):
-                continue
-
-            x = torch.from_numpy(seq).float().unsqueeze(0).transpose(1, 2).to(DEVICE)
-            m = torch.from_numpy(mask).float().unsqueeze(0).to(DEVICE)
-
-            with torch.no_grad():
-                logits = model(x, m)
-                probs = torch.softmax(logits, dim=1)
-                all_probs.append(probs[0].cpu().numpy())
-
-        if len(all_probs) > 0:
-            mean_probs = np.mean(np.stack(all_probs), axis=0)
-            top_idx = np.argmax(mean_probs)
-            confidence = mean_probs[top_idx]
-            current_prediction = f"{LABELS[top_idx]} ({confidence*100:.1f}%)"
-            print(f"Result: {current_prediction}")
-        else:
-            current_prediction = "Error predicting"
-
-    if key == ord('q'):
+    if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
 cap.release()

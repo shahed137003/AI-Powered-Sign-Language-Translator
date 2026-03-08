@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from models.message import Message
 from models.user import User
 
@@ -21,16 +21,26 @@ class ChatController:
         db.refresh(msg)
         return msg  
     @staticmethod
-    def get_chat_history(
-        db: Session, 
-        user1_id: int, 
-        user2_id: int
-    ):
-        return (
+    def get_chat_history(db: Session, user1_id: int, user2_id: int):
+        messages = (
             db.query(Message)
-            .filter(
+            .options(
+                joinedload(Message.sender),
+                joinedload(Message.receiver)
+            ).filter(
                 ((Message.sender_id == user1_id) & (Message.receiver_id == user2_id)) |
                 ((Message.sender_id == user2_id) & (Message.receiver_id == user1_id))
-            )
-            .order_by(Message.created_at).all()
-    )
+            ).order_by(Message.created_at).all()
+        )
+        results = []
+        for msg in messages:
+            results.append({
+                "id": msg.id,
+                "sender_id": msg.sender_id,
+                "sender_username": msg.sender.username,
+                "receiver_id": msg.receiver_id,
+                "receiver_username": msg.receiver.username,
+                "content": msg.content,
+                "created_at": msg.created_at
+            })
+        return results
