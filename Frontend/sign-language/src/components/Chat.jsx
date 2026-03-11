@@ -46,7 +46,9 @@ import {
 } from "react-icons/fa";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
-
+import VideoCall from "../components/VideoCall";
+import IncomingCallModal from "../components/IncomingCallModal";
+import { v4 as uuidv4 } from 'uuid';
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 // Emoji picker component
@@ -526,7 +528,14 @@ export default function ChatPage() {
   const [wsConnected, setWsConnected] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
   const [currentUserId, setCurrentUserId] = useState(null);
-  
+
+  // Video call states
+  const [showVideoCall, setShowVideoCall] = useState(false);
+  const [showIncomingCall, setShowIncomingCall] = useState(false);
+  const [incomingCall, setIncomingCall] = useState(null);
+  const [activeCall, setActiveCall] = useState(null);
+  const [callWs, setCallWs] = useState(null);
+
   const messagesEndRef = useRef(null);
   const wsRef = useRef(null);
 
@@ -670,6 +679,148 @@ export default function ChatPage() {
       console.error("WebSocket error:", err);
       setWsConnected(false);
     };
+  };
+
+    // Connect to video call WebSocket
+  useEffect(() => {
+    if (currentUsername && isAuthenticated && token) {
+      connectCallWebSocket();
+    }
+    return () => {
+      if (callWs) {
+        callWs.close();
+      }
+    };
+  }, [currentUsername, isAuthenticated, token]);
+
+  const connectCallWebSocket = () => {
+    if (!token) return;
+
+    const ws = new WebSocket(
+      `ws://localhost:8000/ws/video-call?token=${token}`
+    );
+
+    ws.onopen = () => {
+      console.log("✅ Video call WebSocket connected");
+      setCallWs(ws);
+      
+      // Send ping every 30 seconds to keep connection alive
+      const pingInterval = setInterval(() => {
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify({ type: "ping" }));
+        }
+      }, 30000);
+      
+      ws.pingInterval = pingInterval;
+    };
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      handleCallSignaling(data);
+    };
+
+    ws.onclose = () => {
+      console.log("❌ Video call WebSocket closed");
+      if (ws.pingInterval) {
+        clearInterval(ws.pingInterval);
+      }
+      setTimeout(connectCallWebSocket, 3000);
+    };
+
+    ws.onerror = (err) => {
+      console.error("Video call WebSocket error:", err);
+    };
+  };
+
+  const handleCallSignaling = (data) => {
+    console.log("📞 Call signal:", data);
+
+    switch (data.type) {
+      case "incoming-call":
+        setIncomingCall({
+          callId: data.callId,
+          caller: data.caller,
+          callType: data.callType,
+          offer: data.offer
+        });
+        setShowIncomingCall(true);
+        break;
+
+      case "call-answered":
+        // Call was accepted, video call component will handle this
+        console.log("Call answered by", data.from);
+        break;
+
+      case "call-rejected":
+        alert(`${data.from} rejected the call`);
+        setShowVideoCall(false);
+        setActiveCall(null);
+        break;
+
+      case "call-ended":
+        if (data.reason === "peer-disconnected") {
+          alert(`${data.from || "The other user"} disconnected`);
+        } else {
+          alert(`Call ended by ${data.from || "the other user"}`);
+        }
+        setShowVideoCall(false);
+        setActiveCall(null);
+        break;
+
+      case "user-offline":
+        alert(`${data.target} is offline`);
+        break;
+
+      case "error":
+        alert(data.message);
+        break;
+
+      case "pong":
+        console.log("🏓 Pong received");
+        break;
+
+      case "ice-candidate":
+        // Forward to video call component via window object
+        if (window.videoCallPeerConnection) {
+          window.videoCallPeerConnection.addIceCandidate(new RTCIceCandidate(data.candidate))
+            .catch(err => console.error("Error adding ICE candidate:", err));
+        }
+        break;
+
+      default:
+        console.log("Unknown message type:", data.type);
+        break;
+    }
+  };
+
+  const initiateCall = async (type = "video") => {
+    if (!activeConversation) {
+      alert("Please select a user to call");
+      return;
+    }
+
+    const receiverUsername = activeConversation.other_username || activeConversation.username;
+    
+    if (receiverUsername === currentUsername) {
+      alert("You cannot call yourself");
+      return;
+    }
+
+    if (!callWs || callWs.readyState !== WebSocket.OPEN) {
+      alert("Video call service is not connected. Please try again.");
+      return;
+    }
+
+    const callId = uuidv4();
+
+    setActiveCall({
+      callId,
+      remoteUsername: receiverUsername,
+      callType: type,
+      isCaller: true
+    });
+
+    setShowVideoCall(true);
   };
 
   const updateConversationFromMessage = (otherUsername, message) => {
@@ -953,14 +1104,24 @@ export default function ChatPage() {
             {/* Header Actions */}
             {activeConversation && (
               <div className="hidden md:flex items-center gap-2">
-                <button className="p-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                  <BsPhone className="text-gray-600 dark:text-gray-400" />
+                <button 
+                  onClick={() => initiateCall("audio")}
+                  className={`p-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${!wsConnected ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={!wsConnected}
+                  title="Start audio call"
+                >
+                  <BsPhone className={`text-xl ${wsConnected ? 'text-gray-600 dark:text-gray-400' : 'text-gray-400'}`} />
+                </button>
+                <button 
+                  onClick={() => initiateCall("video")}
+                  className={`p-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${!wsConnected ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={!wsConnected}
+                  title="Start video call"
+                >
+                  <BsCameraVideo className={`text-xl ${wsConnected ? 'text-gray-600 dark:text-gray-400' : 'text-gray-400'}`} />
                 </button>
                 <button className="p-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                  <BsCameraVideo className="text-gray-600 dark:text-gray-400" />
-                </button>
-                <button className="p-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                  <BsInfoCircle className="text-gray-600 dark:text-gray-400" />
+                  <BsInfoCircle className="text-gray-600 dark:text-gray-400 text-xl" />
                 </button>
                 <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
                   <BsThreeDotsVertical className="text-gray-600 dark:text-gray-400" />
@@ -1047,17 +1208,25 @@ export default function ChatPage() {
                   </div>
                   <span className="text-xs text-gray-600 dark:text-gray-400">Voice</span>
                 </button>
-                <button className="flex flex-col items-center gap-1 px-4 py-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <button 
+                  onClick={() => initiateCall("video")}
+                  className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${!wsConnected ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={!wsConnected}
+                >
                   <div className="p-2 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-400/20">
-                    <BsCameraVideo className="text-green-500 text-xl" />
+                    <BsCameraVideo className={`text-xl ${wsConnected ? 'text-green-500' : 'text-gray-400'}`} />
                   </div>
                   <span className="text-xs text-gray-600 dark:text-gray-400">Video</span>
                 </button>
-                <button className="flex flex-col items-center gap-1 px-4 py-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <button 
+                  onClick={() => initiateCall("audio")}
+                  className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${!wsConnected ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={!wsConnected}
+                >
                   <div className="p-2 rounded-full bg-gradient-to-br from-orange-500/20 to-amber-400/20">
-                    <FaCog className="text-orange-500 text-xl" />
+                    <BsPhone className={`text-xl ${wsConnected ? 'text-orange-500' : 'text-gray-400'}`} />
                   </div>
-                  <span className="text-xs text-gray-600 dark:text-gray-400">Settings</span>
+                  <span className="text-xs text-gray-600 dark:text-gray-400">Audio</span>
                 </button>
               </div>
             </div>
@@ -1073,6 +1242,48 @@ export default function ChatPage() {
           )}
         </div>
       </div>
+
+      {/* Video Call Components */}
+      <VideoCall
+        isOpen={showVideoCall}
+        onClose={() => {
+          setShowVideoCall(false);
+          setActiveCall(null);
+        }}
+        remoteUsername={activeCall?.remoteUsername}
+        localUsername={currentUsername}
+        callType={activeCall?.callType}
+        ws={callWs}
+        isCaller={activeCall?.isCaller}
+        callId={activeCall?.callId}
+      />
+
+      <IncomingCallModal
+        isOpen={showIncomingCall}
+        caller={incomingCall?.caller}
+        callType={incomingCall?.callType}
+        onAccept={() => {
+          setShowIncomingCall(false);
+          setActiveCall({
+            callId: incomingCall.callId,
+            remoteUsername: incomingCall.caller,
+            callType: incomingCall.callType,
+            isCaller: false
+          });
+          setShowVideoCall(true);
+        }}
+        onReject={() => {
+          setShowIncomingCall(false);
+          if (callWs && callWs.readyState === WebSocket.OPEN) {
+            callWs.send(JSON.stringify({
+              type: "call-reject",
+              target: incomingCall.caller,
+              callId: incomingCall.callId
+            }));
+          }
+          setIncomingCall(null);
+        }}
+      />
     </div>
   );
-}
+};

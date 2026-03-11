@@ -19,6 +19,7 @@ from routes.contact import router as contact_router
 from routes.sign_to_text import router as sign_to_text_router
 from routes.chat_ws import router as chat_ws_router
 from routes.chat_history import router as chat_history_router
+from routes.video_call import router as video_call_router
 # from routes.translate import router as translate_router
 
 app = FastAPI(title="AI Powered Sign Language Translator")
@@ -42,6 +43,7 @@ app.include_router(contact_router)
 app.include_router(sign_to_text_router)
 app.include_router(chat_ws_router)
 app.include_router(chat_history_router)
+app.include_router(video_call_router)
 # app.include_router(translate_router)
 @app.get("/")
 def root():
