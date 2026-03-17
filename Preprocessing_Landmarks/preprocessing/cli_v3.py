@@ -13,11 +13,13 @@ def fix_length_to_target(x: np.ndarray, target_len: int) -> np.ndarray:
     """
     Ensure sequence has exactly target_len frames on axis 0 by trimming or padding.
 
-    - If shorter: pad by repeating the last frame.
+    - If shorter: pad with all-zero frames.
     - If longer: trim to the first target_len frames.
     """
     if x.ndim != 2 or x.shape[1] != FEATURE_DIM:
         raise ValueError(f"Expected shape (T,{FEATURE_DIM}), got {x.shape}")
+    if target_len <= 0:
+        raise ValueError(f"target_len must be > 0, got {target_len}")
 
     t = x.shape[0]
     if t == target_len:
@@ -26,8 +28,7 @@ def fix_length_to_target(x: np.ndarray, target_len: int) -> np.ndarray:
         return x[:target_len]
 
     pad_len = target_len - t
-    last = x[-1:, :]
-    pad = np.repeat(last, pad_len, axis=0)
+    pad = np.zeros((pad_len, FEATURE_DIM), dtype=x.dtype)
     return np.concatenate([x, pad], axis=0)
 
 
