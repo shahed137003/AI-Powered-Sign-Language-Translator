@@ -18,7 +18,7 @@
 
 | Case | Description | Kaggle Dataset |
 |------|-------------|----------------|
-| **Case 1** | Not cleaned only | – |
+| **Case 1** | Not cleaned only | – | [Dataset Link](https://www.kaggle.com/datasets/mariamhany44/100words-not-cleaned-not-preprocessed) |
 | **Case 2** | Not cleaned + preprocessing | [Dataset Link](https://www.kaggle.com/datasets/mariamhany44/100-words-preprocessed-not-cleaned-no-mask/data) |
 | **Case 3** | Not cleaned + preprocessing + mask | – |
 | **Case 4** | Clean only | [Dataset Link](https://www.kaggle.com/datasets/mariamhany44/100words-cleaned-not-preprocessed-no-mask/data) |
