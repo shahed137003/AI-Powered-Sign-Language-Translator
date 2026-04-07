@@ -1,0 +1,147 @@
+{
+    "hand_detection_rate": 1.0,
+    "miss_rate": 0.0,
+    "swap_error_rate": 0.0,
+    "MPJPE": 11.442074829931972,
+    "total_joints_evaluated": 294,
+    "per_hand_detection": {
+        "left": {
+            "total": 8,
+            "detected": 8,
+            "accuracy": 1.0
+        },
+        "right": {
+            "total": 6,
+            "detected": 6,
+            "accuracy": 1.0
+        }
+    },
+    "PCK@10": {
+        "correct": 232,
+        "total": 294,
+        "accuracy": 0.7891156462585034
+    },
+    "PCK@20": {
+        "correct": 246,
+        "total": 294,
+        "accuracy": 0.8367346938775511
+    },
+    "per_joint_accuracy": {
+        "WRIST": {
+            "correct": 12,
+            "total": 14,
+            "accuracy": 0.8571428571428571
+        },
+        "THUMB_CMC": {
+            "correct": 11,
+            "total": 14,
+            "accuracy": 0.7857142857142857
+        },
+        "THUMB_MCP": {
+            "correct": 10,
+            "total": 14,
+            "accuracy": 0.7142857142857143
+        },
+        "THUMB_IP": {
+            "correct": 11,
+            "total": 14,
+            "accuracy": 0.7857142857142857
+        },
+        "THUMB_TIP": {
+            "correct": 10,
+            "total": 14,
+            "accuracy": 0.7142857142857143
+        },
+        "INDEX_FINGER_MCP": {
+            "correct": 11,
+            "total": 14,
+            "accuracy": 0.7857142857142857
+        },
+        "INDEX_FINGER_PIP": {
+            "correct": 12,
+            "total": 14,
+            "accuracy": 0.8571428571428571
+        },
+        "INDEX_FINGER_DIP": {
+            "correct": 11,
+            "total": 14,
+            "accuracy": 0.7857142857142857
+        },
+        "INDEX_FINGER_TIP": {
+            "correct": 12,
+            "total": 14,
+            "accuracy": 0.8571428571428571
+        },
+        "MIDDLE_FINGER_MCP": {
+            "correct": 11,
+            "total": 14,
+            "accuracy": 0.7857142857142857
+        },
+        "MIDDLE_FINGER_PIP": {
+            "correct": 11,
+            "total": 14,
+            "accuracy": 0.7857142857142857
+        },
+        "MIDDLE_FINGER_DIP": {
+            "correct": 11,
+            "total": 14,
+            "accuracy": 0.7857142857142857
+        },
+        "MIDDLE_FINGER_TIP": {
+            "correct": 12,
+            "total": 14,
+            "accuracy": 0.8571428571428571
+        },
+        "RING_FINGER_MCP": {
+            "correct": 11,
+            "total": 14,
+            "accuracy": 0.7857142857142857
+        },
+        "RING_FINGER_PIP": {
+            "correct": 10,
+            "total": 14,
+            "accuracy": 0.7142857142857143
+        },
+        "RING_FINGER_DIP": {
+            "correct": 10,
+            "total": 14,
+            "accuracy": 0.7142857142857143
+        },
+        "RING_FINGER_TIP": {
+            "correct": 11,
+            "total": 14,
+            "accuracy": 0.7857142857142857
+        },
+        "PINKY_MCP": {
+            "correct": 12,
+            "total": 14,
+            "accuracy": 0.8571428571428571
+        },
+        "PINKY_PIP": {
+            "correct": 11,
+            "total": 14,
+            "accuracy": 0.7857142857142857
+        },
+        "PINKY_DIP": {
+            "correct": 11,
+            "total": 14,
+            "accuracy": 0.7857142857142857
+        },
+        "PINKY_TIP": {
+            "correct": 11,
+            "total": 14,
+            "accuracy": 0.7857142857142857
+        }
+    },
+    "per_finger_accuracy": {
+        "thumb": 0.75,
+        "index": 0.8214285714285714,
+        "middle": 0.8035714285714286,
+        "ring": 0.75,
+        "pinky": 0.8035714285714285
+    },
+    "error_distribution": {
+        "5-10": 0.1360544217687075,
+        ">10": 0.2108843537414966
+    }
+}
