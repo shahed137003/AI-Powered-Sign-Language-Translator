@@ -1,0 +1,107 @@
+class,variant,count
+1 DOLLAR,clean,29
+5 DOLLARS,clean,30
+8 HOUR,clean,29
+9 OCLOCK,clean,29
+A LITTLE BIT,clean,29
+A-LINE BOB,clean,28
+ABBREVIATE,clean,29
+ABOUT,clean,58
+ABOVE,clean,29
+ABSOLUTELY NOTHING,clean,29
+ACCENT,clean,28
+ACCEPT,clean,28
+ACCESS,clean,29
+ACCIDENT,clean,27
+ACCOMPLISH,clean,27
+ACCORDION,clean,29
+ACCOUNTANT,clean,29
+ACQUIRE,clean,28
+ACT,clean,29
+ACTION,clean,30
+ACTOR,clean,29
+ADD,clean,29
+ADDICT,clean,29
+ADDRESS,clean,28
+ADMIRE,clean,28
+ADMIT,clean,29
+ADOPT,clean,28
+ADULT,clean,27
+ADVANTAGE,clean,29
+ADVERTISE,clean,30
+AFRICA,clean,29
+AFTER,clean,30
+AFTERNOON,clean,28
+AGAIN,clean,27
+AGAINST,clean,28
+AGE,clean,28
+AGENCY,clean,28
+AGREEMENT,clean,27
+AIRPLANE,clean,28
+ALARM,clean,30
+ALASKA,clean,28
+ALCOHOL,clean,29
+ALIGN,clean,29
+ALL,clean,29
+ALL DAY,clean,28
+ALL GONE,clean,29
+ALL OF_SUDDEN,clean,30
+ALL OVER,clean,29
+ALL OVER_BODY,clean,28
+ALL TOGETHER,clean,28
+ALL WAY,clean,29
+ALONE,clean,29
+ALPHABET,clean,30
+ALRIGHT,clean,29
+ALWAYS,clean,29
+AMAZING,clean,27
+AMERICA,clean,29
+ANALYZE,clean,29
+AND,clean,30
+ANGEL,clean,28
+ANGRY,clean,30
+ANIMAL,clean,29
+ANNOUNCE,clean,29
+ANSWER,clean,29
+ANTLERS,clean,28
+ANY,clean,29
+ANYONE,clean,30
+APART,clean,28
+APPEAR,clean,30
+APPLE,clean,30
+APPOINTMENT,clean,28
+APRIL,clean,28
+ARCHEOLOGY,clean,28
+AREA,clean,29
+ARGUE,clean,28
+ARIZONA,clean,29
+ARM,_v1,31
+ARM,_v2,33
+ARM,_v3,21
+ARMY,clean,29
+ARREST,_v1,31
+ARREST,_v2,26
+ARREST,_v3,29
+ARRIVE,clean,27
+ART,clean,28
+ARTICLE,clean,29
+ARTICULATE SIGN,clean,28
+ASIA,clean,29
+ASK,clean,29
+ASSEMBLY,clean,29
+ASSIGN,clean,28
+ASSIST,clean,29
+ASSISTANT,clean,29
+ASTRONAUT,clean,29
+AT,clean,29
+ATHLETE,clean,28
+ATLANTA,clean,28
+ATTENTION,clean,28
+ATTITUDE,clean,29
+AUDIENCE,clean,28
+AUDITORIUM,clean,29
+AUNT,clean,29
+AUSTRALIA,clean,28
+AUTISM,_v1,19
+AUTISM,_v2,40
+AUTOMATIC,clean,29
