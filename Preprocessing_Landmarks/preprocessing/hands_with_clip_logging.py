@@ -17,7 +17,7 @@ def hand_centroid(hand_t: np.ndarray, eps: float = 1e-8):
     if not np.any(m):
         return None
     return hand_t[m].mean(axis=0)
-HAND_ANCHOR_IDXS = (0, 20, 8, 4)  # wrist, pinky tip, index tip, thumb tip
+HAND_ANCHOR_IDXS = (0, 17, 5, 2)  # wrist, pinky MCP, index MCP, thumb MCP
 ANCHOR_WEIGHTS = (2.0, 1.0, 1.0, 1.0)
 
 
@@ -57,10 +57,10 @@ def _collect_anchor_pairs(
 ):
     """
     Match hand anchors to same-side pose anchors:
-      hand[0]  <-> pose wrist
-      hand[20] <-> pose pinky
-      hand[8]  <-> pose index
-      hand[4]  <-> pose thumb
+    hand[0]  <-> pose wrist
+    hand[17] <-> pose pinky
+    hand[5]  <-> pose index
+    hand[2]  <-> pose thumb
     """
     pose_block = _as_pose_anchor_block(pose_anchor_t)
     if pose_block is None:
