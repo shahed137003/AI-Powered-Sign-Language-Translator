@@ -1,14 +1,5 @@
 import sys
 from pathlib import Path
-
-# ✅ reuse preprocessing (DO NOT MODIFY IT)
-ROOT = Path(__file__).resolve().parent
-sys.path.append(str(ROOT / "Preprocessing_Landmarks"))
-
-from preprocessing.pipeline_v3 import preprocess_sequence_global
-from preprocessing.constants import FEATURE_DIM
-
-
 import cv2
 import torch
 import torch.nn as nn
@@ -16,8 +7,14 @@ import numpy as np
 import mediapipe as mp
 import itertools
 import time
-from pathlib import Path
 
+
+# preprocessing
+ROOT = Path(__file__).resolve().parent
+sys.path.append(str(ROOT / "Preprocessing_Landmarks"))
+
+from preprocessing.pipeline_v3 import preprocess_sequence_global
+from preprocessing.constants import FEATURE_DIM
 
 # ============================================================
 # MODEL ARCHITECTURE
