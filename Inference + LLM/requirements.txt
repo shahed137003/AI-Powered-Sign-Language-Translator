@@ -1,0 +1,7 @@
+torch
+opencv-python
+mediapipe
+numpy
+llama-cpp-python
+huggingface-hub
+nltk
