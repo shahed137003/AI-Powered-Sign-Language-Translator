@@ -53,7 +53,7 @@ class ASLPipeline:
             if gloss is None:
                 break
 
-            print("LLM THREAD running on:", gloss)
+            
 
             try:
                 result = self.llm.translate(gloss)
@@ -127,7 +127,7 @@ class ASLPipeline:
                         gloss = " ".join(self.sentence_buffer)
                         self.sentence_buffer = []
 
-                        print("📤 Sending to LLM:", gloss)
+                        print("Sending to LLM:", gloss)
 
                         if not self.llm_busy:
                             self.llm_busy = True
