@@ -1,0 +1,88 @@
+(venv) PS D:\Additionalpreprocessing> python train_tcn_balanced.py
+
+🚀 Training on cpu...
+E001 | LR: 0.001000 | Train: 0.061 | Val: 0.124 | Loss: 3.724
+⭐ New Best Model Saved
+E002 | LR: 0.001000 | Train: 0.225 | Val: 0.358 | Loss: 2.931
+⭐ New Best Model Saved
+E003 | LR: 0.001000 | Train: 0.427 | Val: 0.591 | Loss: 2.376
+⭐ New Best Model Saved
+E004 | LR: 0.001000 | Train: 0.570 | Val: 0.544 | Loss: 2.363
+E005 | LR: 0.001000 | Train: 0.651 | Val: 0.604 | Loss: 2.240
+⭐ New Best Model Saved
+E006 | LR: 0.001000 | Train: 0.698 | Val: 0.758 | Loss: 1.945
+⭐ New Best Model Saved
+E007 | LR: 0.001000 | Train: 0.755 | Val: 0.738 | Loss: 1.971
+E008 | LR: 0.001000 | Train: 0.785 | Val: 0.789 | Loss: 1.840
+⭐ New Best Model Saved
+E009 | LR: 0.001000 | Train: 0.810 | Val: 0.807 | Loss: 1.790
+⭐ New Best Model Saved
+E010 | LR: 0.001000 | Train: 0.833 | Val: 0.802 | Loss: 1.791
+E011 | LR: 0.001000 | Train: 0.839 | Val: 0.856 | Loss: 1.710
+⭐ New Best Model Saved
+E012 | LR: 0.001000 | Train: 0.870 | Val: 0.796 | Loss: 1.789
+E013 | LR: 0.001000 | Train: 0.867 | Val: 0.831 | Loss: 1.710
+E014 | LR: 0.001000 | Train: 0.889 | Val: 0.856 | Loss: 1.670
+📉 Learning Rate reduced to 0.0005
+E015 | LR: 0.001000 | Train: 0.902 | Val: 0.829 | Loss: 1.766
+E016 | LR: 0.000500 | Train: 0.936 | Val: 0.860 | Loss: 1.608
+⭐ New Best Model Saved
+E017 | LR: 0.000500 | Train: 0.943 | Val: 0.878 | Loss: 1.588
+⭐ New Best Model Saved
+E018 | LR: 0.000500 | Train: 0.948 | Val: 0.873 | Loss: 1.572
+E019 | LR: 0.000500 | Train: 0.949 | Val: 0.869 | Loss: 1.583
+E020 | LR: 0.000500 | Train: 0.949 | Val: 0.867 | Loss: 1.586
+📉 Learning Rate reduced to 0.00025
+E021 | LR: 0.000500 | Train: 0.954 | Val: 0.871 | Loss: 1.584
+E022 | LR: 0.000250 | Train: 0.966 | Val: 0.876 | Loss: 1.518
+E023 | LR: 0.000250 | Train: 0.969 | Val: 0.867 | Loss: 1.553
+E024 | LR: 0.000250 | Train: 0.969 | Val: 0.884 | Loss: 1.513
+⭐ New Best Model Saved
+E025 | LR: 0.000250 | Train: 0.970 | Val: 0.891 | Loss: 1.522
+⭐ New Best Model Saved
+E026 | LR: 0.000250 | Train: 0.973 | Val: 0.871 | Loss: 1.531
+E027 | LR: 0.000250 | Train: 0.972 | Val: 0.882 | Loss: 1.527
+E028 | LR: 0.000250 | Train: 0.974 | Val: 0.887 | Loss: 1.508
+📉 Learning Rate reduced to 0.000125
+E029 | LR: 0.000250 | Train: 0.977 | Val: 0.891 | Loss: 1.507
+E030 | LR: 0.000125 | Train: 0.977 | Val: 0.891 | Loss: 1.490
+E031 | LR: 0.000125 | Train: 0.982 | Val: 0.904 | Loss: 1.492
+⭐ New Best Model Saved
+E032 | LR: 0.000125 | Train: 0.981 | Val: 0.900 | Loss: 1.495
+E033 | LR: 0.000125 | Train: 0.980 | Val: 0.893 | Loss: 1.507
+E034 | LR: 0.000125 | Train: 0.982 | Val: 0.891 | Loss: 1.508
+📉 Learning Rate reduced to 6.25e-05
+E035 | LR: 0.000125 | Train: 0.983 | Val: 0.904 | Loss: 1.486
+E036 | LR: 0.000063 | Train: 0.985 | Val: 0.900 | Loss: 1.490
+E037 | LR: 0.000063 | Train: 0.984 | Val: 0.907 | Loss: 1.484
+⭐ New Best Model Saved
+E038 | LR: 0.000063 | Train: 0.985 | Val: 0.896 | Loss: 1.489
+E039 | LR: 0.000063 | Train: 0.986 | Val: 0.891 | Loss: 1.493
+E040 | LR: 0.000063 | Train: 0.987 | Val: 0.898 | Loss: 1.499
+📉 Learning Rate reduced to 3.125e-05
+E041 | LR: 0.000063 | Train: 0.987 | Val: 0.902 | Loss: 1.484
+E042 | LR: 0.000031 | Train: 0.987 | Val: 0.902 | Loss: 1.487
+E043 | LR: 0.000031 | Train: 0.988 | Val: 0.907 | Loss: 1.470
+E044 | LR: 0.000031 | Train: 0.989 | Val: 0.891 | Loss: 1.491
+📉 Learning Rate reduced to 1.5625e-05
+E045 | LR: 0.000031 | Train: 0.986 | Val: 0.898 | Loss: 1.475
+E046 | LR: 0.000016 | Train: 0.989 | Val: 0.902 | Loss: 1.477
+E047 | LR: 0.000016 | Train: 0.991 | Val: 0.900 | Loss: 1.477
+E048 | LR: 0.000016 | Train: 0.989 | Val: 0.904 | Loss: 1.473
+📉 Learning Rate reduced to 7.8125e-06
+E049 | LR: 0.000016 | Train: 0.987 | Val: 0.907 | Loss: 1.473
+E050 | LR: 0.000008 | Train: 0.988 | Val: 0.904 | Loss: 1.475
+E051 | LR: 0.000008 | Train: 0.987 | Val: 0.904 | Loss: 1.474
+E052 | LR: 0.000008 | Train: 0.987 | Val: 0.904 | Loss: 1.477
+⏹️ Early Stopping
+
+🎯 FINAL TEST ACCURACY: 0.9267
+Traceback (most recent call last):
+  File "D:\Additionalpreprocessing\train_tcn_balanced.py", line 193, in <module>
+    report = classification_report(y_true, y_pred, target_names=list(class_map.keys()), zero_division=0)
+  File "D:\Additionalpreprocessing\venv\lib\site-packages\sklearn\utils\_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "D:\Additionalpreprocessing\venv\lib\site-packages\sklearn\metrics\_classification.py", line 2970, in classification_report
+    raise ValueError(
+ValueError: Number of classes, 104, does not match size of target_names, 105. Try specifying the labels parameter
+(venv) PS D:\Additionalpreprocessing>
