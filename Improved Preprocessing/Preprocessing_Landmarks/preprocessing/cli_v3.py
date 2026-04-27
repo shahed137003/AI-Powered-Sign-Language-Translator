@@ -15,33 +15,27 @@ def assert_finite(x, path=None):
         raise ValueError(f"NaN/Inf detected at {path}")
 
 
-def apply_padding_and_mask(x: np.ndarray, target_frames: int | None):
+def apply_padding(x: np.ndarray, target_frames: int | None):
     if target_frames is None:
-        return x, np.ones(x.shape[0], dtype=np.float32)
+        return x
 
     if x.shape[0] == target_frames:
-        return x, np.ones(target_frames, dtype=np.float32)
+        return x
 
     if x.shape[0] > target_frames:
-        return x[:target_frames], np.ones(target_frames, dtype=np.float32)
+        return x[:target_frames]
 
     pad_len = target_frames - x.shape[0]
     pad = np.zeros((pad_len, x.shape[1]), dtype=x.dtype)
+    return np.concatenate([x, pad], axis=0)
 
-    x_fixed = np.concatenate([x, pad], axis=0)
 
-    mask = np.concatenate([
-        np.ones(x.shape[0], dtype=np.float32),
-        np.zeros(pad_len, dtype=np.float32)
-    ])
-
-    return x_fixed, mask
+def compute_mask_from_features(features: np.ndarray):
+    return (np.abs(features).sum(axis=-1) > 0).astype(np.float32)
 
 
 def build_argparser() -> argparse.ArgumentParser:
-    ap = argparse.ArgumentParser(
-        description="v3: global-mean root+scale + keepwrists + tiered hand fill + optional OneEuro smoothing."
-    )
+    ap = argparse.ArgumentParser()
 
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--input-npy", type=str)
@@ -77,10 +71,6 @@ def build_argparser() -> argparse.ArgumentParser:
     ap.add_argument("--face-beta", type=float, default=0.6)
     ap.add_argument("--d-cutoff", type=float, default=1.0)
 
-    ap.add_argument("--limit", type=int, default=0)
-    ap.add_argument("--shuffle", action="store_true")
-    ap.add_argument("--seed", type=int, default=123)
-
     ap.add_argument("--target-frames", type=int, default=None)
 
     return ap
@@ -89,8 +79,6 @@ def build_argparser() -> argparse.ArgumentParser:
 def main() -> None:
     ap = build_argparser()
     args = ap.parse_args()
-
-    rng = np.random.default_rng(args.seed)
 
     def run_one(x: np.ndarray) -> np.ndarray:
         return preprocess_sequence_global(
@@ -118,92 +106,44 @@ def main() -> None:
             d_cutoff=args.d_cutoff,
         )
 
-    # -----------------------
-    # SINGLE FILE MODE
-    # -----------------------
+    # SINGLE FILE
     if args.input_npy:
         if not args.output_npy:
             raise SystemExit("--output-npy is required")
 
-        x = np.load(args.input_npy, allow_pickle=True)
-
-        if x.ndim != 2 or x.shape[1] != FEATURE_DIM:
-            raise SystemExit(f"Expected shape (T,{FEATURE_DIM}), got {x.shape}")
+        x = np.load(args.input_npy)
 
         seq = run_one(x)
-        assert_finite(seq, args.input_npy)
-
-        seq, mask = apply_padding_and_mask(seq, args.target_frames)
+        seq = apply_padding(seq, args.target_frames)
 
         features = build_features(seq)
-        assert_finite(features, args.input_npy)
+        mask = compute_mask_from_features(features)
 
-  
+        assert_finite(features)
 
-        output_path = Path(args.output_npy)
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-
-        save_npy(output_path, features)
-
-        mask_path = output_path.with_name(output_path.stem + "_mask.npy")
-        save_npy(mask_path, mask)
-
-        print("Saved:", args.output_npy)
+        save_npy(Path(args.output_npy), features)
+        save_npy(Path(args.output_npy).with_name(Path(args.output_npy).stem + "_mask.npy"), mask)
         return
 
-    # -----------------------
     # DIRECTORY MODE
-    # -----------------------
-    if not args.output_dir:
-        raise SystemExit("--output-dir is required")
-
     in_root = Path(args.input_dir)
     out_root = Path(args.output_dir)
     out_root.mkdir(parents=True, exist_ok=True)
 
-    files = sorted(iter_npy_files(in_root))
-    if args.shuffle:
-        files = list(rng.permutation(files))
-
-    n = 0
-    skipped = 0
-
-    for in_path in files:
-        rel = in_path.relative_to(in_root)
-        out_path = out_root / rel
-        out_path.parent.mkdir(parents=True, exist_ok=True)
-
+    for in_path in iter_npy_files(in_root):
         try:
             x = load_keypoints_npy(in_path)
-        except ValueError as e:
-            print(f"Skipping: {in_path} ({e})")
-            skipped += 1
+        except:
             continue
 
         seq = run_one(x)
-        assert_finite(seq, str(in_path))
-
-        seq, mask = apply_padding_and_mask(seq, args.target_frames)
+        seq = apply_padding(seq, args.target_frames)
 
         features = build_features(seq)
-        assert_finite(features, str(in_path))
+        mask = compute_mask_from_features(features)
 
-
+        out_path = out_root / in_path.relative_to(in_root)
         save_npy(out_path, features)
+        save_npy(out_path.with_name(out_path.stem + "_mask.npy"), mask)
 
-        mask_path = out_path.with_name(out_path.stem + "_mask.npy")
-        save_npy(mask_path, mask)
-
-        n += 1
-        if n % 200 == 0:
-            print("Processed:", n)
-
-        if args.limit and n >= args.limit:
-            break
-
-    print("Done. Processed:", n, "Skipped:", skipped)
-    print("Output root:", out_root)
-
-
-if __name__ == "__main__":
-    main()
+    print("Done.")
