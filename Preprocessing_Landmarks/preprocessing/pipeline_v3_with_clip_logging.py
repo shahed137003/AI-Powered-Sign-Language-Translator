@@ -21,13 +21,16 @@ def preprocess_sequence_global(
     pose_vis_thresh: float = 0.1,
     keep_legs: bool = False,
     trim_edge_filler: bool = True,
-    swap_min_pose_sep: float = 0.1,
+    swap_min_pose_sep: float = 0.2,
+    swap_abs_margin: float = 0.08,
+    swap_ratio_margin: float = 0.20,
+    swap_close_boost: float = 1.5,
     fix_swap: bool = True,
     fill_hands: bool = True,
     small_gap: int = 6,
     medium_gap: int = 15,
     min_hand_pts: int = 8,
-    hand_wrist_max_dist: float = 1.1,
+    hand_wrist_max_dist: float = 0.4,
     rel_change_thresh: float = 0.7,
     # optional smoothing
     smooth: bool = False,
@@ -145,15 +148,17 @@ def preprocess_sequence_global(
 )
 
     if fix_swap:
-      fix_swap_and_gate_hands(
+     fix_swap_and_gate_hands(
         lh, rh, lpose, rpose,
         min_pts=min_hand_pts,
         hand_wrist_max_dist=hand_wrist_max_dist,
         swap_min_pose_sep=swap_min_pose_sep,
+        swap_abs_margin=swap_abs_margin,
+        swap_ratio_margin=swap_ratio_margin,
+        swap_close_boost=swap_close_boost,
         eps=eps,
         clip_path=clip_path,
-    )
-
+)
 
     if fill_hands:
         fill_hand_gaps_anchor_relative_tiered(

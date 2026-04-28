@@ -49,6 +49,16 @@ def build_argparser() -> argparse.ArgumentParser:
                     help="If set, do NOT zero leg joints (25..32)")
     ap.add_argument("--swap-min-pose-sep", type=float, default=0.2,
                 help="Skip hand swap when left/right pose anchors are too close in XY.")
+    
+
+    ap.add_argument("--swap-abs-margin", type=float, default=0.08,
+                help="Minimum absolute improvement required before swapping hands.")
+
+    ap.add_argument("--swap-ratio-margin", type=float, default=0.20,
+                help="Minimum relative improvement required before swapping hands, as a ratio of keep_score.")
+
+    ap.add_argument("--swap-close-boost", type=float, default=1.5,
+                help="Multiplier applied to required swap confidence when left/right pose anchors are close.")
     ap.add_argument("--no-fix-swap", action="store_true",
                 help="Disable hand swapping only. Anchor-based hand translation still runs.")
     ap.add_argument("--no-fill-hands", action="store_true",
@@ -111,6 +121,9 @@ def main() -> None:
             pose_vis_thresh=args.pose_vis_thresh,
             keep_legs=args.keep_legs,
             swap_min_pose_sep=args.swap_min_pose_sep,
+            swap_abs_margin=args.swap_abs_margin,
+            swap_ratio_margin=args.swap_ratio_margin,
+            swap_close_boost=args.swap_close_boost,
             fix_swap=(not args.no_fix_swap),
             trim_edge_filler=(not args.no_trim_edge_filler),
             fill_hands=(not args.no_fill_hands),

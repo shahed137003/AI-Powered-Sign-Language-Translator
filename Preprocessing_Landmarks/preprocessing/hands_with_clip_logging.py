@@ -137,7 +137,7 @@ def translate_hands_before_swap(
     lh: np.ndarray, rh: np.ndarray,
     lpose: np.ndarray, rpose: np.ndarray,
     min_pts: int = 8,
-    hand_wrist_max_dist: float = 0.02,
+    hand_wrist_max_dist: float = 0.4,
     eps: float = 1e-8,
     clip_path: str | None = None,
 ) -> None:
@@ -244,7 +244,7 @@ def _align_current_hand_to_pose_anchors_xy (
     t: int,
     hand_name: str = "hand",
     min_pts: int = 8,
-    hand_wrist_max_dist: float = 0.5,
+    hand_wrist_max_dist: float = 0.4,
     eps: float = 1e-8,
     clip_path: str | None = None,
 ) -> None:
@@ -288,8 +288,11 @@ def fix_swap_and_gate_hands(
     lh: np.ndarray, rh: np.ndarray,
     left_pose_anchors: np.ndarray, right_pose_anchors: np.ndarray,
     min_pts: int = 8,
-    swap_min_pose_sep: float = 0.1,
-    hand_wrist_max_dist: float = 0.3,
+    swap_min_pose_sep: float = 0.2,
+    swap_abs_margin: float = 0.08,
+    swap_ratio_margin: float = 0.20,
+    swap_close_boost: float = 1.5,
+    hand_wrist_max_dist: float = 0.4,
     eps: float = 1e-8,
     clip_path: str | None = None,
 ) -> None:
@@ -312,14 +315,11 @@ def fix_swap_and_gate_hands(
 
         if not (l_ok and r_ok):
             continue
-        pose_sep = _pose_anchor_separation_xy(left_pose_anchors[t], right_pose_anchors[t], eps=eps)
-        if (pose_sep is not None) and (pose_sep < swap_min_pose_sep):
-            clip_str = clip_path if clip_path is not None else "<unknown_clip>"
-            print(
-                f"[hand_swap_skip_close_pose] clip={clip_str} frame={t} "
-                f"pose_sep={pose_sep:.6f}"
-            )
-            continue
+        pose_sep = _pose_anchor_separation_xy(
+        left_pose_anchors[t],
+        right_pose_anchors[t],
+        eps=eps,
+    )
         d_ll = _anchor_assignment_cost(lh[t], left_pose_anchors[t], eps=eps)
         d_lr = _anchor_assignment_cost(lh[t], right_pose_anchors[t], eps=eps)
         d_rr = _anchor_assignment_cost(rh[t], right_pose_anchors[t], eps=eps)
@@ -328,13 +328,40 @@ def fix_swap_and_gate_hands(
         if None in (d_ll, d_lr, d_rr, d_rl):
             continue
 
-        if (d_lr + d_rl) + 1e-6 < (d_ll + d_rr):
+        keep_score = d_ll + d_rr
+        swap_score = d_lr + d_rl
+
+        gain = keep_score - swap_score
+        required_gain = max(
+            float(swap_abs_margin),
+            float(swap_ratio_margin) * float(keep_score),
+        )
+
+        close_pose = (pose_sep is not None) and (pose_sep < swap_min_pose_sep)
+        if close_pose:
+            required_gain *= float(swap_close_boost)
+
+        if gain > required_gain:
             clip_str = clip_path if clip_path is not None else "<unknown_clip>"
             print(
                 f"[hand_swap] clip={clip_str} frame={t} "
-                f"d_ll={d_ll:.6f} d_rr={d_rr:.6f} d_lr={d_lr:.6f} d_rl={d_rl:.6f}"
+                f"d_ll={d_ll:.6f} d_rr={d_rr:.6f} "
+                f"d_lr={d_lr:.6f} d_rl={d_rl:.6f} "
+                f"keep={keep_score:.6f} swap={swap_score:.6f} "
+                f"gain={gain:.6f} required={required_gain:.6f} "
+                f"pose_sep={-1.0 if pose_sep is None else pose_sep:.6f} "
+                f"close_pose={int(close_pose)}"
             )
             lh[t], rh[t] = rh[t].copy(), lh[t].copy()
+        else:
+            if close_pose:
+                clip_str = clip_path if clip_path is not None else "<unknown_clip>"
+                print(
+                    f"[hand_swap_skip_low_conf_close_pose] clip={clip_str} frame={t} "
+                    f"keep={keep_score:.6f} swap={swap_score:.6f} "
+                    f"gain={gain:.6f} required={required_gain:.6f} "
+                    f"pose_sep={pose_sep:.6f}"
+                )
 # ----------------------------
 # Hand gap filling (tiered)
 # ----------------------------
