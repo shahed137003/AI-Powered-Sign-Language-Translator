@@ -1,0 +1,458 @@
+file,predicted,truth
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/5 DOLLARS 25.npy,FOUR,5 DOLLARS
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/A LITTLE BIT 10.npy,WARM,A LITTLE BIT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/A LITTLE BIT 26.npy,TOILET,A LITTLE BIT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ABOUT 18.npy,WHEN,ABOUT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ABOVE 1.npy,LEARN,ABOVE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ACCENT 14.npy,MISS,ACCENT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ACCOMPLISH 22.npy,ANNOUNCE,ACCOMPLISH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ACT 26.npy,RUN,ACT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ACTION 9.npy,COMPUTER,ACTION
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ACTOR 22.npy,LIVE,ACTOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ADD 11.npy,AT,ADD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ADD 9.npy,AT,ADD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ADDICT 21.npy,HEARING,ADDICT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ADDRESS 5.npy,LIVE,ADDRESS
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ADDRESS 20.npy,LIVE,ADDRESS
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ADDRESS 7.npy,LIVE,ADDRESS
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/AFRICA 15.npy,APPOINTMENT,AFRICA
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/AGAIN 24.npy,AGAINST,AGAIN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/AGAINST 10.npy,ROOM,AGAINST
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/AGAINST 9.npy,1 DOLLAR,AGAINST
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/AGE 12.npy,OLD,AGE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/AGE 24.npy,OLD,AGE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/AGENCY 0.npy,COLD,AGENCY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/AGREEMENT 20.npy,PERSON,AGREEMENT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/AIRPLANE 5.npy,ONION,AIRPLANE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/AIRPLANE 21.npy,I LOVE YOU,AIRPLANE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/AIRPLANE 27.npy,I LOVE YOU,AIRPLANE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ALCOHOL 6.npy,MONTH,ALCOHOL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ALIGN 26.npy,MACHINE,ALIGN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ALIGN 18.npy,AUTISM2,ALIGN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ALL 0.npy,ARRIVE,ALL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ALL DAY 21.npy,9 OCLOCK,ALL DAY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ALL WAY 8.npy,ASIA,ALL WAY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ALL WAY 5.npy,HEAR,ALL WAY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ALRIGHT 3.npy,BORROW,ALRIGHT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/AND 2.npy,THEY,AND
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ANGRY 3.npy,LIVE,ANGRY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ANIMAL 21.npy,HAVE,ANIMAL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ANIMAL 27.npy,JACKET,ANIMAL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ANIMAL 13.npy,SCARED,ANIMAL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ANSWER 1.npy,GO,ANSWER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/APPLE 4.npy,ONION,APPLE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/APPLE 11.npy,ONION,APPLE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ARCHEOLOGY 24.npy,ACCEPT,ARCHEOLOGY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ARIZONA 10.npy,KID,ARIZONA
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ARM 12.npy,BABY,ARM
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ARMY 25.npy,MAKE,ARMY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ARRIVE 2.npy,GONE,ARRIVE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ART 19.npy,THIN,ART
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ART 2.npy,TEACHER,ART
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ARTICULATE SIGN 25.npy,VISIT,ARTICULATE SIGN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ASSEMBLY 12.npy,ATLANTA,ASSEMBLY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ASSEMBLY 19.npy,ATLANTA,ASSEMBLY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ASSEMBLY 2.npy,ATLANTA,ASSEMBLY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ASSIGN 23.npy,MONEY2,ASSIGN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ASSIST 3.npy,ASSISTANT,ASSIST
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ASSISTANT 13.npy,ASSIST,ASSISTANT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ATHLETE 4.npy,BATHROOM,ATHLETE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ATLANTA 24.npy,ASSEMBLY,ATLANTA
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ATLANTA 10.npy,DRUNK,ATLANTA
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ATLANTA 4.npy,ARIZONA,ATLANTA
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ATLANTA 19.npy,ASSEMBLY,ATLANTA
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/AUDITORIUM 13.npy,ANGRY,AUDITORIUM
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/AUNT 26.npy,YESTERDAY,AUNT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/AUSTRALIA 24.npy,AUDIENCE,AUSTRALIA
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/AUTISM1 15.npy,AMERICA,AUTISM1
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/AUTOMATIC 24.npy,MAGAZINE,AUTOMATIC
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BAD 12.npy,OLD,BAD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BAD 10.npy,COLOR,BAD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BATH 10.npy,GIRL,BATH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BATH 24.npy,LIVE,BATH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BATH 19.npy,WHICH,BATH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BATHROOM 19.npy,TOILET,BATHROOM
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BATHROOM 10.npy,TOILET,BATHROOM
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BATHROOM 17.npy,TOILET,BATHROOM
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BECAUSE 13.npy,KNOW,BECAUSE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BECAUSE 22.npy,MIND,BECAUSE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BEDROOM 20.npy,BROTHER,BEDROOM
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BEFORE 13.npy,MACHINE,BEFORE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BEHIND 22.npy,YEAR,BEHIND
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BEST 15.npy,BETTER,BEST
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BEST 3.npy,BETTER,BEST
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BEST 13.npy,BETTER,BEST
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BEST 5.npy,BETTER,BEST
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BEST 28.npy,BETTER,BEST
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BETTER 16.npy,BEST,BETTER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BIG 8.npy,ANGRY,BIG
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BIG 22.npy,ANNOUNCE,BIG
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BLUE 27.npy,WILL,BLUE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BLUE 11.npy,LIGHT,BLUE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BORED 40.npy,WHO,BORED
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BOSS 10.npy,PAST,BOSS
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BRAVE 31.npy,HEALTH,BRAVE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BRAVE 1.npy,HEALTH,BRAVE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BRAVE 14.npy,HEALTH,BRAVE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BRAVE 0.npy,HEALTH,BRAVE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BREAD 7.npy,GIRL,BREAD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BREAD 3.npy,BEFORE,BREAD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BUTTER 0.npy,WEAK,BUTTER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BUTTER 25.npy,HONEST,BUTTER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BUY 12.npy,BIRTH,BUY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/BUY 21.npy,ALRIGHT,BUY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CALL 30.npy,NAME,CALL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CALL 38.npy,WARM,CALL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CALL 54.npy,OTHER,CALL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CAN 44.npy,RICH,CAN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CAN 49.npy,AREA,CAN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CAN 37.npy,AREA,CAN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CANADA 2.npy,A LITTLE BIT,CANADA
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CANADA 22.npy,GAME,CANADA
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CANCEL 7.npy,ARCHEOLOGY,CANCEL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CANCEL 18.npy,ARREST3,CANCEL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CANCEL 1.npy,ROOM,CANCEL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CAREFUL 25.npy,TAKE CARE,CAREFUL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CAREFUL 24.npy,TAKE CARE,CAREFUL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CAREFUL 9.npy,RIGHT,CAREFUL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CARRY 18.npy,BRING,CARRY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CENTER 4.npy,AT,CENTER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CENTER 11.npy,WARN,CENTER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CENTER 9.npy,THAT,CENTER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CHAIR 18.npy,SIT,CHAIR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CHAIR 0.npy,TRAIN,CHAIR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CHAIR 16.npy,SIT,CHAIR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CHALLENGE 12.npy,BEHIND,CHALLENGE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CHEAP 22.npy,MORNING,CHEAP
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CHECK 27.npy,APART,CHECK
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CHECK 18.npy,ARCHEOLOGY,CHECK
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CHECK 10.npy,OUT,CHECK
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CHILDREN 15.npy,HOTDOG,CHILDREN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CHURCH 26.npy,AT,CHURCH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CITY 56.npy,KID,CITY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CLEAN 14.npy,COOK,CLEAN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CLEAN 22.npy,NICE,CLEAN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CLEAN 24.npy,MEDICINE,CLEAN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COFFEE 1.npy,MAKE,COFFEE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COLD 4.npy,RUN,COLD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COLLEGE 0.npy,PAPER,COLLEGE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COLLEGE 27.npy,CLEAN,COLLEGE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COLOR 18.npy,FAVORITE,COLOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COLOR 4.npy,EAT,COLOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COLOR 10.npy,FAVORITE,COLOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COMFORTABLE 28.npy,1 DOLLAR,COMFORTABLE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CONFUSED 25.npy,ALL DAY,CONFUSED
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CONFUSED 20.npy,UNIVERSITY,CONFUSED
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COOK 24.npy,MEDICINE,COOK
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COOK 18.npy,MONEY2,COOK
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COST 0.npy,PRICE,COST
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COST 16.npy,PRICE,COST
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COST 25.npy,PRICE,COST
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COST 13.npy,MILK,COST
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COUNTRY 18.npy,HELP,COUNTRY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COUNTRY 28.npy,POOR,COUNTRY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COUNTRY 15.npy,POOR,COUNTRY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COUSIN 23.npy,ALPHABET,COUSIN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COUSIN 17.npy,KNOW,COUSIN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/COUSIN 3.npy,BLUE,COUSIN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/CRAZY 24.npy,FRANCE,CRAZY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DAUGHTER 11.npy,BABY,DAUGHTER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DAUGHTER 2.npy,AFTER,DAUGHTER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DIE 24.npy,LOAD1,DIE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DIE 17.npy,OTHER,DIE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DIE 30.npy,AUSTRALIA,DIE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DIE 19.npy,CHEAP,DIE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DIFFERENT 3.npy,BUT,DIFFERENT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DIFFERENT 25.npy,BUT,DIFFERENT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DIFFERENT 30.npy,BUT,DIFFERENT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DIFFERENT 19.npy,BUT,DIFFERENT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DIVORCE 23.npy,ABBREVIATE,DIVORCE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DOCTOR 48.npy,AUTOMATIC,DOCTOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DOCTOR 36.npy,PRINT,DOCTOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DOCTOR 50.npy,GIVE,DOCTOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DOCTOR 28.npy,HARD,DOCTOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DOCTOR 55.npy,TABLE,DOCTOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DOCTOR 32.npy,MEDICINE,DOCTOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DONT KNOW 15.npy,IMAGINE,DONT KNOW
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DRINK 21.npy,YESTERDAY,DRINK
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DROP 6.npy,CAN,DROP
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/DRUNK 22.npy,TOMORROW,DRUNK
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/EASY 15.npy,AUTOMATIC,EASY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/EMOTION 3.npy,ACT,EMOTION
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/EMPTY 7.npy,THEY,EMPTY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/EMPTY 45.npy,1 DOLLAR,EMPTY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/EQUAL 2.npy,MORE,EQUAL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/EQUAL 20.npy,MORE,EQUAL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FALL 14.npy,POOR,FALL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FALL 49.npy,READ,FALL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FAVORITE 8.npy,COLOR,FAVORITE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FAVORITE 31.npy,PHONE,FAVORITE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FAVORITE 11.npy,EAT,FAVORITE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FAVORITE 5.npy,COLOR,FAVORITE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FEEL 1.npy,SICK,FEEL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FEEL 3.npy,ALWAYS,FEEL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FEEL 0.npy,HAPPY,FEEL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FEEL 9.npy,HAPPY,FEEL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FINE 51.npy,COLD,FINE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FIX 12.npy,MORE,FIX
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FLOOR 11.npy,NICE,FLOOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FOR 6.npy,WHAT FOR,FOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FOR 28.npy,WHAT FOR,FOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FOR 0.npy,WHAT FOR,FOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FOUR 17.npy,TWO,FOUR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FULL 25.npy,DIRTY,FULL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/FUNNY 9.npy,STUPID,FUNNY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/GET 28.npy,OLD,GET
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/GIRL 7.npy,ANY,GIRL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/GIVE 6.npy,WARM,GIVE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/GLASSES 4.npy,ANY,GLASSES
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/GO 4.npy,ANSWER,GO
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/GO 21.npy,ANSWER,GO
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/GONE 5.npy,PRETTY,GONE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/GOOD 14.npy,THANK YOU,GOOD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/GOOD 23.npy,THANK YOU,GOOD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/GOOD 22.npy,THANK YOU,GOOD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/GRADUATE 11.npy,AMERICA,GRADUATE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HAMBURGER 8.npy,MARRY,HAMBURGER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HAPPY 19.npy,FEEL,HAPPY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HARD 24.npy,ALCOHOL,HARD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HARD 12.npy,TAKE CARE,HARD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HARD 22.npy,TAKE CARE,HARD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HE 21.npy,THEY,HE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HEALTH 12.npy,BRAVE,HEALTH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HEALTH 25.npy,BRAVE,HEALTH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HEALTH 26.npy,BRAVE,HEALTH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HEALTH 15.npy,BRAVE,HEALTH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HEAR 46.npy,LISTEN,HEAR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HEARING 0.npy,APPLE,HEARING
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HEART 16.npy,BABY,HEART
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HEART 11.npy,COLOR,HEART
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HELP 10.npy,ARMY,HELP
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HIGH 15.npy,MAN,HIGH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HOCKEY 9.npy,HONEST,HOCKEY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HOCKEY 25.npy,KITCHEN,HOCKEY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HOSPITAL 58.npy,LOOK FOR,HOSPITAL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HOSPITAL 15.npy,SON,HOSPITAL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HOSPITAL 11.npy,FLOOR,HOSPITAL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HOUR 8.npy,ALARM,HOUR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HUNGRY 9.npy,WISH,HUNGRY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HUNGRY 17.npy,WISH,HUNGRY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HUNGRY 13.npy,WISH,HUNGRY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/HUNGRY 2.npy,WISH,HUNGRY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/IMPOSSIBLE 21.npy,NONE,IMPOSSIBLE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/IMPOSSIBLE 3.npy,BEHIND,IMPOSSIBLE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/IMPOSSIBLE 14.npy,8 HOUR,IMPOSSIBLE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/INTERNET 6.npy,PITY,INTERNET
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/INVITE 19.npy,DAUGHTER,INVITE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/JACKET 115.npy,ACTOR,JACKET
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/JACKET 116.npy,DROP,JACKET
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/JACKET 29.npy,GO,JACKET
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/JACKET 32.npy,ASK,JACKET
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/KEY 26.npy,NOT,KEY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/KID 12.npy,ONION,KID
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/KITCHEN 30.npy,NICE,KITCHEN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/KNIFE 54.npy,PRACTICE,KNIFE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/KNOW 4.npy,5 DOLLARS,KNOW
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/LAST 13.npy,COMFORTABLE,LAST
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/LATER 11.npy,HE,LATER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/LECTURE 2.npy,GRANDFATHER,LECTURE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/LECTURE 16.npy,MORNING,LECTURE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/LETTER 46.npy,BREAD,LETTER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/LETTER 40.npy,SISTER,LETTER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/LETTER 41.npy,YEAR,LETTER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/LIBRARY 9.npy,LEFT,LIBRARY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/LIGHT 7.npy,FOUR,LIGHT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/LIKE 11.npy,SAME,LIKE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/LISTEN 29.npy,TRAVEL,LISTEN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/LIVE 53.npy,ADDRESS,LIVE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/LIVE 20.npy,ADDRESS,LIVE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/LIVE 47.npy,ADDRESS,LIVE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/LONELY 16.npy,SINGLE,LONELY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/LONELY 22.npy,SINGLE,LONELY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/LOOK FOR 0.npy,ALL OVER,LOOK FOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MAGAZINE 2.npy,HOUR,MAGAZINE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MAGAZINE 14.npy,8 HOUR,MAGAZINE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MAKE 20.npy,COFFEE,MAKE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MAKE 10.npy,COFFEE,MAKE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MAN 20.npy,WOMAN,MAN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MARRY 0.npy,NONE,MARRY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MEAN 33.npy,START,MEAN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MEAN 54.npy,GET,MEAN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MEDICINE 23.npy,RELATIONSHIP,MEDICINE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MEDICINE 7.npy,PRINT,MEDICINE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MILK 34.npy,THEY,MILK
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MIND 7.npy,WONDER,MIND
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MISS 3.npy,ME,MISS
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MODEL 18.npy,STATE,MODEL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MODEL 23.npy,BOSS,MODEL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MONDAY 12.npy,JEALOUS,MONDAY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MONEY2 22.npy,HOCKEY,MONEY2
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MONEY2 1.npy,SHOP,MONEY2
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MONEY2 0.npy,NONE,MONEY2
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/MOST 25.npy,WHICH,MOST
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/NAME 26.npy,KNIFE,NAME
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/NEW 12.npy,BABY,NEW
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/NEW 17.npy,PAPER,NEW
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/NICE 22.npy,GIRL,NICE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/NIGHT 20.npy,NICE,NIGHT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/NIGHT 9.npy,AT,NIGHT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/NIGHT 51.npy,ABOVE,NIGHT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/NONE 10.npy,AGAINST,NONE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/NONE 26.npy,ARREST1,NONE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/NOT 14.npy,ALL WAY,NOT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/NOW 8.npy,TODAY,NOW
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/NOW 21.npy,TODAY,NOW
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/OH I SEE 27.npy,SAME,OH I SEE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/OLD 11.npy,AGE,OLD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/OLD 13.npy,AGE,OLD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/OLD 2.npy,WATER,OLD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/OLD 7.npy,AGE,OLD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/OTHER 28.npy,BEST,OTHER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PAIN 4.npy,MEET,PAIN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PAPER 29.npy,WINDOW,PAPER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PARK 0.npy,WARM,PARK
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PATIENT 32.npy,HOSPITAL,PATIENT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PATIENT 31.npy,HOSPITAL,PATIENT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PATIENT 80.npy,NOT,PATIENT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PEN 22.npy,WEEK,PEN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PEN 4.npy,FOR,PEN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PEN 30.npy,1 DOLLAR,PEN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PENCIL 3.npy,WRITE,PENCIL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PERSON 13.npy,TEST,PERSON
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PERSON 6.npy,CHAT,PERSON
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PHONE 10.npy,GIRL,PHONE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PITY 13.npy,ALASKA,PITY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PLEASE 6.npy,MY,PLEASE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PLEASE 21.npy,HAPPY,PLEASE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/POOR 6.npy,TABLE,POOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/POTATO 13.npy,TIME,POTATO
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PRACTICE 29.npy,POTATO,PRACTICE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PRETTY 23.npy,HIGH,PRETTY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PRETTY 18.npy,SLEEP,PRETTY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PRICE 20.npy,COST,PRICE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PRICE 24.npy,COST,PRICE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/PRINT 9.npy,FRIEND,PRINT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/QUIET 17.npy,TABLE,QUIET
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/QUIET 11.npy,ANSWER,QUIET
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/READ 18.npy,CANCEL,READ
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/RESTAURANT 23.npy,COLOR,RESTAURANT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/RICH 9.npy,COLLEGE,RICH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/RIGHT 28.npy,FINGERSPELL,RIGHT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/RIGHT 60.npy,BROTHER,RIGHT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/RIGHT 84.npy,DRINK,RIGHT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/RIGHT 13.npy,LEFT,RIGHT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/RIGHT 7.npy,SISTER,RIGHT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/RIGHT 37.npy,NEW,RIGHT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/ROOM 16.npy,NICE,ROOM
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/RUDE 4.npy,MEDICINE,RUDE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/RUDE 22.npy,MEDICINE,RUDE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/RUDE 11.npy,ADVANTAGE,RUDE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/RUN 44.npy,MONTH,RUN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/RUN 9.npy,YOU,RUN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SAD 18.npy,VISIT,SAD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SALAD 19.npy,ANGRY,SALAD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SAME 8.npy,STAY,SAME
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SAME 2.npy,MARRY,SAME
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SCHOOL 18.npy,PAPER,SCHOOL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SCHOOL 27.npy,PAPER,SCHOOL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SERIOUS 11.npy,SINGLE,SERIOUS
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SHOP 4.npy,STRONG,SHOP
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SHOP 22.npy,STRONG,SHOP
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SHOP 36.npy,COOK,SHOP
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SHOULD 29.npy,MUST,SHOULD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SHOULD 5.npy,MUST,SHOULD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SHOULD 19.npy,YOU,SHOULD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SHOULD 28.npy,TOILET,SHOULD
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SHOW 29.npy,HAMBURGER,SHOW
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SICK 1.npy,KNOW,SICK
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SINGLE 13.npy,LONELY,SINGLE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SINGLE 2.npy,LONELY,SINGLE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SINGLE 15.npy,LONELY,SINGLE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SISTER 11.npy,RIGHT,SISTER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SLOW 30.npy,COOK,SLOW
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SMALL 2.npy,8 HOUR,SMALL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/STAND 49.npy,WARN,STAND
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/START 27.npy,LIVE,START
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/START 29.npy,ABBREVIATE,START
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/STRESS 25.npy,AREA,STRESS
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/STRESS 28.npy,WARN,STRESS
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/STRESS 13.npy,AREA,STRESS
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/STRONG 10.npy,COLD,STRONG
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/STRONG 12.npy,LOUD,STRONG
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/STUDENT 5.npy,STAND,STUDENT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/STUDENT 0.npy,EXPENSIVE,STUDENT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/STUDY 23.npy,BEFORE,STUDY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/STUDY 26.npy,RUDE,STUDY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/STUDY 17.npy,BEFORE,STUDY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/STUPID 1.npy,OTHER,STUPID
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/SURE 11.npy,LEFT,SURE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TAKE 20.npy,YESTERDAY,TAKE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TAKE 14.npy,COME,TAKE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TAKE CARE 25.npy,CAREFUL,TAKE CARE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TAKE CARE 1.npy,CAREFUL,TAKE CARE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TALL 44.npy,RICH,TALL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TEACH 61.npy,MORE,TEACH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TEACHER 0.npy,ALL OVER BODY,TEACHER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/THANK YOU 3.npy,GOOD,THANK YOU
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/THANK YOU 24.npy,BAD,THANK YOU
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/THANK YOU 12.npy,GOOD,THANK YOU
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/THANK YOU 14.npy,COLOR,THANK YOU
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/THANK YOU 29.npy,GOOD,THANK YOU
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/THAT 4.npy,DOWN,THAT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/THEY 31.npy,A LITTLE BIT,THEY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/THEY 47.npy,SISTER,THEY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/THREE 28.npy,ASK,THREE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TIME 16.npy,IN,TIME
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TIME 17.npy,BICYCLE,TIME
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TIRED 1.npy,YOUNG,TIRED
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TODAY 20.npy,NOW,TODAY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TODAY 19.npy,NOW,TODAY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TODAY 23.npy,NOW,TODAY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TOILET 15.npy,BATHROOM,TOILET
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TOILET 1.npy,BATHROOM,TOILET
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TOILET 29.npy,BATHROOM,TOILET
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TOMORROW 28.npy,PATIENT,TOMORROW
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TRAIN 16.npy,CHAIR,TRAIN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TRAVEL 9.npy,DREAM,TRAVEL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TYPE 13.npy,FRIEND,TYPE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TYPE 32.npy,STAY,TYPE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/TYPE 40.npy,BICYCLE,TYPE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/UNIVERSITY 6.npy,TRAVEL,UNIVERSITY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/UP 23.npy,WHAT FOR,UP
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WAIT 14.npy,WANT,WAIT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WAIT 12.npy,WANT,WAIT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WARM 7.npy,FAVORITE,WARM
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WATER 17.npy,TWO,WATER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WEDNESDAY 3.npy,MONDAY,WEDNESDAY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WEEK 13.npy,LONELY,WEEK
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WELCOME 50.npy,ADMIT,WELCOME
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WHAT 52.npy,COST,WHAT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WHAT 26.npy,MONEY1,WHAT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WHAT 47.npy,ARCHEOLOGY,WHAT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WHAT 33.npy,HEAVY,WHAT
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WHAT FOR 15.npy,COUSIN,WHAT FOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WHAT FOR 54.npy,FOR,WHAT FOR
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WHEN 3.npy,ABOUT,WHEN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WHEN 9.npy,ABOUT,WHEN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WHEN 10.npy,ABOUT,WHEN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WHERE 5.npy,I LOVE YOU,WHERE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WHO 19.npy,MISS,WHO
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WHO 27.npy,ASSISTANT,WHO
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WHY 6.npy,WILL,WHY
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WILL 18.npy,HELLO,WILL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WILL 28.npy,GRANDMOTHER,WILL
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WIN 19.npy,FULL,WIN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WISH 20.npy,HUNGRY,WISH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WISH 2.npy,HUNGRY,WISH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WISH 28.npy,PLEASE,WISH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WISH 27.npy,HUNGRY,WISH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WISH 22.npy,HUNGRY,WISH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WISH 0.npy,HUNGRY,WISH
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WOMAN 29.npy,HOT,WOMAN
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WONDER 27.npy,SLEEP,WONDER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WONDER 3.npy,MIND,WONDER
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/WRITE 20.npy,1 DOLLAR,WRITE
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/YES 11.npy,CHILD,YES
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/YOU 2.npy,ASK,YOU
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/YOU 7.npy,HE,YOU
+/root/.cache/kagglehub/datasets/mariamhany44/500-preprocessed-with-mask/versions/1/splits_with_mask/test/YOUNG 5.npy,BATH,YOUNG
