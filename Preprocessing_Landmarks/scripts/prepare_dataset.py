@@ -5,21 +5,30 @@ from collections import defaultdict
 from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 
-# -----------------------
+# =========================
 # CONFIG
-# -----------------------
-INPUT_DIR = r"preprocessed_enhanced_landmarks"
-OUTPUT_DIR = r"balanced_dataset"
+# =========================
+INPUT_DIR = r"D:\Additionalpreprocessing 4\150_words\preprocessed_enhanced_landmarks"
+OUTPUT_DIR = r"D:\Additionalpreprocessing 4\150_words\final_dataset"
 
-TARGET_SAMPLES_PER_CLASS = 35  
+MIN_SAMPLES_THRESHOLD = 15
+MIN_TARGET_PER_CLASS = 45
+
 TRAIN_RATIO, VAL_RATIO, TEST_RATIO = 0.7, 0.15, 0.15
 SEED = 42
 
 random.seed(SEED)
 np.random.seed(SEED)
 
+POSE_SIZE = 33 * 4
+FACE_SIZE = 468 * 3
+HAND_SIZE = 21 * 3
 
-def extract_label(filename: str) -> str:
+
+# =========================
+# LABEL
+# =========================
+def extract_label(filename: str):
     name = Path(filename).stem
     parts = name.split()
     if len(parts) > 1 and parts[-1].isdigit():
@@ -27,170 +36,248 @@ def extract_label(filename: str) -> str:
     return " ".join(parts).strip().upper()
 
 
-# ============================
-# FIXED AUGMENTATION
-# ============================
-def augment_sample(x, mask):
-    x_aug = x.copy()
+# =========================
+# LOAD MASK (SAFE)
+# =========================
+def load_mask(file_path):
+    mask_path = str(file_path).replace(".npy", "_mask.npy")
+    if Path(mask_path).exists():
+        try:
+            return np.load(mask_path).astype(np.float32)
+        except:
+            return None
+    return None
 
-    KEYPOINT_DIM = 438  # ONLY raw keypoints
 
-    # -----------------------
-    # SAFE NOISE (ONLY RAW)
-    # -----------------------
-    if random.random() < 0.7:
-        noise = np.random.normal(0, 0.005, size=x[:, :KEYPOINT_DIM].shape)
-        x_aug[:, :KEYPOINT_DIM] += noise
+# =========================
+# SAFE AUGMENTATION (FULL FEATURES, NO EXTRA ALLOCATIONS)
+# =========================
+def augment_sample(x):
+    T, D = x.shape
 
-    # -----------------------
-    # TEMPORAL SHIFT
-    # -----------------------
-    if random.random() < 0.5:
-        shift = np.random.randint(-3, 3)
+    out = np.empty_like(x)
+    out[:] = x
 
-        if shift > 0:
-            x_aug = np.concatenate([
-                np.zeros((shift, x.shape[1])),
-                x_aug[:-shift]
-            ])
-        elif shift < 0:
-            x_aug = np.concatenate([
-                x_aug[-shift:],
-                np.zeros((-shift, x.shape[1]))
-            ])
+    lh_start = POSE_SIZE + FACE_SIZE
+    rh_start = lh_start + HAND_SIZE
 
     # -----------------------
-    # TEMPORAL WARP
+    # 1. SPARSE NOISE
     # -----------------------
-    if random.random() < 0.5:
-        T, D = x.shape
-        factor = np.random.uniform(0.9, 1.1)
-        new_T = max(1, int(T * factor))
+    if random.random() < 0.6:
+        idx = np.random.randint(0, T, size=max(2, T // 10))
+        out[idx] += np.random.normal(0, 0.003, (len(idx), D)).astype(np.float32)
 
-        idx = np.clip(np.linspace(0, T - 1, new_T).astype(int), 0, T - 1)
-        x_new = x[idx]
+    # -----------------------
+    # 2. TEMP SHIFT
+    # -----------------------
+    if random.random() < 0.4:
+        shift = random.randint(-2, 2)
 
-        if new_T < T:
-            pad = np.zeros((T - new_T, D), dtype=x.dtype)
-            x_aug = np.concatenate([x_new, pad], axis=0)
+        if shift != 0:
+            tmp = np.zeros_like(out)
+
+            if shift > 0:
+                tmp[shift:] = out[:-shift]
+            else:
+                tmp[:shift] = out[-shift:]
+
+            out = tmp
+
+    # -----------------------
+    # 3. SPEED VARIATION (SAFE INDEXING)
+    # -----------------------
+    if random.random() < 0.4:
+        factor = random.uniform(0.9, 1.1)
+        step = max(1, int(1 / factor))
+
+        idx = np.arange(0, T, step, dtype=np.int32)
+        idx = idx[idx < T]
+
+        temp = out[idx]
+
+        if temp.shape[0] < T:
+            pad = np.zeros((T - temp.shape[0], D), dtype=np.float32)
+            out = np.vstack((temp, pad))
         else:
-            x_aug = x_new[:T]
+            out = temp[:T]
 
-    m_aug = (np.abs(x_aug).sum(axis=-1) > 0).astype(np.float32)
+    # -----------------------
+    # 4. HAND SHIFT
+    # -----------------------
+    if random.random() < 0.5:
+        shift = np.random.normal(0, 0.01, (1, 1, 3)).astype(np.float32)
 
-    return x_aug.astype(np.float32), m_aug
+        lh = out[:, lh_start:lh_start+HAND_SIZE].reshape(-1, 21, 3)
+        rh = out[:, rh_start:rh_start+HAND_SIZE].reshape(-1, 21, 3)
+
+        lh += shift
+        rh += shift
+
+        out[:, lh_start:lh_start+HAND_SIZE] = lh.reshape(-1, HAND_SIZE)
+        out[:, rh_start:rh_start+HAND_SIZE] = rh.reshape(-1, HAND_SIZE)
+
+    # -----------------------
+    # 5. HAND SCALE
+    # -----------------------
+    if random.random() < 0.4:
+        scale = random.uniform(0.95, 1.05)
+
+        lh = out[:, lh_start:lh_start+HAND_SIZE].reshape(-1, 21, 3)
+        rh = out[:, rh_start:rh_start+HAND_SIZE].reshape(-1, 21, 3)
+
+        lh *= scale
+        rh *= scale
+
+        out[:, lh_start:lh_start+HAND_SIZE] = lh.reshape(-1, HAND_SIZE)
+        out[:, rh_start:rh_start+HAND_SIZE] = rh.reshape(-1, HAND_SIZE)
+
+    # -----------------------
+    # 6. FEATURE DROPOUT
+    # -----------------------
+    if random.random() < 0.3:
+        cols = np.random.randint(0, D, size=max(1, D // 120))
+        out[:, cols] = 0.0
+
+    # -----------------------
+    # 7. LIGHT NOISE
+    # -----------------------
+    if random.random() < 0.3:
+        idx = np.random.randint(0, T, size=max(2, T // 20))
+        out[idx] += np.random.normal(0, 0.001, (len(idx), D)).astype(np.float32)
+
+    return out
 
 
+# =========================
+# SAVE STREAM (NO RAM STORAGE)
+# =========================
+def save_split(split, name, label_to_idx):
+    out_dir = Path(OUTPUT_DIR) / name
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    for i, s in enumerate(tqdm(split)):
+        x = s["x"].copy()
+        x = augment_sample(x)
+
+        np.savez_compressed(
+            out_dir / f"{i}.npz",
+            x=x,
+            y=label_to_idx[s["label"]],
+            mask=s["mask"]   # <<< INCLUDED SAFELY
+        )
+
+
+# =========================
+# MAIN
+# =========================
 def main():
-    print("🚀 Step 1: Loading Raw Data...")
+    print("Loading data...")
+
     all_samples = []
     files = list(Path(INPUT_DIR).glob("*.npy"))
 
-    for file in tqdm(files):
-        if "_mask" in file.name:
+    for f in tqdm(files):
+        if "_mask" in f.name:
             continue
 
-        label = extract_label(file.name)
-
         try:
-            x = np.load(file).astype(np.float32)
-            m = np.load(file.with_name(file.stem + "_mask.npy")).astype(np.float32)
+            x = np.load(f).astype(np.float32)
+            label = extract_label(f.name)
+            mask = load_mask(f)
 
-            all_samples.append({'x': x, 'm': m, 'label': label})
+            all_samples.append({
+                "x": x,
+                "mask": mask,
+                "label": label
+            })
+
         except:
             continue
 
-    print(f"Loaded samples: {len(all_samples)}")
-    print("Feature shape example:", all_samples[0]['x'].shape)
+    print(f"Total samples: {len(all_samples)}")
 
-    unique_labels = sorted(list(set(s['label'] for s in all_samples)))
-    label_to_idx = {l: i for i, l in enumerate(unique_labels)}
+    # =========================
+    # GROUP BY CLASS
+    # =========================
+    by_class = defaultdict(list)
 
-    # -----------------------
-    # SPLIT
-    # -----------------------
-    print(f"🚀 Step 2: Splitting Data safely...")
+    for s in all_samples:
+        by_class[s["label"]].append(s)
 
-    samples_by_class = defaultdict(list)
-    for i, s in enumerate(all_samples):
-        samples_by_class[label_to_idx[s['label']]].append(i)
+    by_class = {
+        k: v for k, v in by_class.items()
+        if len(v) >= MIN_SAMPLES_THRESHOLD
+    }
 
-    idx_train, idx_val, idx_test = [], [], []
+    labels = sorted(by_class.keys())
+    label_to_idx = {l: i for i, l in enumerate(labels)}
 
-    for cls_idx, indices in samples_by_class.items():
-        if len(indices) < 3:
-            idx_train.extend(indices)
-        else:
-            tr, temp = train_test_split(
-                indices,
-                test_size=(1 - TRAIN_RATIO),
-                random_state=SEED
-            )
+    # =========================
+    # SPLIT (NO LEAK)
+    # =========================
+    train, val, test = [], [], []
 
-            rel_val = VAL_RATIO / (VAL_RATIO + TEST_RATIO)
+    for label, samples in by_class.items():
 
-            v, te = train_test_split(
-                temp,
-                test_size=(1 - rel_val),
-                random_state=SEED
-            )
+        tr, temp = train_test_split(
+            samples,
+            test_size=(1 - TRAIN_RATIO),
+            random_state=SEED
+        )
 
-            idx_train.extend(tr)
-            idx_val.extend(v)
-            idx_test.extend(te)
+        rel_val = VAL_RATIO / (VAL_RATIO + TEST_RATIO)
 
-    # -----------------------
-    # SAVE
-    # -----------------------
-    def process_and_save(indices, name, augment=False):
-        final_X, final_y, final_m = [], [], []
+        v, te = train_test_split(
+            temp,
+            test_size=(1 - rel_val),
+            random_state=SEED
+        )
 
-        current_split_by_class = defaultdict(list)
-        for i in indices:
-            s = all_samples[i]
-            current_split_by_class[label_to_idx[s['label']]].append(s)
+        train += tr
+        val += v
+        test += te
 
-        for cls_idx in range(len(unique_labels)):
-            samples = current_split_by_class[cls_idx]
-            if not samples:
-                continue
+    print(f"Train: {len(train)} | Val: {len(val)} | Test: {len(test)}")
 
-            if augment:
-                balanced = samples.copy()
+    # =========================
+    # BALANCE TRAIN ONLY (NO AUG HERE)
+    # =========================
+    train_by_class = defaultdict(list)
 
-                while len(balanced) < TARGET_SAMPLES_PER_CLASS:
-                    source = random.choice(samples)
-                    x_a, m_a = augment_sample(source['x'], source['m'])
-                    balanced.append({'x': x_a, 'm': m_a})
+    for s in train:
+        train_by_class[s["label"]].append(s)
 
-                if len(balanced) > TARGET_SAMPLES_PER_CLASS:
-                    balanced = random.sample(balanced, TARGET_SAMPLES_PER_CLASS)
+    max_size = max(len(v) for v in train_by_class.values())
+    target = max(max_size, MIN_TARGET_PER_CLASS)
 
-                samples_to_save = balanced
-            else:
-                samples_to_save = samples
+    balanced_train = []
 
-            for s in samples_to_save:
-                final_X.append(s['x'])
-                final_m.append(s['m'])
-                final_y.append(cls_idx)
+    for label, samples in train_by_class.items():
+        pool = list(samples)
 
-        out_path = Path(OUTPUT_DIR) / name
-        out_path.mkdir(parents=True, exist_ok=True)
+        while len(pool) < target:
+            pool.append(random.choice(samples))
 
-        np.save(out_path / "X.npy", np.array(final_X, dtype=np.float32))
-        np.save(out_path / "y.npy", np.array(final_y))
-        np.save(out_path / "mask.npy", np.array(final_m, dtype=np.float32))
+        balanced_train.extend(random.sample(pool, target))
 
-        print(f"✅ Saved {name}: {len(final_X)} samples")
+    print(f"Balanced train: {len(balanced_train)}")
 
-    process_and_save(idx_train, "train", augment=True)
-    process_and_save(idx_val, "val", augment=False)
-    process_and_save(idx_test, "test", augment=False)
+    # =========================
+    # STREAM SAVE
+    # =========================
+    print("Saving train...")
+    save_split(balanced_train, "train", label_to_idx)
+
+    print("Saving val...")
+    save_split(val, "val", label_to_idx)
+
+    print("Saving test...")
+    save_split(test, "test", label_to_idx)
 
     np.save(Path(OUTPUT_DIR) / "class_map.npy", label_to_idx)
 
-    print(f"\n🎉 Done. Dataset ready at {OUTPUT_DIR}")
+    print("Done")
 
 
 if __name__ == "__main__":
