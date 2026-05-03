@@ -77,6 +77,16 @@ experiments = [
     ("NO_DISTANCE", ["distances"]),
     ("NO_HANDSHAPE", ["handshape"]),
     ("ONLY_X", ["v","a","v2","direction","pose_bones","lh_bones","rh_bones","lh_angles","rh_angles","relative","distances","handshape"]),
+    # Remove weak features together
+    ("NO_WEAK_FEATURES", ["v","a","relative","distances","handshape"]),
+    # Core model (no motion, no weak stuff)
+    ("CORE_GEOMETRY_ONLY", ["v","a","v2","direction","relative","distances","handshape"]),
+    # Add ONLY best motion candidate
+    ("CORE_PLUS_V2", ["v","a","direction","relative","distances","handshape"]),
+    # Angles-only geometry (important test)
+    ("X_PLUS_ANGLES_ONLY", ["v","a","v2","direction","pose_bones","lh_bones","rh_bones","relative","distances","handshape"]),
+    #  Minimal realistic deploy model, keep only hand bones + angles
+    ("MINIMAL_STRONG", ["v","a","v2","direction","relative","distances","handshape","pose_bones"]),
 ]
 
 # =========================
