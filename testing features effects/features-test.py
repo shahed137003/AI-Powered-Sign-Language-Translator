@@ -103,6 +103,9 @@ experiments = [
     ("MINIMAL_CLEAN", ["v","a","direction","distances","handshape"]),
     # Raw + angles only
     ("X_PLUS_ANGLES_ONLY_CLEAN", ["v","a","v2","direction","pose_bones","lh_bones","rh_bones","relative","distances","handshape"]),
+    ("NO_NOISE_KEEP_STRUCTURE", ["v", "a", "distances", "handshape"]),
+    ("NO_X_NO_NOISE", ["x", "v", "a", "distances", "handshape"]),
+    ("GEOMETRY_V2_WITH_X", ["v", "a", "direction", "relative", "distances", "handshape"]),
     ]
 
 # =========================
