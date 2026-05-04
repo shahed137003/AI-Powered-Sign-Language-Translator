@@ -87,7 +87,23 @@ experiments = [
     ("X_PLUS_ANGLES_ONLY", ["v","a","v2","direction","pose_bones","lh_bones","rh_bones","relative","distances","handshape"]),
     #  Minimal realistic deploy model, keep only hand bones + angles
     ("MINIMAL_STRONG", ["v","a","v2","direction","relative","distances","handshape","pose_bones"]),
-]
+    # geometry only (no raw, no motion)
+    ("RELATIVE_PLUS_ANGLES", ["x","v","a","v2","direction","pose_bones","lh_bones","rh_bones","distances","handshape"]),
+    # Remove raw → test if features alone are enough
+    ("NO_X", ["x"]),
+    # Remove noisy motion (keep only v2)
+    ("NO_NOISY_MOTION", ["v","a","direction"]),
+    # Only v2 (clean temporal signal)
+    ("ONLY_V2", ["x","v","a","direction","pose_bones","lh_bones","rh_bones","lh_angles","rh_angles","relative","distances","handshape"]),
+    # Remove bones → are angles enough?
+    ("ANGLES_ONLY_GEOMETRY", ["pose_bones","lh_bones","rh_bones"]),
+    # Remove weak helpers
+    ("NO_SMALL_FEATURES", ["distances","handshape"]),
+    # Keep strong core only
+    ("MINIMAL_CLEAN", ["v","a","direction","distances","handshape"]),
+    # Raw + angles only
+    ("X_PLUS_ANGLES_ONLY_CLEAN", ["v","a","v2","direction","pose_bones","lh_bones","rh_bones","relative","distances","handshape"]),
+    ]
 
 # =========================
 # DATASET
