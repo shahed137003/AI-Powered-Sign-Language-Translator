@@ -107,6 +107,10 @@ experiments = [
     ("NO_X_NO_NOISE", ["x", "v", "a", "distances", "handshape"]),
     ("GEOMETRY_V2_WITH_X", ["v", "a", "direction", "relative", "distances", "handshape"]),
     ("FINAL_TEST", ["x","v", "a", "direction","distances", "handshape"]),
+    ("NO_X_NO_DIST", ["x", "distances"]),
+    ("NO_X_NO_HAND", ["x", "handshape"]),
+    ("NO_X_NO_VEL_ACC", ["x", "v", "a"]),
+    ("NO_X_NO_DIRECTION", ["x", "direction"]),
     ]
 
 # =========================
