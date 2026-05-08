@@ -111,6 +111,16 @@ experiments = [
     ("NO_X_NO_HAND", ["x", "handshape"]),
     ("NO_X_NO_VEL_ACC", ["x", "v", "a"]),
     ("NO_X_NO_DIRECTION", ["x", "direction"]),
+    ("NO_X_NO_DIST_NO_HAND", ["x", "distances","handshape"]),
+    ("NO_X_NO_V_NO_A_NO_DIST", ["x", "v","a","distances"]),
+    ("NO_X_NO_V_NO_A_NO_DIR", ["x", "v","a","direction"]),
+    ("NO_X_NO_V_NO_A_NO_DIST_NO_DIR", ["x", "v","a","distances","direction"]),
+    ("NO_X_NO_V_NO_A_NO_DIST_NO_HAND", ["x", "v","a","distances","handshape"]),
+    ("NO_X_NO_V_NO_A_NO_V2_NO_DIST_NO_HAND", ["x", "v","a","v2","distances","handshape"]),
+    ("NO_X_NO_V2", ["x", "v2"]),
+    ("NO_X_NO_V2_NO_DIR", ["x", "v2","direction"]),
+    ("NO_X_NO_V_NO_V2_NO_DIR", ["x","v", "v2","direction"]),
+    ("NO_X_NO_A_NO_V2_NO_DIR", ["x","a","v2","direction"]),
     ]
 
 # =========================
