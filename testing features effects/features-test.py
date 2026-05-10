@@ -131,6 +131,9 @@ experiments = [
     ("NO_X_NO_V2_NO_DISTANCE", ["x","v2","distances"]),
     ("NO_X_NO_V2_NO_DISTANCE_NO_DIR", ["x","v2","distances","direction"]),
     ("NO_X_NO_V2_NO_DISTANCE_NO_V", ["x","v2","distances","v"]),
+    ("NO_X_NO_DISTANCE_NO_V2_NO_HANDSHAPE", ["x","v2","distances","handshape"]),
+    ("NO_X_NO_V_NO_DISTANCE", ["x","v","distances"]),
+    ("NO_X_NO_A_NO_DISTANCE", ["x","a","distances"]),
 
     ]
 
