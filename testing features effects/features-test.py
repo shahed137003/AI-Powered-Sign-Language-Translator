@@ -134,6 +134,7 @@ experiments = [
     ("NO_X_NO_DISTANCE_NO_V2_NO_HANDSHAPE", ["x","v2","distances","handshape"]),
     ("NO_X_NO_V_NO_DISTANCE", ["x","v","distances"]),
     ("NO_X_NO_A_NO_DISTANCE", ["x","a","distances"]),
+    ("NO_X_NO_V_NO_A_NO_DISTANCE", ["x","v","a","distances"]),
 
     ]
 
