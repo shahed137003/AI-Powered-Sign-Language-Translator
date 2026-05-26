@@ -30,8 +30,7 @@ def apply_padding(x: np.ndarray, target_frames: int | None):
     return np.concatenate([x, pad], axis=0)
 
 
-def compute_mask_from_features(features: np.ndarray):
-    return (np.abs(features).sum(axis=-1) > 0).astype(np.float32)
+
 
 
 def build_argparser() -> argparse.ArgumentParser:
@@ -116,13 +115,20 @@ def main() -> None:
         seq = run_one(x)
         seq = apply_padding(seq, args.target_frames)
 
+        # CREATE MASK BEFORE FEATURE ENGINEERING
+        mask = (np.abs(seq).sum(axis=-1) > 0).astype(np.float32)
+
         features = build_features(seq)
-        mask = compute_mask_from_features(features)
 
         assert_finite(features)
 
         save_npy(Path(args.output_npy), features)
-        save_npy(Path(args.output_npy).with_name(Path(args.output_npy).stem + "_mask.npy"), mask)
+        save_npy(
+            Path(args.output_npy).with_name(
+                Path(args.output_npy).stem + "_mask.npy"
+            ),
+            mask
+        )
         return
 
     # DIRECTORY MODE
@@ -139,11 +145,18 @@ def main() -> None:
         seq = run_one(x)
         seq = apply_padding(seq, args.target_frames)
 
+        # CREATE MASK BEFORE FEATURE ENGINEERING
+        mask = (np.abs(seq).sum(axis=-1) > 0).astype(np.float32)
+
         features = build_features(seq)
-        mask = compute_mask_from_features(features)
 
         out_path = out_root / in_path.relative_to(in_root)
+
         save_npy(out_path, features)
-        save_npy(out_path.with_name(out_path.stem + "_mask.npy"), mask)
+
+        save_npy(
+            out_path.with_name(out_path.stem + "_mask.npy"),
+            mask
+        )
 
     print("Done.")

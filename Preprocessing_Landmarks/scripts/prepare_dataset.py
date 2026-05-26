@@ -4,12 +4,31 @@ import random
 from collections import defaultdict
 from tqdm import tqdm
 from sklearn.model_selection import train_test_split
+import argparse
 
 # =========================
 # CONFIG
 # =========================
-INPUT_DIR = r"E:\500 new with cleaning\165_preprocessed_with_features"
-OUTPUT_DIR = r"E:\500 new with cleaning\165_final_dataset"
+parser = argparse.ArgumentParser()
+
+parser.add_argument(
+    "--input-dir",
+    type=str,
+    required=True,
+    help="Path to input directory"
+)
+
+parser.add_argument(
+    "--output-dir",
+    type=str,
+    required=True,
+    help="Path to output directory"
+)
+
+args = parser.parse_args()
+
+INPUT_DIR = args.input_dir
+OUTPUT_DIR = args.output_dir
 
 MIN_SAMPLES_THRESHOLD = 15
 MIN_TARGET_PER_CLASS = 45
@@ -30,10 +49,14 @@ np.random.seed(SEED)
 # =========================
 def extract_label(filename: str):
     name = Path(filename).stem
-    parts = name.split()
-    if len(parts) > 1 and parts[-1].isdigit():
-        parts = parts[:-1]
-    return " ".join(parts).strip().upper()
+
+    # remove only the LAST numeric token
+    parts = name.rsplit(" ", 1)
+
+    if len(parts) == 2 and parts[1].isdigit():
+        name = parts[0]
+
+    return name.strip().upper()
 
 
 # =========================
@@ -302,7 +325,7 @@ def main():
         augment=False
     )
 
-    np.save(Path(OUTPUT_DIR) / "class_map.npy", label_to_idx)
+    np.save(Path(OUTPUT_DIR) / "label_encoder.npy", label_to_idx)
 
     print("Done")
 

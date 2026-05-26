@@ -19,11 +19,10 @@ os.environ["MKL_NUM_THREADS"] = "4"
 # =========================
 # CONFIG
 # =========================
-DATA_DIR = r"E:\500 new with cleaning\500_final_dataset_modified"
-OUTPUT_DIR = r"E:\500 new with cleaning\500_modified_model_results"
-CLASS_MAP_PATH = r"E:\500 new with cleaning\500_final_dataset_modified\class_map.npy"
+DATA_DIR = r"E:\500 newest\final_dataset"
+OUTPUT_DIR = r"E:\500 newest\final_dataset\model_results"
+CLASS_MAP_PATH = r"E:\500 newest\final_dataset\label_encoder.npy"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
-
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 BATCH_SIZE = 16
@@ -62,7 +61,7 @@ feature_slices = {
     "handshape": (2676, 2680)
 }
 
-label_to_new = None
+
 # =========================
 # DATASET
 # =========================
@@ -75,21 +74,17 @@ class NPZDataset(Dataset):
         return len(self.files)
 
     def __getitem__(self, idx):
-            data = np.load(self.files[idx])
+        data = np.load(self.files[idx])
 
-            x = data["x"].astype(np.float32)
-            y = int(data["y"])
-            m = data["mask"].astype(np.float32)
+        x = data["x"].astype(np.float32)
+        y = int(data["y"])
+        m = data["mask"].astype(np.float32)
 
-            for g in self.remove_groups:
-                s, e = feature_slices[g]
-                x[:, s:e] = 0.0
-            if label_to_new is None:
-                raise ValueError("label_to_new is not initialized")
-            y = int(label_to_new[int(y)])
-            
+        for g in self.remove_groups:
+            s, e = feature_slices[g]
+            x[:, s:e] = 0.0
 
-            return torch.from_numpy(x), torch.from_numpy(m), torch.tensor(y, dtype=torch.long)
+        return torch.from_numpy(x), torch.from_numpy(m), y
 
 # =========================
 # MODEL
@@ -155,23 +150,6 @@ def run_experiment(name, remove_groups):
     print(name)
 
 
-
-    all_labels = set()
-
-    for split in ["train", "val", "test"]:
-        for f in Path(DATA_DIR, split).glob("*.npz"):
-            with np.load(f) as d:
-                all_labels.add(int(d["y"]))
-
-
-
-    unique_labels = sorted(all_labels)
-
-    global label_to_new
-    label_to_new = {old: i for i, old in enumerate(unique_labels)}
-    num_classes = len(unique_labels)
-    loaded_map = np.load(CLASS_MAP_PATH, allow_pickle=True).item()
-    
     train_ds = NPZDataset(os.path.join(DATA_DIR, "train"), remove_groups)
     val_ds   = NPZDataset(os.path.join(DATA_DIR, "val"), remove_groups)
     test_ds  = NPZDataset(os.path.join(DATA_DIR, "test"), remove_groups)
@@ -182,19 +160,16 @@ def run_experiment(name, remove_groups):
 
     sample_x, _, _ = train_ds[0]
     FEATURE_DIM = sample_x.shape[1]
-    # keep only classes that still exist
-    existing_labels = set()
-    for split in ["train", "val", "test"]:
-        for f in Path(DATA_DIR, split).glob("*.npz"):
-            with np.load(f) as d:
-                existing_labels.add(int(d["y"]))
-    index_to_name = {
-        i: loaded_map.get(str(old), loaded_map.get(old, str(old)))
-        for old, i in label_to_new.items()
-    }
 
-    target_names = [index_to_name[i] for i in range(num_classes)]
-    class_map = index_to_name
+    labels = [train_ds[i][2] for i in range(len(train_ds))]
+    unique_labels = sorted(set(labels))
+    num_classes = len(unique_labels)
+    loaded_map = np.load(CLASS_MAP_PATH, allow_pickle=True).item()
+
+    # invert map: gloss -> id  becomes  id -> gloss
+    class_map = {v: k for k, v in loaded_map.items()}
+
+    target_names = [class_map[i] for i in unique_labels]
     # =========================
     # DATA STATS PRINTING
     # =========================
@@ -208,10 +183,7 @@ def run_experiment(name, remove_groups):
     print(f"\nNumber of classes: {num_classes}")
   
     print(f"\nFeature dimension: {FEATURE_DIM}")
-    np.save(
-        os.path.join(trial_dir, "label_encoder.npy"),
-        class_map
-    )
+
 
     model = TCN(FEATURE_DIM, num_classes).to(DEVICE)
 
@@ -319,7 +291,7 @@ def run_experiment(name, remove_groups):
     report = classification_report(
         targets,
         preds,
-        labels=list(range(num_classes)),
+        labels=unique_labels,
         target_names=target_names,
         output_dict=True,
         zero_division=0
