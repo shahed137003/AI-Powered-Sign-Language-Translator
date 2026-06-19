@@ -1,0 +1,80 @@
+const fs = require('fs');
+
+function updateCards(filePath) {
+  if (!fs.existsSync(filePath)) return;
+  
+  let content = fs.readFileSync(filePath, 'utf8');
+
+  // Find the Premium Feature Cards block
+  // First, change the array to use component references instead of JSX elements
+  content = content.replace(/icon:\s*<([^ ]+)\s+className="text-2xl"\s*\/>/g, 'icon: $1');
+  
+  // Next, replace the mapping code
+  const oldMappingRegex = /\{\[\s*\{[\s\S]*?\}\s*\]\.map\(\(feature, i\) => \([\s\S]*?\}\)\)/;
+  
+  const newMapping = `{[
+                  {
+                    icon: BsRobot,
+                    title: "AI Translation Ready",
+                    description: "Access real-time sign language translation with advanced AI",
+                    color: "from-primary-400 to-primary-600",
+                    delay: 0.1
+                  },
+                  {
+                    icon: BsLightningFill,
+                    title: "Lightning Fast",
+                    description: "Get started immediately with all premium features",
+                    color: "from-primary-500 to-primary-700",
+                    delay: 0.2
+                  },
+                  {
+                    icon: FaShieldAlt,
+                    title: "Secure Session",
+                    description: "Encrypted connection with enterprise-grade security",
+                    color: "from-primary-600 to-primary-800",
+                    delay: 0.3
+                  },
+                  {
+                    icon: BsStars,
+                    title: "Sync Across Devices",
+                    description: "Your preferences and history saved in the cloud",
+                    color: "from-primary-700 to-primary-900",
+                    delay: 0.4
+                  }
+                ].map((feature, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: feature.delay }}
+                    whileHover={{ y: -5, scale: 1.05 }}
+                    className="group relative cursor-pointer h-full"
+                  >
+                    <div className={"absolute -inset-0.5 bg-gradient-to-br " + feature.color + " rounded-3xl blur opacity-0 group-hover:opacity-60 transition-opacity duration-500"} />
+                    
+                    <div className="relative h-full p-4 flex flex-col items-center text-center justify-center rounded-3xl bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-primary-200/50 dark:border-primary-500/20 shadow-lg shadow-primary-100/20 dark:shadow-primary-900/20 group-hover:bg-white/90 dark:group-hover:bg-white/10 transition-colors duration-300 overflow-hidden">
+                      
+                      <feature.icon className="absolute -bottom-4 -right-4 text-7xl text-gray-400 dark:text-gray-500 opacity-[0.06] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:-rotate-12 transition-all duration-500 pointer-events-none" />
+                      
+                      <div className={"p-3 rounded-2xl bg-gradient-to-br " + feature.color + " shadow-lg mb-3 group-hover:-translate-y-1 transition-transform duration-300"}>
+                        <feature.icon className="text-2xl text-white drop-shadow-md group-hover:scale-110 transition-transform duration-300" />
+                      </div>
+                      
+                      <h3 className="font-bold text-gray-900 dark:text-white mb-1 text-sm z-10">{feature.title}</h3>
+                      <p className="text-gray-600 dark:text-gray-300 text-xs font-medium z-10 break-words w-full">{feature.description}</p>
+                    </div>
+                  </motion.div>
+                ))}`;
+
+  if(content.match(oldMappingRegex)) {
+      content = content.replace(oldMappingRegex, newMapping);
+      fs.writeFileSync(filePath, content, 'utf8');
+      console.log("Updated " + filePath);
+  } else {
+      console.log("Failed to update " + filePath);
+  }
+}
+
+updateCards('d:/GP/Frontend/sign-language/src/components/Login.jsx');
+updateCards('d:/GP/Frontend/sign-language/src/components/Register.jsx');
