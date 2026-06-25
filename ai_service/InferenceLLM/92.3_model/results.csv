@@ -1,0 +1,2 @@
+experiment,removed,train_loss,train_acc,val_loss,val_acc,test_loss,test_acc
+TCN_model,,1.175082112474888,1.0,1.6064795879387634,0.9049093321539142,1.540295426581747,0.9235908141962421

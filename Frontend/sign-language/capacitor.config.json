@@ -1,0 +1,9 @@
+{
+  "appId": "com.aisign.translator",
+  "appName": "AI Sign Language Translator",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "http",
+    "cleartext": true
+  }
+}
