@@ -12,9 +12,9 @@ export default function Logo({ size = 42 }) {
         {/* Gradient */}
         <defs>
           <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#6A3093" />
-            <stop offset="50%" stopColor="#A044FF" />
-            <stop offset="100%" stopColor="#BF5AE0" />
+            <stop offset="0%" stopColor="var(--theme-primary-custom-1)" />
+            <stop offset="50%" stopColor="var(--theme-primary-custom-2)" />
+            <stop offset="100%" stopColor="var(--theme-primary-custom-3)" />
           </linearGradient>
         </defs>
 

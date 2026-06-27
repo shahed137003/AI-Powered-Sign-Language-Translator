@@ -4,7 +4,7 @@ export default function HelloHand3D() {
   return (
     <div className="relative w-[180px] h-[180px] flex items-center justify-center">
       {/* Glow */}
-      <div className="absolute inset-0 rounded-full blur-2xl bg-gradient-to-br from-[#A044FF55] to-[#BF5AE055]" />
+      <div className="absolute inset-0 rounded-full blur-2xl bg-gradient-to-br from-primary-custom-2/35 to-primary-custom-3/35" />
 
       {/* 3D Illusion Hand */}
       <motion.svg
@@ -32,9 +32,9 @@ export default function HelloHand3D() {
         {/* Gradient Definition */}
         <defs>
           <linearGradient id="grad" x1="0" y1="0" x2="300" y2="300">
-            <stop offset="0%" stopColor="#6A3093" />
-            <stop offset="50%" stopColor="#A044FF" />
-            <stop offset="100%" stopColor="#BF5AE0" />
+            <stop offset="0%" stopColor="var(--theme-primary-custom-1)" />
+            <stop offset="50%" stopColor="var(--theme-primary-custom-2)" />
+            <stop offset="100%" stopColor="var(--theme-primary-custom-3)" />
           </linearGradient>
         </defs>
       </motion.svg>
