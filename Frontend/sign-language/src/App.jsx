@@ -47,7 +47,7 @@ function App() {
           element={
             <>
               <Home />
-              <Features />
+              <Features />              <HelpGuide />
               
               
                 <Footer />
