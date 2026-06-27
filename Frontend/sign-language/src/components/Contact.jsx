@@ -74,9 +74,9 @@ export default function Contact() {
 
   const contactInfo = [
     { icon: FaEnvelope, title: "Email Support", value: "support@linguasign.io", color: "from-purple-500 to-pink-500" },
-    { icon: FaPhone, title: "Phone Support", value: "+1 (555) 123-4567", color: "from-blue-500 to-cyan-500" },
-    { icon: FaMapMarkerAlt, title: "Headquarters", value: "San Francisco, CA", color: "from-green-500 to-emerald-500" },
-    { icon: FaRegClock, title: "Business Hours", value: "Mon-Fri, 9AM-6PM PST", color: "from-orange-500 to-yellow-500" },
+    { icon: FaPhone, title: "Phone Support", value: "+02-21-44-20-11", color: "from-blue-500 to-cyan-500" },
+    { icon: FaMapMarkerAlt, title: "Headquarters", value: "Faculty Of Engineering, Ain Shams University", color: "from-green-500 to-emerald-500" },
+    { icon: FaRegClock, title: "Support Hours", value: "Available 24/7", color: "from-orange-500 to-yellow-500" },
   ];
 
   return (

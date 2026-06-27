@@ -3,7 +3,7 @@ import React from "react";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import Features from "./components/Features";
-// import About from "./components/About";
+import About from "./components/About";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Chat from "./components/Chat";
@@ -33,7 +33,7 @@ function App() {
             <>
               <Home />
               <Features />
-              {/* <About /> */}
+              <About />
                 <Footer />
     
             </>

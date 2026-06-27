@@ -27,8 +27,7 @@ engine = create_engine(
     echo=False,         # set True only for debugging SQL queries
     poolclass=NullPool, # no connection reuse — fresh connection every request
     connect_args={
-        "timeout": 30,      # connection timeout in seconds
-        "autocommit": False # explicit transaction control
+        "timeout": 30
     }
 )
 
