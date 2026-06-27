@@ -168,7 +168,7 @@ export default function About() {
     { name: "Demiana Ayman", role: "AI & Backend Engineer", icon: <FaLaptopCode />, expertise: ["Node.js", "Python", "AWS"], gradient: "from-primary-600 to-primary-800" },
     { name: "Kareem Reda", role: "AI Engineer", icon: <FaBrain />, expertise: ["PyTorch", "Computer Vision", "MLOps"], gradient: "from-primary-500 to-primary-700" },
     { name: "Yahya Aboamer", role: "AI Engineer", icon: <FaCode />, expertise: ["Deep Learning", "TensorFlow", "Kubernetes"], gradient: "from-primary-600 to-primary-800" },
-    { name: "Mariam Hany", role: "AI & Frontend Engineer", icon: <FaBrain />, expertise: ["Next.js", "TypeScript", "WebGL"], gradient: "from-primary-500 to-primary-700" },
+    { name: "Mariam Hany", role: "AI Engineer", icon: <FaBrain />, expertise: ["Deep Learning", "Computer Vision", "TensorFlow"], gradient: "from-primary-500 to-primary-700" },
     { name: "Hussam Elsayed", role: "AI Engineer", icon: <FaUserAlt />, expertise: ["TensorFlow", "Data Science", "Docker"], gradient: "from-primary-600 to-primary-800" },
   ];
 

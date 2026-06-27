@@ -325,18 +325,7 @@ const ChatInput = ({ onSendMessage, isTyping, onTyping }) => {
 
   return (
     <div className="relative px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
-      {isTyping && (
-        <div className="absolute -top-8 left-4 bg-white dark:bg-gray-800 px-3 py-2 rounded-full shadow-md border border-gray-200 dark:border-gray-700">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-              <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-              <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-            </div>
-            <span className="text-sm text-gray-600 dark:text-gray-400">Typing...</span>
-          </div>
-        </div>
-      )}
+      
 
       {showEmojiPicker && (
         <EmojiPicker 
@@ -1268,9 +1257,9 @@ export default function ChatPage() {
 
           {/* Chat Input */}
           {activeConversation && (
-            <ChatInput 
+            <ChatInput
               onSendMessage={handleSendMessage}
-              isTyping={isTyping}
+              isTyping={false}
               onTyping={setIsTyping}
             />
           )}

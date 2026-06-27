@@ -32,17 +32,20 @@ export default function Profile() {
   const [profileData, setProfileData] = useState({
     name: "",
     email: "",
-    password: "",
     theme: "system",
     preferredLanguage: "ASL",
     notifications: true,
     twoFactor: false,
     autoSave: true
   });
-  const [showToast, setShowToast] = useState(false);
+  // Password change fields
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [saving, setSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [showToast, setShowToast] = useState(false);
   const [avatar, setAvatar] = useState(PROFILE_PLACEHOLDER_URL);
 
   const fileInputRef = useRef(null);
@@ -93,18 +96,50 @@ export default function Profile() {
     if (!authUser) return;
     setSaving(true);
     setErrorMsg("");
+
+    // Validate password fields
+    const isOldFilled = oldPassword.trim().length > 0;
+    const isNewFilled = newPassword.trim().length > 0;
+    const isConfirmFilled = confirmPassword.trim().length > 0;
+
+    if (isOldFilled || isNewFilled || isConfirmFilled) {
+      // If any password field is filled, all three must be filled
+      if (!isOldFilled || !isNewFilled || !isConfirmFilled) {
+        setErrorMsg("Please fill in all password fields to change your password.");
+        setSaving(false);
+        return;
+      }
+      if (newPassword !== confirmPassword) {
+        setErrorMsg("New password and confirm password do not match.");
+        setSaving(false);
+        return;
+      }
+      if (newPassword.length < 6) {
+        setErrorMsg("New password must be at least 6 characters long.");
+        setSaving(false);
+        return;
+      }
+    }
+
     try {
-      // Save name/username and password to the backend
-      await axios.put(`${getApiUrl()}/users/me`, {
+      // Prepare payload – send old and new password only if they are filled
+      const payload = {
         username: profileData.name,
-        password: profileData.password
-      });
+      };
+      if (isOldFilled && isNewFilled) {
+        payload.old_password = oldPassword;
+        payload.new_password = newPassword;
+      }
+
+      await axios.put(`${getApiUrl()}/users/me`, payload);
 
       // Update AuthContext user state
       updateUser({ username: profileData.name });
 
-      // Clear password field in state after success
-      setProfileData(prev => ({ ...prev, password: "" }));
+      // Clear password fields after success
+      setOldPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
 
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
@@ -133,7 +168,6 @@ export default function Profile() {
         setAvatar(base64String);
         if (authUser?.email) {
           localStorage.setItem(`profile_pic_${authUser.email}`, base64String);
-          // Dispatch a storage event so that Navbar updates immediately if needed
           window.dispatchEvent(new Event('storage'));
         }
       };
@@ -258,7 +292,6 @@ export default function Profile() {
   return (
     <div className="relative w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-purple-50/60 dark:from-[#0a0518] dark:via-[#110a2e] dark:to-[#1e0f5c] py-24 px-4 sm:px-6 lg:px-8 font-inter overflow-hidden z-0">
       
-      {/* Hidden file input for picture upload */}
       <input
         type="file"
         ref={fileInputRef}
@@ -267,7 +300,6 @@ export default function Profile() {
         className="hidden"
       />
 
-      {/* Premium Geometric Grid */}
       <div className="absolute inset-0 opacity-40 dark:opacity-60 pointer-events-none">
         <div className="absolute inset-0" style={{
           backgroundImage: `
@@ -278,11 +310,9 @@ export default function Profile() {
         }} />
       </div>
 
-      {/* Animated glows - pointer-events-none added to avoid blocking mobile taps */}
       <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-gradient-to-r from-purple-600/10 via-pink-600/10 to-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-gradient-to-r from-indigo-600/10 via-purple-600/10 to-pink-600/10 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* Save Toast Notification */}
       <motion.div
         initial={{ x: "100%", opacity: 0 }}
         animate={showToast ? { x: 0, opacity: 1 } : { x: "100%", opacity: 0 }}
@@ -301,7 +331,6 @@ export default function Profile() {
         </div>
       </motion.div>
 
-      {/* Header */}
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -343,7 +372,6 @@ export default function Profile() {
           Manage your personal details, preferences, and track your AI translation journey all in one place.
         </motion.p>
 
-        {/* Decorative Elements */}
         <motion.div
           variants={fadeUp}
           className="flex items-center justify-center gap-8 mt-10"
@@ -362,7 +390,6 @@ export default function Profile() {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left Column */}
           <div className="lg:w-2/5 space-y-8">
-            {/* Profile Card */}
             <Card hover={true} className="text-center">
               <div className="relative mb-6">
                 <div 
@@ -414,7 +441,6 @@ export default function Profile() {
               </div>
             </Card>
 
-            {/* Quick Actions */}
             <Card>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
                 <Zap className="text-purple-600" size={20} />
@@ -434,7 +460,6 @@ export default function Profile() {
 
           {/* Right Column */}
           <div className="lg:w-3/5 space-y-8">
-            {/* Personal Details */}
             <Card>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
                 <User className="text-purple-600" size={24} />
@@ -461,20 +486,51 @@ export default function Profile() {
                   disabled={true}
                   icon={<Mail size={18} />}
                 />
-                <InputField
-                  label="Password"
-                  type="password"
-                  name="password"
-                  value={profileData.password}
-                  onChange={handleInputChange}
-                  placeholder="Enter new password"
-                  icon={<Lock size={18} />}
-                />
+              </div>
 
+              {/* Password Change Section */}
+              <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+                <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                  <Lock size={18} className="text-purple-600" />
+                  Change Password
+                </h4>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <InputField
+                    label="Current Password"
+                    type="password"
+                    name="oldPassword"
+                    value={oldPassword}
+                    onChange={(e) => setOldPassword(e.target.value)}
+                    placeholder="Enter current password"
+                    icon={<Lock size={18} />}
+                  />
+                  <div className="md:col-span-2 grid md:grid-cols-2 gap-6">
+                    <InputField
+                      label="New Password"
+                      type="password"
+                      name="newPassword"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      placeholder="Enter new password"
+                      icon={<Lock size={18} />}
+                    />
+                    <InputField
+                      label="Confirm New Password"
+                      type="password"
+                      name="confirmPassword"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="Confirm new password"
+                      icon={<Lock size={18} />}
+                    />
+                  </div>
+                </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                  Leave all password fields empty to keep your current password unchanged.
+                </p>
               </div>
             </Card>
 
-            {/* Preferences */}
             <Card>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
                 <Palette className="text-purple-600" size={24} />
@@ -519,7 +575,6 @@ export default function Profile() {
               </div>
             </Card>
 
-            {/* Save Button */}
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}

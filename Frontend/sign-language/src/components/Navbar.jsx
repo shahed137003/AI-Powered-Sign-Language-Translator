@@ -7,7 +7,6 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import { useTheme } from "../context/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
-
 export default function Navbar() {
   const [darkMode, setDarkMode] = useState(() => {
     if (
@@ -80,8 +79,9 @@ export default function Navbar() {
 
   const navItems = [
     { name: "Home", to: "/", icon: <TbHome />, color: "from-primary-500 to-primary-400" },
-    { name: "Translate", to: "/translate", icon: <BsTranslate />, color: "from-primary-500 to-primary-300" },
+    { name: "About", to: "/about" },
     { name: "Guide", to: "/guide", icon: <TbHelp /> },
+    { name: "Translate", to: "/translate", icon: <BsTranslate />, color: "from-primary-500 to-primary-300" },
     { name: "Profile", to: "/profile", icon: <BsStars />, color: "from-primary-600 to-primary-400" },
     { name: "Contact", to: "/contactus", icon: <TbMail />, color: "from-primary-500 to-primary-400" },
     

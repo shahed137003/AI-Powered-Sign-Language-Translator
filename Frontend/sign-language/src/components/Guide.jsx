@@ -438,7 +438,7 @@ export default function HelpGuide() {
                 ? "Loading signs..."
                 : error
                 ? "Error loading signs"
-                : `Explore our extensive library of ${allSigns.length}+ sign language glosses`}
+                : `Explore our extensive library of ${allSigns.length} sign language glosses`}
             </p>
           </div>
 

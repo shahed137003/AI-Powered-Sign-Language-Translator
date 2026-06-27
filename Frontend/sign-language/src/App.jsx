@@ -3,7 +3,7 @@ import React from "react";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import Features from "./components/Features";
-// import About from "./components/About";
+import About from "./components/About";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Chat from "./components/Chat";
@@ -15,7 +15,6 @@ import Register from "./components/Register";
 import HelloHand3D from "./components/HelloHand3D";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import About from "./components/About";
 import Chatbot from "./components/Chatbot";
 import ForgetPassword from "./components/ForgetPassword";
 import ResetPassword from "./components/ResetPassword";
@@ -49,7 +48,7 @@ function App() {
             <>
               <Home />
               <Features />
-              <About /> 
+              
               
                 <Footer />
     
@@ -75,6 +74,16 @@ function App() {
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/chatbot" element={<ProtectedRoute><Chatbot /></ProtectedRoute>} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/about" element={<About />} />
+
         <Route
           path="/dashboard"
           element={
