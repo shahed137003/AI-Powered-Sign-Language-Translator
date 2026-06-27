@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { FaHandBackFist, FaBars, FaXmark } from "react-icons/fa6";
-import { FaSun, FaMoon, FaSignInAlt, FaSignOutAlt, FaUser, FaCaretDown } from "react-icons/fa";
-import { BsTranslate, BsFillChatDotsFill } from "react-icons/bs";
-import { TbHome, TbMail, TbUser } from "react-icons/tb";
+import { FaSun, FaMoon, FaSignInAlt, FaSignOutAlt, FaUser, FaCaretDown, FaCrown, FaPalette } from "react-icons/fa";
+import { BsTranslate, BsFillChatDotsFill, BsStars, BsLightningCharge } from "react-icons/bs";
+import { TbHome, TbMail, TbUser, TbSparkles,TbHelp, TbMessageChatbot } from "react-icons/tb";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
+import { useTheme } from "../context/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
@@ -22,27 +23,13 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const [avatar, setAvatar] = useState(null);
+  const [appearanceMenuOpen, setAppearanceMenuOpen] = useState(false);
+  const [hoveredItem, setHoveredItem] = useState(null);
 
   const { user, logout, isAuthenticated } = useAuth();
+  const { themeColor, setThemeColor } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-
-  // Synchronize user profile picture (avatar) locally
-  useEffect(() => {
-    const updateAvatar = () => {
-      if (user?.email) {
-        const pic = localStorage.getItem(`profile_pic_${user.email}`);
-        setAvatar(pic);
-      } else {
-        setAvatar(null);
-      }
-    };
-    updateAvatar();
-    
-    window.addEventListener('storage', updateAvatar);
-    return () => window.removeEventListener('storage', updateAvatar);
-  }, [user]);
 
   // Apply dark mode to document
   useEffect(() => {
@@ -76,9 +63,15 @@ export default function Navbar() {
   };
 
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
-  const toggleUserMenu = () => setUserMenuOpen(!userMenuOpen);
+  const toggleUserMenu = () => {
+    setUserMenuOpen(!userMenuOpen);
+    setAppearanceMenuOpen(false);
+  };
 
-  // Logout function
+  const toggleAppearanceMenu = () => {
+    setAppearanceMenuOpen(!appearanceMenuOpen);
+    setUserMenuOpen(false);
+  };
   const handleLogout = () => {
     logout();
     navigate('/');
@@ -86,16 +79,18 @@ export default function Navbar() {
   };
 
   const navItems = [
-    { name: "Home", to: "/", icon: <TbHome /> },
-    { name: "Translate", to: "/translate", icon: <BsTranslate /> },
-    { name: "Profile", to: "/profile", icon: <TbUser /> },
-    { name: "Contact", to: "/contactus", icon: <TbMail /> },
+    { name: "Home", to: "/", icon: <TbHome />, color: "from-primary-500 to-primary-400" },
+    { name: "Translate", to: "/translate", icon: <BsTranslate />, color: "from-primary-500 to-primary-300" },
+    { name: "Guide", to: "/guide", icon: <TbHelp /> },
+    { name: "Profile", to: "/profile", icon: <BsStars />, color: "from-primary-600 to-primary-400" },
+    { name: "Contact", to: "/contactus", icon: <TbMail />, color: "from-primary-500 to-primary-400" },
   ];
 
   const userMenuItems = [
-    { name: "My Profile", to: "/profile", icon: <FaUser /> },
-    { name: "Contact Us", to: "/contactus", icon: <TbMail /> },
-    { name: "AI Assistant", to: "/chatbot", icon: <BsFillChatDotsFill /> },
+    { name: "Dashboard", to: "/", icon: <TbHome />, color: "from-primary-500 to-primary-400" },
+    { name: "Profile", to: "/profile", icon: <FaUser />, color: "from-primary-600 to-primary-300" },
+    { name: "Chatbot", to: "/chat", icon: <TbMessageChatbot />, color: "from-primary-500 to-primary-400" },
+    { name: "Settings", to: "/profile", icon: <BsLightningCharge />, color: "from-primary-600 to-primary-400" },
   ];
 
   // Nav animations
@@ -125,28 +120,18 @@ export default function Navbar() {
   };
 
   const mobileMenuVariants = {
-    hidden: { 
-      opacity: 0,
-      height: 0,
-      y: -20
-    },
+    hidden: { opacity: 0, height: 0, y: -20 },
     visible: { 
       opacity: 1,
       height: "auto",
       y: 0,
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut"
-      }
+      transition: { duration: 0.3, ease: "easeInOut" }
     },
     exit: { 
       opacity: 0,
       height: 0,
       y: -20,
-      transition: {
-        duration: 0.2,
-        ease: "easeIn"
-      }
+      transition: { duration: 0.2, ease: "easeIn" }
     }
   };
 
@@ -156,16 +141,19 @@ export default function Navbar() {
       animate="visible"
       variants={containerVariants}
       className={`
-        fixed top-0 left-0 w-full px-4 sm:px-6 lg:px-16 py-3 flex items-center justify-between
-        bg-gradient-to-r from-white/90 via-white/95 to-white/90 
-        dark:from-[#0f0c29]/95 dark:via-[#0f0c29]/95 dark:to-[#0f0c29]/95
+        fixed top-0 left-0 w-full px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between
+        bg-gradient-to-r from-white/80 via-white/90 to-white/80 
+        dark:from-primary-bg-1/95 dark:via-primary-bg-2/95 dark:to-primary-bg-1/95
         backdrop-blur-xl
-        border-b border-gray-200/60 dark:border-purple-900/50
-        ${scrolled ? "shadow-2xl shadow-purple-500/10 dark:shadow-purple-900/30" : "shadow-lg shadow-purple-500/5 dark:shadow-purple-900/20"}
-        transition-all duration-500 z-[9999]
+        border-b-2 border-primary-200/50 dark:border-primary-900/40
+        ${scrolled 
+          ? "shadow-2xl shadow-primary-500/15 dark:shadow-primary-900/30" 
+          : "shadow-lg shadow-primary-500/5 dark:shadow-primary-900/20"
+        }
+        transition-all duration-500 z-50
       `}
     >
-      {/* Logo with animation */}
+      {/* Logo with enhanced animation */}
       <motion.div
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -177,21 +165,28 @@ export default function Navbar() {
         >
           <div className="relative">
             <motion.div
-              animate={{ rotate: [0, 10, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              animate={{ 
+                rotate: [0, 10, 0, -5, 0],
+                scale: [1, 1.05, 1]
+              }}
+              transition={{ 
+                duration: 4, 
+                repeat: Infinity, 
+                ease: "easeInOut",
+                repeatDelay: 2
+              }}
               className="relative"
             >
-              <FaHandBackFist className="text-3xl sm:text-4xl text-[#BF5AE0] " />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#A044FF] to-[#BF5AE0] blur-md opacity-60 dark:opacity-40 -z-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-custom-2 to-primary-custom-3 rounded-full blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+              <FaHandBackFist className="text-3xl sm:text-4xl text-primary-custom-3 relative z-10" />
             </motion.div>
           </div>
           <span className="
-            text-2xl sm:text-3xl font-bold italic
-            bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] 
-            
+            text-2xl sm:text-3xl font-black italic
+            bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 
             bg-clip-text text-transparent 
-            drop-shadow-sm
-            group-hover:drop-shadow-lg
+            drop-shadow-lg
+            group-hover:drop-shadow-xl
             transition-all duration-300
           ">
             LinguaSign
@@ -199,7 +194,7 @@ export default function Navbar() {
         </NavLink>
       </motion.div>
 
-      {/* Desktop Navigation */}
+      {/* Desktop Navigation - Enhanced */}
       <div className="hidden md:flex items-center gap-1 lg:gap-2">
         {navItems.map((item, i) => (
           <motion.div
@@ -208,38 +203,48 @@ export default function Navbar() {
             variants={itemVariants}
             initial="hidden"
             animate="visible"
+            onMouseEnter={() => setHoveredItem(i)}
+            onMouseLeave={() => setHoveredItem(null)}
           >
             <NavLink
               to={item.to}
               className={({ isActive }) => `
-                relative px-4 py-2 mx-1 rounded-xl flex items-center gap-2
-                text-gray-700 dark:text-gray-200 font-medium
+                relative px-5 py-2.5 mx-1 rounded-xl flex items-center gap-2
+                text-gray-700 dark:text-gray-200 font-semibold text-sm
                 transition-all duration-300 group
                 ${isActive 
-                  ? "text-purple-700 dark:text-purple-300 bg-gradient-to-r from-purple-50 to-purple-100/50 dark:from-purple-900/30 dark:to-purple-800/20 shadow-inner" 
-                  : "hover:text-purple-600 dark:hover:text-purple-300 hover:bg-white/50 dark:hover:bg-white/5"
+                  ? "text-primary-700 dark:text-primary-300 bg-gradient-to-r from-primary-50/80 to-primary-100/50 dark:from-primary-900/40 dark:to-primary-800/20 shadow-inner border border-primary-200/50 dark:border-primary-700/30" 
+                  : "hover:text-primary-600 dark:hover:text-primary-300 hover:bg-white/60 dark:hover:bg-white/10"
                 }
               `}
             >
-              {/* MODIFIED HERE: Wrapped all children inside the render prop function */}
               {({ isActive }) => (
                 <>
-                  <span className="text-lg opacity-80">{item.icon}</span>
+                  <motion.span 
+                    className="text-lg opacity-80"
+                    animate={hoveredItem === i || isActive ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {item.icon}
+                  </motion.span>
                   {item.name}
                   
-                  {/* Active indicator */}
+                  {/* Active indicator with gradient */}
                   {isActive && (
                     <motion.div
                       layoutId="activeIndicator"
-                      className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 h-1 rounded-full bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]"
-                      initial={{ width: 0 }}
-                      animate={{ width: 32 }}
+                      className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 h-1 rounded-full bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3"
+                      initial={{ width: 0, opacity: 0 }}
+                      animate={{ width: 32, opacity: 1 }}
                       transition={{ duration: 0.3 }}
                     />
                   )}
                   
                   {/* Hover glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-400/0 to-purple-500/0 rounded-xl group-hover:via-purple-400/5 group-hover:opacity-100 opacity-0 transition-all duration-300" />
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-r from-primary-500/0 via-primary-400/10 to-primary-500/0 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300"
+                    animate={hoveredItem === i ? { opacity: 1 } : { opacity: 0 }}
+                  />
                 </>
               )}
             </NavLink>
@@ -249,50 +254,48 @@ export default function Navbar() {
 
       {/* Right side controls */}
       <div className="flex items-center gap-3 lg:gap-4">
-        {/* User Profile Section */}
+        {/* User Profile Section - Enhanced */}
         {isAuthenticated ? (
           <div className="relative">
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.98 }}
               onClick={toggleUserMenu}
               className="
                 hidden sm:flex items-center gap-3 px-4 py-2
-                bg-gradient-to-r from-white/80 to-white/60 
-                dark:from-gray-800/80 dark:to-gray-900/60
+                bg-white/80 dark:bg-white/5
                 backdrop-blur-xl
-                border border-gray-200/60 dark:border-purple-900/50
+                border-2 border-primary-200/50 dark:border-primary-800/50
                 rounded-2xl
-                shadow-lg shadow-purple-500/10 dark:shadow-purple-900/20
-                hover:shadow-xl hover:shadow-purple-500/20 dark:hover:shadow-purple-900/30
+                shadow-lg shadow-primary-500/10 dark:shadow-primary-900/20
+                hover:shadow-xl hover:shadow-primary-500/20 dark:hover:shadow-primary-900/30
+                hover:border-primary-300 dark:hover:border-primary-600
                 transition-all duration-300 group
               "
             >
               <div className="relative">
                 <div className="
                   w-10 h-10 rounded-full 
-                  bg-gradient-to-br from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
+                  bg-gradient-to-br from-primary-custom-1 via-primary-custom-2 to-primary-custom-3
                   flex items-center justify-center
                   shadow-inner
-                  overflow-hidden
                 ">
-                  {avatar ? (
-                    <img src={avatar} alt="User Profile" className="w-full h-full object-cover" />
-                  ) : (
-                    <FaUser className="text-white text-sm" />
-                  )}
+                  <FaUser className="text-white text-sm" />
                 </div>
-                <div className="
-                  absolute -inset-1 rounded-full 
-                  bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] 
-                  opacity-0 group-hover:opacity-20
-                  blur-md transition-opacity duration-300
-                " />
+                <motion.div 
+                  className="
+                    absolute -inset-1 rounded-full 
+                    bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 
+                    blur-md transition-opacity duration-300
+                  "
+                  animate={{ opacity: [0, 0.3, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
               </div>
               
               <div className="text-left">
-                <p className="text-sm font-semibold text-gray-800 dark:text-white">
-                  {user?.username || user?.email?.split('@')[0] || 'User'}
+                <p className="text-sm font-black text-gray-800 dark:text-white">
+                  {user?.email?.split('@')[0] || 'User'}
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[120px]">
                   {user?.email}
@@ -300,13 +303,13 @@ export default function Navbar() {
               </div>
               
               <FaCaretDown className={`
-                text-gray-400 dark:text-gray-500 
-                transition-transform duration-300
-                ${userMenuOpen ? "rotate-180" : ""}
+                text-primary-500 dark:text-primary-400 
+                transition-all duration-300
+                ${userMenuOpen ? "rotate-180" : "group-hover:rotate-180"}
               `} />
             </motion.button>
 
-            {/* User Dropdown Menu */}
+            {/* User Dropdown Menu - Enhanced */}
             <AnimatePresence>
               {userMenuOpen && (
                 <motion.div
@@ -315,35 +318,39 @@ export default function Navbar() {
                   exit={{ opacity: 0, y: 10, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
                   className="
-                    absolute right-0 mt-2 w-64
-                    bg-white/95 dark:bg-gray-900/95
+                    absolute right-0 mt-3 w-72
+                    bg-white/98 dark:bg-primary-bg-1/98
                     backdrop-blur-xl
-                    border border-gray-200/60 dark:border-purple-900/50
+                    border-2 border-primary-200/50 dark:border-primary-800/50
                     rounded-2xl
-                    shadow-2xl shadow-purple-500/20 dark:shadow-purple-900/40
+                    shadow-2xl shadow-primary-500/20 dark:shadow-primary-900/40
                     overflow-hidden
                   "
                 >
+                  {/* Premium Badge */}
+                  <div className="absolute top-2 right-2">
+                    <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-primary-500/20 to-primary-400/10 text-[10px] font-bold text-primary-600 dark:text-primary-400">
+                      <FaCrown className="text-[8px]" />
+                      Premium
+                    </div>
+                  </div>
+
                   {/* User info header */}
-                  <div className="p-4 border-b border-gray-100 dark:border-gray-800">
-                    <div className="flex items-center gap-3">
+                  <div className="p-5 border-b-2 border-primary-200/30 dark:border-primary-800/30 bg-gradient-to-br from-primary-50/30 to-transparent dark:from-primary-900/10">
+                    <div className="flex items-center gap-4">
                       <div className="
-                        w-12 h-12 rounded-full 
-                        bg-gradient-to-br from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
+                        w-14 h-14 rounded-full 
+                        bg-gradient-to-br from-primary-custom-1 via-primary-custom-2 to-primary-custom-3
                         flex items-center justify-center
-                        overflow-hidden
+                        shadow-lg
                       ">
-                        {avatar ? (
-                          <img src={avatar} alt="User Profile" className="w-full h-full object-cover" />
-                        ) : (
-                          <FaUser className="text-white text-lg" />
-                        )}
+                        <FaUser className="text-white text-xl" />
                       </div>
                       <div>
-                        <p className="font-semibold text-gray-800 dark:text-white">
-                          {user?.username || user?.email?.split('@')[0] || 'User'}
+                        <p className="font-black text-gray-800 dark:text-white text-lg">
+                          {user?.email?.split('@')[0] || 'User'}
                         </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+                        <p className="text-sm text-gray-500 dark:text-gray-400 truncate max-w-[180px]">
                           {user?.email}
                         </p>
                       </div>
@@ -351,44 +358,48 @@ export default function Navbar() {
                   </div>
 
                   {/* Menu items */}
-                  <div className="p-2">
+                  <div className="p-3">
                     {userMenuItems.map((item) => (
                       <NavLink
                         key={item.to}
                         to={item.to}
+                        onClick={() => setUserMenuOpen(false)}
                         className="
                           flex items-center gap-4 px-4 py-3 rounded-xl
-                          text-gray-700 dark:text-gray-300
-                          hover:bg-purple-50 dark:hover:bg-purple-900/30
-                          hover:text-purple-700 dark:hover:text-purple-300
-                          transition-all duration-200
+                          text-gray-700 dark:text-gray-300 font-medium
+                          hover:bg-gradient-to-r hover:from-primary-50 hover:to-primary-100/50 dark:hover:from-primary-900/30 dark:hover:to-primary-800/20
+                          hover:text-primary-700 dark:hover:text-primary-300
+                          transition-all duration-200 group
                         "
                       >
-                        <span className="text-lg">{item.icon}</span>
+                        <span className="text-lg text-primary-500 group-hover:scale-110 transition-transform">
+                          {item.icon}
+                        </span>
                         {item.name}
                       </NavLink>
                     ))}
                   </div>
 
                   {/* Logout button */}
-                  <div className="p-4 border-t border-gray-100 dark:border-gray-800">
-                    <button
+                  <div className="p-4 border-t-2 border-primary-200/30 dark:border-primary-800/30 bg-gradient-to-t from-primary-50/20 to-transparent dark:from-primary-900/5">
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                       onClick={handleLogout}
                       className="
                         w-full flex items-center justify-center gap-2
                         px-4 py-3 rounded-xl
-                        bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
-                        text-white font-medium
-                        shadow-lg shadow-purple-500/30
-                        hover:shadow-xl hover:shadow-purple-500/40
-                        active:scale-[0.98]
+                        bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3
+                        text-white font-bold
+                        shadow-lg shadow-primary-500/30
+                        hover:shadow-xl hover:shadow-primary-500/40
                         transition-all duration-300
                         group
                       "
                     >
                       <FaSignOutAlt className="group-hover:rotate-180 transition-transform duration-300" />
                       Logout
-                    </button>
+                    </motion.button>
                   </div>
                 </motion.div>
               )}
@@ -398,91 +409,141 @@ export default function Navbar() {
           <NavLink
             to="/login"
             className="
-              hidden sm:flex items-center gap-2 px-5 py-2.5
-              bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
-              text-white font-medium rounded-4xl
-              shadow-lg shadow-purple-500/30
-              hover:shadow-xl hover:shadow-purple-500/40
-              hover:scale-[1.02] active:scale-[0.98]
+              hidden sm:flex items-center gap-2 px-6 py-2.5
+              bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3
+              text-white font-bold rounded-full
+              shadow-lg shadow-primary-500/40
+              hover:shadow-xl hover:shadow-primary-500/60
+              hover:scale-105 active:scale-95
               transition-all duration-300
               group relative overflow-hidden
             "
           >
             <span className="
-              absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
+              absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent 
               -translate-x-full group-hover:translate-x-full 
               transition-transform duration-1000
             " />
             <FaSignInAlt className="group-hover:translate-x-1 transition-transform duration-300" />
-            Login
+            Sign In
           </NavLink>
         )}
 
-        {/* Dark Mode Toggle - Enhanced */}
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={toggleDarkMode}
-          aria-label="Toggle Dark Mode"
-          className="
-            relative w-16 h-8 flex items-center
-            bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200
-            dark:from-gray-800 dark:via-gray-900 dark:to-gray-800
-            rounded-full p-1
-            shadow-inner shadow-gray-400/50 dark:shadow-gray-900
-            border border-gray-300/50 dark:border-gray-700/50
-            transition-all duration-500
-            group
-          "
-        >
-          <motion.div
-            layout
-            transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            className={`
-              absolute w-6 h-6 rounded-full flex items-center justify-center
-              shadow-lg
-              ${darkMode 
-                ? "translate-x-8 bg-gradient-to-br from-yellow-300 to-orange-400" 
-                : "translate-x-0 bg-gradient-to-br from-white to-gray-100"
-              }
-            `}
+        {/* Professional Appearance Dropdown */}
+        <div className="relative hidden sm:block">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={toggleAppearanceMenu}
+            aria-label="Appearance Settings"
+            className="
+              relative w-10 h-10 flex items-center justify-center
+              bg-white/80 dark:bg-white/5
+              backdrop-blur-xl
+              rounded-full
+              border border-primary-200/50 dark:border-primary-800/50
+              shadow-md hover:shadow-lg transition-all duration-300
+              text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400
+            "
           >
-            {darkMode ? (
-              <FaSun className="text-yellow-600 text-xs" />
-            ) : (
-              <FaMoon className="text-purple-600 text-xs" />
-            )}
-          </motion.div>
+            <FaPalette size={16} />
+          </motion.button>
           
-          {/* Background gradients */}
-          <div className={`
-            absolute inset-0 rounded-full transition-opacity duration-500
-            ${darkMode ? "opacity-100" : "opacity-0"}
-          `}>
-            <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 rounded-full" />
-          </div>
-          <div className={`
-            absolute inset-0 rounded-full transition-opacity duration-500
-            ${darkMode ? "opacity-0" : "opacity-100"}
-          `}>
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-full" />
-          </div>
-        </motion.button>
+          <AnimatePresence>
+            {appearanceMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="
+                  absolute right-0 mt-3 p-4 w-64
+                  bg-white/95 dark:bg-[#0f0920]/95
+                  backdrop-blur-xl
+                  border border-primary-200/50 dark:border-primary-800/50
+                  rounded-2xl
+                  shadow-2xl shadow-primary-500/10 dark:shadow-primary-900/40
+                  flex flex-col gap-4 z-50
+                "
+              >
+                {/* Theme Mode Segment */}
+                <div>
+                  <div className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">
+                    Appearance
+                  </div>
+                  <div className="flex bg-gray-100 dark:bg-gray-800/50 p-1 rounded-xl">
+                    <button
+                      onClick={() => { if(darkMode) toggleDarkMode(); }}
+                      className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-semibold transition-all ${
+                        !darkMode 
+                          ? 'bg-white dark:bg-gray-700 shadow text-primary-600 dark:text-primary-400' 
+                          : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+                      }`}
+                    >
+                      <FaSun size={14} /> Light
+                    </button>
+                    <button
+                      onClick={() => { if(!darkMode) toggleDarkMode(); }}
+                      className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-semibold transition-all ${
+                        darkMode 
+                          ? 'bg-gray-800 shadow text-primary-400' 
+                          : 'text-gray-500 hover:text-gray-700'
+                      }`}
+                    >
+                      <FaMoon size={14} /> Dark
+                    </button>
+                  </div>
+                </div>
 
-        {/* Mobile Menu Button */}
+                {/* Accent Color Segment */}
+                <div>
+                  <div className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">
+                    Accent Color
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() => setThemeColor('purple')}
+                      className={`flex items-center gap-2 p-2 rounded-xl border transition-all ${
+                        themeColor === 'purple' 
+                          ? 'border-purple-500 bg-purple-50 dark:bg-purple-500/10' 
+                          : 'border-transparent hover:bg-gray-50 dark:hover:bg-white/5'
+                      }`}
+                    >
+                      <div className="w-4 h-4 rounded-full bg-purple-500 shadow-sm"></div>
+                      <span className={`text-sm font-medium ${themeColor === 'purple' ? 'text-purple-700 dark:text-purple-300' : 'text-gray-600 dark:text-gray-400'}`}>Purple</span>
+                    </button>
+                    <button
+                      onClick={() => setThemeColor('midnight-blue')}
+                      className={`flex items-center gap-2 p-2 rounded-xl border transition-all ${
+                        themeColor === 'midnight-blue' 
+                          ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/10' 
+                          : 'border-transparent hover:bg-gray-50 dark:hover:bg-white/5'
+                      }`}
+                    >
+                      <div className="w-4 h-4 rounded-full bg-indigo-600 shadow-sm"></div>
+                      <span className={`text-sm font-medium ${themeColor === 'midnight-blue' ? 'text-indigo-700 dark:text-indigo-300' : 'text-gray-600 dark:text-gray-400'}`}>Blue</span>
+                    </button>
+                  </div>
+                </div>
+
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Mobile Menu Button - Enhanced */}
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={toggleMobileMenu}
           className="
             md:hidden w-10 h-10 flex items-center justify-center
-            bg-gradient-to-r from-white/80 to-white/60
-            dark:from-gray-800/80 dark:to-gray-900/60
+            bg-white/80 dark:bg-white/5
             backdrop-blur-xl
-            border border-gray-200/60 dark:border-purple-900/50
+            border-2 border-primary-200/50 dark:border-primary-800/50
             rounded-xl
-            shadow-lg shadow-purple-500/10 dark:shadow-purple-900/20
-            hover:shadow-xl hover:shadow-purple-500/20 dark:hover:shadow-purple-900/30
+            shadow-lg shadow-primary-500/10 dark:shadow-primary-900/20
+            hover:shadow-xl hover:shadow-primary-500/20 dark:hover:shadow-primary-900/30
             transition-all duration-300
           "
         >
@@ -494,7 +555,7 @@ export default function Navbar() {
         </motion.button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Enhanced */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -504,11 +565,11 @@ export default function Navbar() {
             exit="exit"
             className="
               absolute top-full left-0 w-full md:hidden
-              bg-gradient-to-b from-white/98 via-white/95 to-white/92
-              dark:from-[#0f0c29]/98 dark:via-[#0f0c29]/96 dark:to-[#0f0c29]/94
+              bg-gradient-to-b from-white/98 via-white/96 to-white/94
+              dark:from-primary-bg-1/98 dark:via-primary-bg-2/96 dark:to-primary-bg-1/94
               backdrop-blur-2xl
-              border-b border-gray-200/60 dark:border-purple-900/50
-              shadow-2xl shadow-purple-500/20 dark:shadow-purple-900/40
+              border-b-2 border-primary-200/50 dark:border-primary-800/50
+              shadow-2xl shadow-primary-500/20 dark:shadow-primary-900/40
               overflow-hidden
             "
           >
@@ -525,28 +586,30 @@ export default function Navbar() {
                   <NavLink
                     to={item.to}
                     className={({ isActive }) => `
-                      flex items-center gap-4 px-4 py-4 rounded-2xl
-                      text-lg font-medium
+                      flex items-center gap-4 px-5 py-4 rounded-2xl
+                      text-lg font-bold
                       transition-all duration-300 group
                       ${isActive 
-                        ? "bg-gradient-to-r from-purple-50 to-purple-100/50 dark:from-purple-900/30 dark:to-purple-800/20 text-purple-700 dark:text-purple-300 shadow-inner" 
-                        : "text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-300 hover:bg-white/50 dark:hover:bg-white/5"
+                        ? "bg-gradient-to-r from-primary-50 to-primary-100/50 dark:from-primary-900/30 dark:to-primary-800/20 text-primary-700 dark:text-primary-300 shadow-inner border border-primary-200/50 dark:border-primary-700/30" 
+                        : "text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-300 hover:bg-white/60 dark:hover:bg-white/10"
                       }
                     `}
                   >
-                    {/* MODIFIED HERE: Wrapped all children inside the render prop function */}
                     {({ isActive }) => (
                       <>
                         <span className={`
-                          text-xl transition-transform duration-300
-                          group-hover:scale-110
-                          ${isActive ? "text-purple-600 dark:text-purple-400" : ""}
+                          text-2xl transition-all duration-300
+                          group-hover:scale-110 group-hover:rotate-6
+                          ${isActive ? "text-primary-600 dark:text-primary-400" : ""}
                         `}>
                           {item.icon}
                         </span>
                         {item.name}
                         {isActive && (
-                          <div className="ml-auto w-2 h-2 rounded-full bg-gradient-to-r from-[#6A3093] to-[#A044FF]" />
+                          <motion.div 
+                            layoutId="mobileActiveIndicator"
+                            className="ml-auto w-2 h-2 rounded-full bg-gradient-to-r from-primary-custom-1 to-primary-custom-2" 
+                          />
                         )}
                       </>
                     )}
@@ -554,88 +617,92 @@ export default function Navbar() {
                 </motion.div>
               ))}
 
-              {/* User Section in Mobile */}
-              <div className="pt-4 border-t border-gray-200/50 dark:border-gray-800/50">
+              {/* User Section in Mobile - Enhanced */}
+              <div className="pt-6 border-t-2 border-primary-200/30 dark:border-primary-800/30">
                 {isAuthenticated ? (
                   <>
-                    <div className="flex items-center gap-4 px-4 py-3 rounded-2xl bg-white/50 dark:bg-gray-800/30 mb-4">
+                    <div className="flex items-center gap-4 px-5 py-4 rounded-2xl bg-gradient-to-r from-primary-50/50 to-transparent dark:from-primary-900/20 mb-4 border border-primary-200/30 dark:border-primary-800/30">
                       <div className="
                         w-12 h-12 rounded-full 
-                        bg-gradient-to-br from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
+                        bg-gradient-to-br from-primary-custom-1 via-primary-custom-2 to-primary-custom-3
                         flex items-center justify-center
-                        overflow-hidden
+                        shadow-lg
                       ">
-                        {avatar ? (
-                          <img src={avatar} alt="User Profile" className="w-full h-full object-cover" />
-                        ) : (
-                          <FaUser className="text-white text-lg" />
-                        )}
+                        <FaUser className="text-white text-lg" />
                       </div>
                       <div className="flex-1">
-                        <p className="font-semibold text-gray-800 dark:text-white">
-                          {user?.username || user?.email?.split('@')[0] || 'User'}
+                        <p className="font-black text-gray-800 dark:text-white">
+                          {user?.email?.split('@')[0] || 'User'}
                         </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[180px]">
                           {user?.email}
                         </p>
+                      </div>
+                      <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-gradient-to-r from-primary-500/20 to-primary-400/10">
+                        <FaCrown className="text-primary-500 text-[10px]" />
+                        <span className="text-[10px] font-bold text-primary-600 dark:text-primary-400">Pro</span>
                       </div>
                     </div>
 
                     {/* Mobile User Menu Items */}
-                    <div className="space-y-2 mb-4">
+                    <div className="space-y-2 mb-6">
                       {userMenuItems.map((item) => (
                         <NavLink
                           key={item.to}
                           to={item.to}
+                          onClick={() => setMobileMenuOpen(false)}
                           className="
-                            flex items-center gap-4 px-4 py-3 rounded-xl
-                            text-gray-700 dark:text-gray-300
-                            hover:bg-purple-50 dark:hover:bg-purple-900/30
-                            hover:text-purple-700 dark:hover:text-purple-300
-                            transition-all duration-200
+                            flex items-center gap-4 px-5 py-3 rounded-xl
+                            text-gray-700 dark:text-gray-300 font-medium
+                            hover:bg-gradient-to-r hover:from-primary-50 hover:to-primary-100/50 dark:hover:from-primary-900/30 dark:hover:to-primary-800/20
+                            hover:text-primary-700 dark:hover:text-primary-300
+                            transition-all duration-200 group
                           "
                         >
-                          <span className="text-lg">{item.icon}</span>
+                          <span className="text-xl text-primary-500 group-hover:scale-110 transition-transform">
+                            {item.icon}
+                          </span>
                           {item.name}
                         </NavLink>
                       ))}
                     </div>
 
-                    <button
+                    <motion.button
+                      whileTap={{ scale: 0.98 }}
                       onClick={handleLogout}
                       className="
                         w-full flex items-center justify-center gap-3
-                        px-4 py-4 rounded-2xl
-                        bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
-                        text-white font-semibold
-                        shadow-lg shadow-purple-500/30
-                        hover:shadow-xl hover:shadow-purple-500/40
-                        active:scale-[0.98]
+                        px-5 py-4 rounded-2xl
+                        bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3
+                        text-white font-bold
+                        shadow-lg shadow-primary-500/30
+                        hover:shadow-xl hover:shadow-primary-500/40
                         transition-all duration-300
                         group
                       "
                     >
                       <FaSignOutAlt className="text-lg group-hover:rotate-180 transition-transform duration-300" />
                       Logout
-                    </button>
+                    </motion.button>
                   </>
                 ) : (
                   <NavLink
                     to="/login"
+                    onClick={() => setMobileMenuOpen(false)}
                     className="
                       flex items-center justify-center gap-3
-                      px-4 py-4 rounded-2xl
-                      bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
-                      text-white font-semibold
-                      shadow-lg shadow-purple-500/30
-                      hover:shadow-xl hover:shadow-purple-500/40
-                      active:scale-[0.98]
+                      px-5 py-4 rounded-2xl
+                      bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3
+                      text-white font-bold
+                      shadow-lg shadow-primary-500/40
+                      hover:shadow-xl hover:shadow-primary-500/60
+                      hover:scale-105 active:scale-95
                       transition-all duration-300
                       group
                     "
                   >
                     <FaSignInAlt className="text-lg group-hover:translate-x-1 transition-transform duration-300" />
-                    Login to Your Account
+                    Sign In
                   </NavLink>
                 )}
               </div>
@@ -646,7 +713,10 @@ export default function Navbar() {
 
       {/* Blur effect for backdrop */}
       {mobileMenuOpen && (
-        <div 
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           className="fixed inset-0 bg-black/20 dark:bg-black/40 backdrop-blur-sm z-40 md:hidden"
           onClick={toggleMobileMenu}
         />

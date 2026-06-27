@@ -1,2 +1,76 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary-50: var(--theme-primary-50);
+  --color-primary-100: var(--theme-primary-100);
+  --color-primary-200: var(--theme-primary-200);
+  --color-primary-300: var(--theme-primary-300);
+  --color-primary-400: var(--theme-primary-400);
+  --color-primary-500: var(--theme-primary-500);
+  --color-primary-600: var(--theme-primary-600);
+  --color-primary-700: var(--theme-primary-700);
+  --color-primary-800: var(--theme-primary-800);
+  --color-primary-900: var(--theme-primary-900);
+  --color-primary-950: var(--theme-primary-950);
+  
+  --color-primary-custom-1: var(--theme-primary-custom-1);
+  --color-primary-custom-2: var(--theme-primary-custom-2);
+  --color-primary-custom-3: var(--theme-primary-custom-3);
+
+  --color-primary-bg-1: var(--theme-primary-bg-1);
+  --color-primary-bg-2: var(--theme-primary-bg-2);
+  --color-primary-bg-3: var(--theme-primary-bg-3);
+  --color-primary-bg-4: var(--theme-primary-bg-4);
+  --color-primary-bg-5: var(--theme-primary-bg-5);
+}
+
+:root {
+  /* Default Purple Theme */
+  --theme-primary-50: #faf5ff;
+  --theme-primary-100: #f3e8ff;
+  --theme-primary-200: #e9d5ff;
+  --theme-primary-300: #d8b4fe;
+  --theme-primary-400: #c084fc;
+  --theme-primary-500: #a855f7;
+  --theme-primary-600: #9333ea;
+  --theme-primary-700: #7e22ce;
+  --theme-primary-800: #6b21a8;
+  --theme-primary-900: #581c87;
+  --theme-primary-950: #3b0764;
+  --theme-primary-custom-1: #6A3093;
+  --theme-primary-custom-2: #A044FF;
+  --theme-primary-custom-3: #BF5AE0;
+  
+  --theme-primary-bg-1: #0a0518;
+  --theme-primary-bg-2: #110a2e;
+  --theme-primary-bg-3: #1e0f5c;
+  --theme-primary-bg-4: #0f0c29;
+  --theme-primary-bg-5: #1a163a;
+}
+
+
+
+html[data-theme="midnight-blue"] {
+  /* Midnight Blue Theme */
+  --theme-primary-50: #eef2ff;
+  --theme-primary-100: #e0e7ff;
+  --theme-primary-200: #c7d2fe;
+  --theme-primary-300: #a5b4fc;
+  --theme-primary-400: #818cf8;
+  --theme-primary-500: #6366f1;
+  --theme-primary-600: #4f46e5;
+  --theme-primary-700: #4338ca;
+  --theme-primary-800: #3730a3;
+  --theme-primary-900: #312e81;
+  --theme-primary-950: #1e1b4b;
+  --theme-primary-custom-1: #312e81;
+  --theme-primary-custom-2: #4f46e5;
+  --theme-primary-custom-3: #818cf8;
+  
+  --theme-primary-bg-1: #02040a;
+  --theme-primary-bg-2: #0f0d2a;
+  --theme-primary-bg-3: #1c1955;
+  --theme-primary-bg-4: #02040a;
+  --theme-primary-bg-5: #0f0d2a;
+}

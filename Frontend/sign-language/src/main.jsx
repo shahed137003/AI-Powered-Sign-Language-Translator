@@ -4,12 +4,14 @@ import App from "./App.jsx";
 import './index.css';
 import { HashRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.jsx';
-
+import { ThemeProvider } from "./context/ThemeContext";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <HashRouter>
       <AuthProvider>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </AuthProvider>
     </HashRouter>
 

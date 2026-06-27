@@ -1,65 +1,141 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Mobile from '../assets/about.svg';
-import { FaMicrophone, FaVideo, FaRobot, FaShareAlt, FaMobileAlt, FaHands, FaEye, FaUsers, FaRocket, FaChartLine, FaGlobe, FaLightbulb, FaHeart, FaAward, FaShieldAlt, FaSyncAlt } from "react-icons/fa";
-import { motion, useInView, useAnimation } from "framer-motion";
-import { FaUserTie, FaLaptopCode, FaBrain, FaCode, FaUserAlt, FaHandshake, FaChartBar, FaCloud, FaDatabase } from "react-icons/fa";
-import { BsStars, BsLightningFill, BsGearFill } from "react-icons/bs";
-import { TbArrowWaveRightDown, TbArrowWaveLeftDown, TbSparkles, TbTargetArrow } from "react-icons/tb";
+import React, { useEffect, useState, useRef } from "react";
+import { motion } from "framer-motion";
+import { useTheme } from "../context/ThemeContext";
+import { 
+  FaMicrophone, FaVideo, FaRobot, FaMobileAlt, FaHands, FaEye, 
+  FaUsers, FaChartLine, FaGlobe, FaLightbulb, FaHeart, FaShieldAlt, 
+  FaSyncAlt, FaBrain, FaRocket, FaAward, FaCrown, FaGem
+} from "react-icons/fa";
+import { FaLaptopCode, FaCode, FaUserAlt, FaCloud } from "react-icons/fa";
+import { BsStars, BsLightningCharge, BsCheckCircleFill } from "react-icons/bs";
+import { TbSparkles, TbHandLoveYou, TbHexagon } from "react-icons/tb";
+import { GiArtificialIntelligence, GiHand } from "react-icons/gi";
 
 export default function About() {
-  const containerRef = useRef(null);
-  const headerRef = useRef(null);
-  
-  const isHeaderInView = useInView(headerRef, { once: true, amount: 0.5 });
-  const isInView = useInView(containerRef, { once: true, amount: 0.3 });
-  
-  const headerControls = useAnimation();
-  const controls = useAnimation();
+  const canvasRef = useRef(null);
+  const particlesRef = useRef([]);
+  const animationFrameRef = useRef(null);
+  const [isDark, setIsDark] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState(null);
+  const [expandedItem, setExpandedItem] = useState(null);
+  const { themeColor } = useTheme();
 
-  useEffect(() => {
-    if (isHeaderInView) {
-      headerControls.start("visible");
-    }
-  }, [headerControls, isHeaderInView]);
+  const gridColor = themeColor === "midnight-blue" ? "rgba(99, 102, 241, 0.1)" : "rgba(168, 85, 247, 0.1)";
 
+  // Detect dark mode
   useEffect(() => {
-    if (isInView) {
-      controls.start("visible");
-    }
-  }, [controls, isInView]);
+    const observer = new MutationObserver(() => {
+      setIsDark(document.documentElement.classList.contains("dark"));
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    setIsDark(document.documentElement.classList.contains("dark"));
+    return () => observer.disconnect();
+  }, []);
+
+  // Particle system matching Home page
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+
+    const themeColorsMap = {
+      purple: ['#A855F7', '#9333EA', '#7C3AED', '#6D28D9', '#8B5CF6'],
+      'midnight-blue': ['#6366F1', '#4F46E5', '#4338CA', '#3730A3', '#818CF8'],
+    };
+    const currentThemeColors = themeColorsMap[themeColor] || themeColorsMap['purple'];
+    const colors = isDark ? currentThemeColors : currentThemeColors.slice().reverse();
+
+    particlesRef.current = Array.from({ length: 120 }).map(() => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 4 + 1,
+      speedX: Math.random() * 0.5 - 0.25,
+      speedY: Math.random() * 0.5 - 0.25,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      opacity: Math.random() * 0.6 + 0.2,
+      glow: Math.random() > 0.7,
+    }));
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particlesRef.current.forEach(particle => {
+        particle.x += particle.speedX;
+        particle.y += particle.speedY;
+
+        if (particle.x < -10) particle.x = canvas.width + 10;
+        if (particle.x > canvas.width + 10) particle.x = -10;
+        if (particle.y < -10) particle.y = canvas.height + 10;
+        if (particle.y > canvas.height + 10) particle.y = -10;
+
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        
+        if (particle.glow) {
+          const glowGradient = ctx.createRadialGradient(
+            particle.x, particle.y, 0,
+            particle.x, particle.y, particle.size * 4
+          );
+          glowGradient.addColorStop(0, particle.color + '99');
+          glowGradient.addColorStop(1, particle.color + '00');
+          ctx.fillStyle = glowGradient;
+        } else {
+          ctx.fillStyle = particle.color + Math.floor(particle.opacity * 255).toString(16).padStart(2, '0');
+        }
+        
+        ctx.fill();
+
+        particlesRef.current.forEach(otherParticle => {
+          const dx = particle.x - otherParticle.x;
+          const dy = particle.y - otherParticle.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 100) {
+            ctx.beginPath();
+            ctx.strokeStyle = particle.color + '44';
+            ctx.lineWidth = 0.6 * (1 - distance / 100);
+            ctx.moveTo(particle.x, particle.y);
+            ctx.lineTo(otherParticle.x, otherParticle.y);
+            ctx.stroke();
+          }
+        });
+      });
+
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    const handleResize = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isDark, themeColor]);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
-    visible: {
+    visible: { 
       opacity: 1, 
       y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1]
-      }
-    }
-  };
-
-  const fade = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 1,
-        ease: "easeOut"
-      }
+      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
     }
   };
 
   const scaleIn = {
     hidden: { opacity: 0, scale: 0.8 },
-    visible: {
+    visible: { 
       opacity: 1, 
       scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: "backOut"
-      }
+      transition: { duration: 0.6, ease: "backOut" }
     }
   };
 
@@ -67,812 +143,344 @@ export default function About() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 }
     }
   };
 
-  const journeySteps = [
-    { 
-      icon: FaMicrophone, 
-      text: "1. Speak or Type Your Message", 
-      details: "Our advanced AI captures spoken or typed English with 99% accuracy, understanding subtle nuances and context.",
-      gradient: "from-[#6A3093] to-[#A044FF]",
-      delay: 0
-    },
-    { 
-      icon: FaBrain, 
-      text: "2. AI Processing & Analysis", 
-      details: "Neural networks analyze language patterns, context, and intent for precise translation.",
-      gradient: "from-[#A044FF] to-[#BF5AE0]",
-      delay: 0.1
-    },
-    { 
-      icon: FaHands, 
-      text: "3. Real-Time Sign Translation", 
-      details: "Generates fluid, natural sign language animations with expressive 3D avatars.",
-      gradient: "from-[#BF5AE0] to-[#D946EF]",
-      delay: 0.2
-    },
-    { 
-      icon: FaShareAlt, 
-      text: "4. Instant Communication", 
-      details: "View, save, or share translations instantly across any platform or device.",
-      gradient: "from-[#D946EF] to-[#EC4899]",
-      delay: 0.3
-    },
+  const stats = [
+    { icon: <FaUsers />, value: "500K+", label: "Active Users", gradient: "from-primary-500 to-primary-700" },
+    { icon: <FaGlobe />, value: "50+", label: "Languages", gradient: "from-primary-600 to-primary-800" },
+    { icon: <FaRobot />, value: "99%", label: "Accuracy", gradient: "from-primary-500 to-primary-700" },
+    { icon: <BsLightningCharge />, value: "<100ms", label: "Response Time", gradient: "from-primary-600 to-primary-800" },
   ];
 
-  const capabilityFeatures = [
-    { 
-      icon: FaVideo, 
-      text: "Video-to-Sign Translation", 
-      details: "Upload any video content and automatically generate synchronized sign language animations.",
-      stats: "95% accuracy rate",
-      gradient: "from-[#6A3093] to-[#A044FF]"
-    },
-    { 
-      icon: FaRobot,
-      text: "AI Chatbot Practice", 
-      details: "Practice sign language with intelligent chatbot providing real-time feedback.",
-      stats: "24/7 availability",
-      gradient: "from-[#A044FF] to-[#BF5AE0]"
-    },
-    { 
-      icon: FaMobileAlt, 
-      text: "Cross-Platform Access", 
-      details: "Mobile app with offline mode, camera recognition, and instant translation.",
-      stats: "10M+ downloads",
-      gradient: "from-[#BF5AE0] to-[#D946EF]"
-    },
-    { 
-      icon: FaUsers, 
-      text: "Multi-User Collaboration", 
-      details: "Real-time translation for group conversations in meetings and classrooms.",
-      stats: "50+ simultaneous users",
-      gradient: "from-[#D946EF] to-[#EC4899]"
-    },
-    { 
-      icon: FaGlobe, 
-      text: "100+ Language Support", 
-      details: "Translate between sign language and over 100 spoken languages worldwide.",
-      stats: "Global coverage",
-      gradient: "from-[#EC4899] to-[#F97316]"
-    },
-    { 
-      icon: FaChartLine, 
-      text: "Analytics Dashboard", 
-      details: "Track progress, usage statistics, and performance metrics with insights.",
-      stats: "Real-time analytics",
-      gradient: "from-[#F97316] to-[#F59E0B]"
-    },
-    { 
-      icon: FaShieldAlt, 
-      text: "Enterprise Security", 
-      details: "End-to-end encryption, compliance, and advanced security features.",
-      stats: "Bank-level security",
-      gradient: "from-[#F59E0B] to-[#10B981]"
-    },
-    { 
-      icon: FaSyncAlt, 
-      text: "Real-time Sync", 
-      details: "Instant synchronization across all devices with cloud backup.",
-      stats: "<100ms latency",
-      gradient: "from-[#10B981] to-[#0EA5E9]"
-    },
+  const features = [
+    { icon: <FaVideo />, text: "Video Translation", desc: "Upload any video and get instant sign language translation", gradient: "from-primary-500 to-primary-700" },
+    { icon: <FaRobot />, text: "AI Chatbot", desc: "Practice sign language with our intelligent chatbot", gradient: "from-primary-600 to-primary-800" },
+    { icon: <FaMobileAlt />, text: "Cross-Platform", desc: "Available on web, mobile, and desktop", gradient: "from-primary-500 to-primary-700" },
+    { icon: <FaUsers />, text: "Multi-User", desc: "Real-time translation for group conversations", gradient: "from-primary-600 to-primary-800" },
+    { icon: <FaGlobe />, text: "Global Support", desc: "100+ spoken languages supported", gradient: "from-primary-500 to-primary-700" },
+    { icon: <FaShieldAlt />, text: "Enterprise Security", desc: "Bank-level encryption for all data", gradient: "from-primary-600 to-primary-800" },
   ];
 
   const team = [
-    {
-      name: "Shahd Mohamed",
-      role: "AI & Frontend Engineer",
-      icon: FaCode,
-      bio: "Expert in building intelligent, user-friendly interfaces and real-time AI-powered experiences.",
-      expertise: ["React", "TensorFlow.js", "UI/UX Design", "Framer Motion"],
-      gradient: "from-[#6A3093] to-[#A044FF]"
-    },
-    {
-      name: "Demiana Ayman",
-      role: "AI & Backend Engineer",
-      icon: FaLaptopCode,
-      bio: "Specializes in backend systems, APIs, databases, and AI integration for scalable architectures.",
-      expertise: ["Node.js", "Python", "AWS", "Microservices"],
-      gradient: "from-[#A044FF] to-[#BF5AE0]"
-    },
-    {
-      name: "Kareem Reda",
-      role: "AI Engineer",
-      icon: FaBrain,
-      bio: "Focused on machine learning, model optimization, and advanced data-driven solutions.",
-      expertise: ["PyTorch", "Computer Vision", "NLP", "MLOps"],
-      gradient: "from-[#BF5AE0] to-[#D946EF]"
-    },
-    {
-      name: "Yahya Aboamer",
-      role: "AI Engineer",
-      icon: FaCode,
-      bio: "Passionate about neural networks, deep learning applications, and system intelligence.",
-      expertise: ["Deep Learning", "TensorFlow", "System Design", "Kubernetes"],
-      gradient: "from-[#D946EF] to-[#EC4899]"
-    },
-    {
-      name: "Mariam Hany",
-      role: "AI Engineer",
-      icon: FaBrain,
-      bio: "Focuses on developing advanced computer vision models and AI systems to create intelligent, accessible solutions.",
-      expertise: ["Deep Learning", "Computer Vision", "AI/ML", "MLOps"], 
-      gradient: "from-[#6A3093] to-[#A044FF]"
-    },
-    {
-      name: "Hussam Elsayed",
-      role: "AI Engineer",
-      icon: FaUserAlt,
-      bio: "Expert in neural networks, deep learning applications, and scalable AI systems.",
-      expertise: ["TensorFlow", "Data Science", "API Development", "Docker"],
-      gradient: "from-[#6A3093] to-[#A044FF]"
-    }
-  ];
-
-  const techStack = [
-    { name: "React & Next.js", icon: FaCode, color: "text-blue-500", gradient: "from-blue-500 to-cyan-500" },
-    { name: "TensorFlow", icon: FaBrain, color: "text-orange-500", gradient: "from-orange-500 to-red-500" },
-    { name: "Node.js", icon: FaLaptopCode, color: "text-green-500", gradient: "from-green-500 to-emerald-500" },
-    { name: "AWS Cloud", icon: FaCloud, color: "text-yellow-500", gradient: "from-yellow-500 to-amber-500" },
-    { name: "WebRTC", icon: FaVideo, color: "text-red-500", gradient: "from-red-500 to-pink-500" },
-    { name: "WebGL", icon: BsStars, color: "text-purple-500", gradient: "from-purple-500 to-pink-500" },
+    { name: "Shahd Mohamed", role: "AI & Frontend Engineer", icon: <FaCode />, expertise: ["React", "TensorFlow.js", "Framer Motion"], gradient: "from-primary-500 to-primary-700" },
+    { name: "Demiana Ayman", role: "AI & Backend Engineer", icon: <FaLaptopCode />, expertise: ["Node.js", "Python", "AWS"], gradient: "from-primary-600 to-primary-800" },
+    { name: "Kareem Reda", role: "AI Engineer", icon: <FaBrain />, expertise: ["PyTorch", "Computer Vision", "MLOps"], gradient: "from-primary-500 to-primary-700" },
+    { name: "Yahya Aboamer", role: "AI Engineer", icon: <FaCode />, expertise: ["Deep Learning", "TensorFlow", "Kubernetes"], gradient: "from-primary-600 to-primary-800" },
+    { name: "Mariam Hany", role: "AI & Frontend Engineer", icon: <FaBrain />, expertise: ["Next.js", "TypeScript", "WebGL"], gradient: "from-primary-500 to-primary-700" },
+    { name: "Hussam Elsayed", role: "AI Engineer", icon: <FaUserAlt />, expertise: ["TensorFlow", "Data Science", "Docker"], gradient: "from-primary-600 to-primary-800" },
   ];
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-purple-50/60 dark:from-[#0a0518] dark:via-[#110a2e] dark:to-[#1e0f5c] py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="relative w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50/60 dark:from-primary-bg-1 dark:via-primary-bg-2 dark:to-primary-bg-3 overflow-hidden selection:bg-primary-500 selection:text-white transition-all duration-700 py-24 px-4 sm:px-6 lg:px-8">
       
-      {/* Premium Geometric Grid matching Home page */}
+      {/* Canvas Particles */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none opacity-60" />
+
+      {/* Premium Geometric Grid */}
       <div className="absolute inset-0 opacity-40 dark:opacity-60 pointer-events-none">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(90deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px),
-            linear-gradient(180deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px)
+            linear-gradient(90deg, ${gridColor} 1px, transparent 1px),
+            linear-gradient(180deg, ${gridColor} 1px, transparent 1px)
           `,
           backgroundSize: '40px 40px'
         }} />
       </div>
 
-      {/* Animated glows */}
-      <motion.div 
-        animate={{ 
-          x: [0, 50, 0],
-          y: [0, 30, 0]
-        }}
-        transition={{ 
-          duration: 20, 
-          repeat: Infinity, 
-          ease: "linear" 
-        }}
-        className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-gradient-to-r from-purple-600/10 via-pink-600/10 to-indigo-600/10 rounded-full blur-[120px]"
+      {/* Animated gradient orbs */}
+      <motion.div
+        className="absolute top-20 left-20 w-[600px] h-[600px] bg-primary-600/10 rounded-full blur-[120px]"
+        animate={{ x: [0, 100, 0], y: [0, -100, 0] }}
+        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
       />
-      <motion.div 
-        animate={{ 
-          x: [0, -40, 0],
-          y: [0, -20, 0]
-        }}
-        transition={{ 
-          duration: 25, 
-          repeat: Infinity, 
-          ease: "linear" 
-        }}
-        className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-gradient-to-r from-indigo-600/10 via-purple-600/10 to-pink-600/10 rounded-full blur-[100px]"
+      <motion.div
+        className="absolute bottom-20 right-20 w-[600px] h-[600px] bg-primary-400/10 rounded-full blur-[120px]"
+        animate={{ x: [0, -100, 0], y: [0, 100, 0] }}
+        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
       />
 
-      {/* Floating particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(25)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-purple-500/20 rounded-full"
-            initial={{ 
-              x: Math.random() * 100 + 'vw', 
-              y: Math.random() * 100 + 'vh',
-              scale: 0 
-            }}
-            animate={{ 
-              y: [null, -30, 30, -20],
-              x: [null, 20, -20, 10],
-              scale: [0, 1, 1, 0],
-              opacity: [0, 0.5, 0.5, 0]
-            }}
-            transition={{ 
-              duration: Math.random() * 10 + 20,
-              repeat: Infinity,
-              ease: "linear",
-              delay: Math.random() * 5
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Main Container */}
+      {/* Header */}
       <div className="relative z-10 max-w-7xl mx-auto">
-        {/* Header Section with its own ref */}
-        <div ref={headerRef}>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="text-center mb-16"
+        >
+          {/* Premium Badge - matching home page */}
           <motion.div
-            initial="hidden"
-            animate={headerControls}
-            variants={fadeUp}
-            className="text-center mb-20"
+            whileHover={{ scale: 1.05 }}
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/50 dark:bg-white/5 border border-primary-200/50 dark:border-primary-500/20 backdrop-blur-xl shadow-xl shadow-primary-500/5 relative overflow-hidden group mb-8"
           >
-            {/* Premium Badge matching Home page */}
             <motion.div
-              variants={fadeUp}
-              whileHover={{ scale: 1.05, rotate: 1 }}
-              className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-purple-500/15 via-purple-400/10 to-purple-300/10 border border-purple-200/60 dark:border-purple-700/60 backdrop-blur-xl shadow-lg shadow-purple-500/10 relative overflow-hidden group mb-8"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              className="p-1 rounded-full bg-gradient-to-r from-primary-500 to-primary-400"
             >
-              <div className="relative">
-                <span className="absolute animate-ping inline-flex h-3.5 w-3.5 rounded-full bg-purple-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-gradient-to-r from-purple-500 to-purple-400" />
-              </div>
-              <span className="text-sm font-bold bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400 bg-clip-text text-transparent">
-                About LinguaSign
-              </span>
-              <TbSparkles className="text-purple-500 ml-1" />
-              <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/0 via-purple-400/10 to-purple-500/0 group-hover:via-purple-400/20 transition-all duration-500" />
+              <FaCrown className="text-white text-sm" />
             </motion.div>
+            <span className="text-sm font-extrabold bg-gradient-to-r from-primary-700 via-primary-600 to-primary-500 dark:from-primary-400 dark:via-primary-300 dark:to-primary-200 bg-clip-text text-transparent uppercase tracking-wider">
+              About LinguaSign
+            </span>
+            <TbSparkles className="text-primary-500 text-lg" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+          </motion.div>
 
-            <motion.h1
-              variants={fadeUp}
-              className="font-extrabold text-4xl sm:text-5xl lg:text-[53px] leading-tight mb-6"
-            >
-              <motion.span
-                variants={fadeUp}
-                className="block text-gray-900 dark:text-white"
-              >
+          <div className="space-y-1 mb-6">
+            <motion.h1 className="font-black text-5xl sm:text-6xl lg:text-[58px] leading-[1.1] tracking-tight">
+              <span className="block text-gray-900 dark:text-white">
                 Our Story
-              </motion.span>
+              </span>
               <motion.span
-                variants={fadeUp}
-                transition={{ delay: 0.1 }}
-                className="block bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent"
+                className="block bg-gradient-to-r from-primary-700 via-primary-500 to-primary-400 bg-clip-text text-transparent"
+                animate={{
+                  backgroundPosition: ["0%", "100%", "0%"],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+                style={{
+                  backgroundSize: "200% auto",
+                }}
               >
                 Revolutionizing Communication
               </motion.span>
-              <motion.span
-                variants={fadeUp}
-                transition={{ delay: 0.2 }}
-                className="block text-gray-900 dark:text-white"
-              >
+              <span className="block text-gray-900 dark:text-white">
                 Through AI Innovation
-              </motion.span>
+              </span>
             </motion.h1>
+          </div>
+          
+          <motion.p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            Discover the vision, mission, and team behind LinguaSign — transforming communication through AI-powered sign language translation.
+          </motion.p>
 
-            <motion.p
-              variants={fadeUp}
-              transition={{ delay: 0.3 }}
-              className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed"
-            >
-              Discover the vision, mission, and team behind LinguaSign — the platform 
-              transforming how the world communicates through cutting-edge AI-powered 
-              sign language translation.
-            </motion.p>
-
-            {/* Decorative Elements */}
+          {/* Decorative Elements */}
+          <motion.div className="flex items-center justify-center gap-8 mt-10">
+            <div className="w-12 h-1 bg-gradient-to-r from-transparent via-primary-500 to-transparent rounded-full" />
             <motion.div
-              variants={fadeUp}
-              transition={{ delay: 0.4 }}
-              className="flex items-center justify-center gap-8 mt-10"
-            >
-              <div className="w-12 h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent rounded-full" />
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="w-6 h-6 rounded-full border-2 border-purple-400/50"
-              />
-              <div className="w-12 h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent rounded-full" />
-            </motion.div>
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="w-6 h-6 rounded-full border-2 border-primary-400/50"
+            />
+            <div className="w-12 h-1 bg-gradient-to-r from-transparent via-primary-500 to-transparent rounded-full" />
           </motion.div>
-        </div>
+        </motion.div>
 
-        {/* Rest of the content with containerRef */}
-        <div ref={containerRef}>
-          {/* Intro Section with Enhanced Design */}
-          <div className="grid lg:grid-cols-2 gap-50 items-center mb-32">
-            {/* Text Content */}
+        {/* Stats Section */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={staggerContainer}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-20"
+        >
+          {stats.map((stat, i) => (
             <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={fade}
-              className="space-y-6"
-            >
-              <div className="inline-flex items-center gap-3 text-purple-600 dark:text-purple-400 font-semibold uppercase tracking-wider text-sm mb-4">
-                <FaLightbulb className="text-lg" />
-                Our Innovation Journey
-              </div>
-              
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white">
-                Where <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
-                  AI Meets
-                </span> Human Connection
-              </h2>
-              
-              <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                LinguaSign was born from a vision to eliminate communication barriers using 
-                artificial intelligence. Our journey began with a dedicated team of AI engineers 
-                passionate about creating meaningful impact.
-              </p>
-              
-              <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                Today, we combine state-of-the-art gesture recognition, natural language processing, 
-                and expressive 3D animation to create a seamless bridge between sign language 
-                and spoken communication for millions worldwide.
-              </p>
-              
-              {/* Tech Stack - Enhanced with Individual Gradients */}
-              <div className="pt-6">
-                <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Powered By</h4>
-                <div className="flex flex-wrap gap-3">
-                  {techStack.map((tech, index) => {
-                    const Icon = tech.icon;
-                    return (
-                      <motion.div
-                        key={index}
-                        whileHover={{ 
-                          scale: 1.05,
-                          y: -2,
-                          boxShadow: `0 10px 25px -5px ${tech.color}40`
-                        }}
-                        className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-white/80 to-white/60 dark:from-white/10 dark:to-white/5 backdrop-blur-xl border border-purple-200/50 dark:border-purple-500/20 shadow-lg shadow-purple-100/20 dark:shadow-purple-900/20 group transition-all duration-300 cursor-pointer hover:shadow-xl hover:shadow-purple-200/30 dark:hover:shadow-purple-900/40 relative overflow-hidden"
-                      >
-                        {/* Gradient overlay */}
-                        <div className={`absolute inset-0 bg-gradient-to-r ${tech.gradient}/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                        
-                        {/* Shimmer effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/0 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                        
-                        <div className="relative z-10 flex items-center gap-2">
-                          <div className={`p-2 rounded-lg bg-gradient-to-br ${tech.gradient}/10`}>
-                            <Icon className={`text-lg ${tech.color}`} />
-                          </div>
-                          <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900 dark:text-gray-300 dark:group-hover:text-gray-100 transition-colors duration-300">
-                            {tech.name}
-                          </span>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Image with Enhanced Orbital Effects */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
+              key={i}
               variants={scaleIn}
-              className="relative"
-            >
-              {/* Orbital rings */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                className="absolute -inset-8 border-2 border-purple-500/10 rounded-3xl"
-              />
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute -ins-12 border border-purple-400/5 rounded-3xl"
-              />
-              
-              <motion.div
-                whileHover={{ 
-                  scale: 1.02,
-                  boxShadow: "0 20px 40px -15px rgba(168, 85, 247, 0.15) dark:shadow-purple-900/40"
-                }}
-                transition={{ duration: 0.3 }}
-                className="relative bg-gradient-to-br from-white/10 to-transparent backdrop-blur-xl border border-white/20 dark:border-purple-900/30 rounded-2xl p-4 shadow-2xl shadow-purple-500/10 dark:shadow-purple-900/20 overflow-hidden"
-              >
-                {/* Image glow */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-400/0 to-purple-300/0 group-hover:via-purple-400/5 group-hover:opacity-100 opacity-0 transition-all duration-300" />
-                
-                <motion.img
-                  src={Mobile}
-                  alt="LinguaSign Platform"
-                  className="w-full rounded-xl relative z-10"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.5 }}
-                />
-              </motion.div>
-            </motion.div>
-          </div>
-
-          {/* Mission & Vision Section with Enhanced Design */}
-          <div className="grid lg:grid-cols-2 gap-8 mb-32">
-            {/* Mission Card */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={fadeUp}
+              whileHover={{ scale: 1.05, y: -5 }}
               className="relative group"
             >
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#6A3093] to-[#A044FF] rounded-3xl blur opacity-20 dark:opacity-30 group-hover:opacity-40 transition duration-500" />
-              <div className="relative bg-gradient-to-br from-white/80 to-white/60 dark:from-white/10 dark:to-white/5 backdrop-blur-xl border border-purple-200/50 dark:border-purple-500/20 rounded-3xl p-8 h-full shadow-xl shadow-purple-100/30 dark:shadow-purple-900/30 group-hover:shadow-2xl group-hover:shadow-purple-200/40 dark:group-hover:shadow-purple-900/50 group-hover:border-purple-300/70 dark:group-hover:border-purple-400/40 transition-all duration-500 overflow-hidden">
-                {/* Shimmer effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/0 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                
-                <div className="relative z-10">
-                  <div className="inline-flex items-center gap-4 mb-6">
-                    <div className="w-14 h-14 rounded-xl flex items-center justify-center bg-gradient-to-br from-purple-100 to-purple-50 shadow-inner dark:bg-gradient-to-br dark:from-[#6A3093]/20 dark:to-[#A044FF]/20 group-hover:scale-105 transition-transform duration-300">
-                      <FaHeart className="text-2xl text-purple-600 group-hover:text-purple-700 dark:text-purple-400 dark:group-hover:text-purple-300 transition-colors duration-300" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-bold text-gray-900 group-hover:text-purple-900 dark:text-white dark:group-hover:text-purple-200 transition-colors duration-300">
-                        Our Mission
-                      </h3>
-                      <p className="text-purple-500 group-hover:text-purple-600 dark:text-purple-400 dark:group-hover:text-purple-300 text-sm transition-colors duration-300">
-                        Driving Purpose
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <p className="text-lg leading-relaxed mb-6 text-gray-700 group-hover:text-gray-800 dark:text-gray-300 dark:group-hover:text-gray-200 transition-colors duration-300">
-                    To create a world where communication barriers cease to exist, empowering 
-                    every individual to connect, learn, and thrive through accessible AI technology.
-                  </p>
-                  
-                  <div className="flex items-center gap-2 text-purple-600 group-hover:text-purple-700 dark:text-purple-400 dark:group-hover:text-purple-300 transition-colors duration-300">
-                    <TbArrowWaveRightDown className="text-xl" />
-                    <span className="font-medium">Building Inclusive Connections</span>
-                  </div>
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-500/30 to-primary-600/30 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative p-6 rounded-2xl bg-white/80 dark:bg-white/10 backdrop-blur-xl border-2 border-primary-200/50 dark:border-primary-500/20 shadow-xl hover:shadow-2xl transition-all duration-300 text-center">
+                <div className={`p-3 rounded-xl bg-gradient-to-br ${stat.gradient} inline-flex mb-4 group-hover:scale-110 transition-transform`}>
+                  <div className="text-white text-2xl">{stat.icon}</div>
                 </div>
-              </div>
-            </motion.div>
+                <div className="text-3xl font-bold text-gray-900 dark:text-white mb-1">{stat.value}</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</div>
+              </div></motion.div>
+          ))}
+        </motion.div>
 
-            {/* Vision Card */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={fadeUp}
-              transition={{ delay: 0.2 }}
-              className="relative group"
-            >
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#A044FF] to-[#BF5AE0] rounded-3xl blur opacity-20 dark:opacity-30 group-hover:opacity-40 transition duration-500" />
-              <div className="relative bg-gradient-to-br from-white/80 to-white/60 dark:from-white/10 dark:to-white/5 backdrop-blur-xl border border-purple-200/50 dark:border-purple-500/20 rounded-3xl p-8 h-full shadow-xl shadow-purple-100/30 dark:shadow-purple-900/30 group-hover:shadow-2xl group-hover:shadow-purple-200/40 dark:group-hover:shadow-purple-900/50 group-hover:border-purple-300/70 dark:group-hover:border-purple-400/40 transition-all duration-500 overflow-hidden">
-                {/* Shimmer effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/0 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                
-                <div className="relative z-10">
-                  <div className="inline-flex items-center gap-4 mb-6">
-                    <div className="w-14 h-14 rounded-xl flex items-center justify-center bg-gradient-to-br from-purple-100 to-purple-50 shadow-inner dark:bg-gradient-to-br dark:from-[#A044FF]/20 dark:to-[#BF5AE0]/20 group-hover:scale-105 transition-transform duration-300">
-                      <FaEye className="text-2xl text-purple-600 group-hover:text-purple-700 dark:text-purple-400 dark:group-hover:text-purple-300 transition-colors duration-300" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-bold text-gray-900 group-hover:text-purple-900 dark:text-white dark:group-hover:text-purple-200 transition-colors duration-300">
-                        Our Vision
-                      </h3>
-                      <p className="text-purple-500 group-hover:text-purple-600 dark:text-purple-400 dark:group-hover:text-purple-300 text-sm transition-colors duration-300">
-                        Future Focus
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <p className="text-lg leading-relaxed mb-6 text-gray-700 group-hover:text-gray-800 dark:text-gray-300 dark:group-hover:text-gray-200 transition-colors duration-300">
-                    To become the global standard for AI-powered sign language translation, 
-                    transforming how humanity connects across languages, cultures, and abilities.
-                  </p>
-                  
-                  <div className="flex items-center gap-2 text-purple-600 group-hover:text-purple-700 dark:text-purple-400 dark:group-hover:text-purple-300 transition-colors duration-300">
-                    <TbArrowWaveLeftDown className="text-xl" />
-                    <span className="font-medium">Shaping Communication's Future</span>
-                  </div>
+        {/* Mission & Vision Section */}
+        <div className="grid lg:grid-cols-2 gap-8 mb-20">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            className="relative group"
+          >
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-500/30 to-primary-600/30 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative p-8 rounded-2xl bg-white/80 dark:bg-white/10 backdrop-blur-xl border-2 border-primary-200/50 dark:border-primary-500/20 shadow-xl hover:shadow-2xl transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 opacity-0 group-hover:opacity-5 transition-opacity duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-primary-400 to-primary-600 opacity-0 group-hover:opacity-10 rounded-bl-3xl transition-all duration-500" />
+              
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 text-white group-hover:scale-110 transition-transform">
+                  <FaHeart className="text-2xl" />
                 </div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Our Mission</h3>
               </div>
-            </motion.div>
-          </div>
+              <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
+                To create a world where communication barriers cease to exist, empowering every individual to connect, learn, and thrive through accessible AI technology.
+              </p>
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-400 to-primary-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
+            </div></motion.div>
 
-          {/* Enhanced Journey Section */}
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={staggerContainer}
-            className="mb-32"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            transition={{ delay: 0.2 }}
+            className="relative group"
           >
-            {/* Section Header */}
-            <div className="text-center mb-16">
-              <motion.div
-                variants={fadeUp}
-                className="inline-flex items-center gap-4 mb-6"
-              >
-                <div className="w-16 h-1 bg-gradient-to-r from-transparent via-[#A044FF] to-transparent rounded-full" />
-                <span className="text-sm font-semibold uppercase tracking-wider text-purple-600 dark:text-purple-400 bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">
-                  Our Journey
-                </span>
-                <div className="w-16 h-1 bg-gradient-to-r from-transparent via-[#A044FF] to-transparent rounded-full" />
-              </motion.div>
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-500/30 to-primary-600/30 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative p-8 rounded-2xl bg-white/80 dark:bg-white/10 backdrop-blur-xl border-2 border-primary-200/50 dark:border-primary-500/20 shadow-xl hover:shadow-2xl transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500 to-primary-700 opacity-0 group-hover:opacity-5 transition-opacity duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-tr from-primary-500 to-primary-700 opacity-0 group-hover:opacity-10 rounded-br-3xl transition-all duration-500" />
               
-              <motion.h2
-                variants={fadeUp}
-                className="font-extrabold text-4xl sm:text-5xl leading-tight mb-4"
-              >
-                <span className="block text-gray-900 dark:text-white">How We</span>
-                <span className="block bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
-                  Built LinguaSign
-                </span>
-              </motion.h2>
-              
-              <motion.p
-                variants={fadeUp}
-                className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
-              >
-                From concept to reality - our journey of innovation and impact
-              </motion.p>
-            </div>
-
-            {/* Enhanced Journey Steps with Animated Connector */}
-            <div className="relative">
-              {/* Animated connecting line */}
-              <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-transparent via-purple-500/30 to-transparent -translate-x-1/2">
-                <motion.div 
-                  className="absolute top-0 w-full h-1/4 bg-gradient-to-b from-purple-500 to-transparent"
-                  animate={{ 
-                    y: ['0%', '100%', '0%'] 
-                  }}
-                  transition={{ 
-                    duration: 3, 
-                    repeat: Infinity, 
-                    ease: "linear" 
-                  }}
-                />
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 rounded-xl bg-gradient-to-br from-primary-600 to-primary-800 text-white group-hover:scale-110 transition-transform">
+                  <FaEye className="text-2xl" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Our Vision</h3>
               </div>
-              
-              <div className="space-y-12">
-                {journeySteps.map((step, index) => (
-                  <motion.div
-                    key={index}
-                    variants={fadeUp}
-                    transition={{ delay: step.delay }}
-                    className={`relative flex flex-col lg:flex-row items-center gap-8 ${
-                      index % 2 === 0 ? 'lg:flex-row-reverse' : ''
-                    }`}
-                  >
-                    {/* Step Card */}
-                    <div className={`w-full lg:w-1/2 ${index % 2 === 0 ? 'lg:text-right' : ''}`}>
-                      <motion.div
-                        whileHover={{ 
-                          scale: 1.03,
-                          y: -5,
-                          boxShadow: "0 25px 50px -20px rgba(168, 85, 247, 0.25) dark:shadow-purple-900/40"
-                        }}
-                        className={`
-                          group p-8 rounded-2xl backdrop-blur-xl border bg-white/80 dark:bg-white/10 border-purple-300/50 dark:border-purple-500/50 shadow-xl shadow-purple-100/20 dark:shadow-2xl
-                          hover:bg-white/90 dark:hover:bg-white/15 hover:shadow-2xl hover:shadow-purple-200/30 dark:hover:shadow-purple-900/40
-                          transition-all duration-300 overflow-hidden
-                          ${index % 2 === 0 ? 'lg:mr-12' : 'lg:ml-12'}
-                        `}
-                      >
-                        {/* Gradient overlay */}
-                        <div className={`absolute inset-0 bg-gradient-to-r ${step.gradient}/5 opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-                        
-                        {/* Shimmer effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/0 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                        
-                        <div className={`flex items-start gap-4 ${index % 2 === 0 ? 'lg:flex-row-reverse' : ''}`}>
-                          <div className="p-3 rounded-xl bg-gradient-to-br from-purple-100 to-purple-50 text-purple-600 border border-purple-200/50 dark:bg-gradient-to-br dark:from-[#6A3093]/20 dark:to-[#A044FF]/20 dark:text-purple-400 group-hover:scale-110 group-hover:shadow-md group-hover:shadow-purple-200/50 dark:group-hover:shadow-purple-900/30 transition-all duration-300 relative z-10">
-                            <step.icon className="text-2xl" />
-                          </div>
-                          <div className={`${index % 2 === 0 ? 'lg:text-right' : ''} relative z-10`}>
-                            <h3 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-purple-900 dark:text-white dark:group-hover:text-purple-200 transition-colors duration-300">
-                              {step.text}
-                            </h3>
-                            <p className="text-gray-600 group-hover:text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-300 transition-colors duration-300">
-                              {step.details}
-                            </p>
-                          </div>
-                        </div>
-                      </motion.div>
-                    </div>
-
-                    {/* Step Indicator with Pulse Animation */}
-                    <div className="relative z-10">
-                      <motion.div
-                        animate={{ 
-                          y: [0, -10, 0],
-                          scale: [1, 1.05, 1]
-                        }}
-                        transition={{ 
-                          repeat: Infinity, 
-                          duration: 3.2, 
-                          ease: "easeInOut" 
-                        }}
-                        className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg border bg-gradient-to-br from-purple-100 to-purple-50 border-purple-300/50 shadow-purple-200/30 dark:bg-purple-900/50 dark:border-purple-400/30 group-hover:shadow-xl group-hover:shadow-purple-300/50 dark:group-hover:shadow-purple-900/40 group-hover:scale-105 transition-all duration-300"
-                      >
-                        {/* Outer pulse ring */}
-                        <motion.div
-                          animate={{ 
-                            scale: [1, 1.2, 1],
-                            opacity: [0.5, 0, 0.5]
-                          }}
-                          transition={{ 
-                            repeat: Infinity, 
-                            duration: 2, 
-                            ease: "easeInOut" 
-                          }}
-                          className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-500/30 to-pink-500/30"
-                        />
-                        
-                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#6A3093] to-[#A044FF] flex items-center justify-center shadow-inner dark:shadow-purple-900/30 group-hover:scale-110 transition-all duration-300 relative z-10">
-                          <step.icon className="text-white text-2xl" />
-                        </div>
-                      </motion.div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Enhanced Capabilities Section */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-            className="mb-32"
-          >
-            <div className="text-center mb-16">
-              <motion.h2
-                variants={fadeUp}
-                className="font-extrabold text-4xl sm:text-5xl leading-tight mb-4"
-              >
-                <span className="block text-gray-900 dark:text-white">Powerful</span>
-                <span className="block bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
-                  Capabilities
-                </span>
-              </motion.h2>
-              <motion.p
-                variants={fadeUp}
-                className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
-              >
-                Explore the advanced features that make LinguaSign the premier sign language platform
-              </motion.p>
-            </div>
-
-            {/* Enhanced Capabilities Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {capabilityFeatures.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  variants={scaleIn}
-                  whileHover={{ 
-                    scale: 1.05,
-                    y: -8,
-                    boxShadow: "0 25px 50px -20px rgba(168, 85, 247, 0.3) dark:shadow-purple-900/40"
-                  }}
-                  className="group relative p-6 rounded-2xl backdrop-blur-xl border bg-white/90 dark:bg-white/10 border-purple-300/50 dark:border-purple-500/50 shadow-xl shadow-purple-100/20 dark:shadow-2xl hover:bg-white/95 dark:hover:bg-white/15 hover:border-purple-400/60 dark:hover:border-purple-400/30 transition-all duration-300 overflow-hidden"
-                >
-                  {/* Gradient overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient}/5 rounded-2xl opacity-10 dark:opacity-0 group-hover:opacity-20 dark:group-hover:opacity-100 transition-opacity duration-300`} />
-                  
-                  {/* Shimmer effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/0 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                  
-                  <div className="relative z-10">
-                    <div className="flex flex-col items-center text-center space-y-4">
-                      <div className="w-16 h-16 rounded-xl flex items-center justify-center bg-gradient-to-br from-purple-100 to-purple-50 border border-purple-200/50 dark:bg-gradient-to-br dark:from-[#6A3093]/20 dark:to-[#A044FF]/20 group-hover:scale-110 group-hover:shadow-md group-hover:shadow-purple-200/50 dark:group-hover:shadow-purple-900/30 transition-transform duration-300">
-                        <feature.icon className="text-2xl text-purple-600 group-hover:text-purple-700 dark:text-purple-400 dark:group-hover:text-purple-300 transition-colors duration-300" />
-                      </div>
-                      <h3 className="font-bold text-lg text-gray-900 group-hover:text-purple-900 dark:text-white dark:group-hover:text-purple-200 transition-colors duration-300">
-                        {feature.text}
-                      </h3>
-                      <p className="text-sm text-gray-600 group-hover:text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-300 transition-colors duration-300">
-                        {feature.details}
-                      </p>
-                      <div className="text-xs font-semibold px-3 py-1 rounded-full text-purple-700 bg-purple-100/80 border border-purple-200 group-hover:bg-purple-200/80 group-hover:text-purple-800 dark:text-purple-400 dark:bg-purple-900/30 dark:border-purple-700/30 dark:group-hover:bg-purple-800/30 dark:group-hover:text-purple-300 transition-all duration-300">
-                        {feature.stats}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Enhanced Team Section */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-            className="mb-24"
-          >
-            <div className="text-center mb-16">
-              <motion.div
-                variants={fadeUp}
-                className="inline-flex items-center gap-4 mb-6"
-              >
-                <div className="w-16 h-1 bg-gradient-to-r from-transparent via-[#A044FF] to-transparent rounded-full" />
-                <span className="text-sm font-semibold uppercase tracking-wider text-purple-600 dark:text-purple-400 bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">
-                  The Team
-                </span>
-                <div className="w-16 h-1 bg-gradient-to-r from-transparent via-[#A044FF] to-transparent rounded-full" />
-              </motion.div>
-              
-              <motion.h2
-                variants={fadeUp}
-                className="font-extrabold text-4xl sm:text-5xl leading-tight mb-4"
-              >
-                <span className="block text-gray-900 dark:text-white">Meet Our</span>
-                <span className="block bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
-                  Expert Team
-                </span>
-              </motion.h2>
-              
-              <motion.p
-                variants={fadeUp}
-                className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
-              >
-                The brilliant minds behind LinguaSign's groundbreaking technology
-              </motion.p>
-            </div>
-
-            {/* Enhanced Team Grid */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {team.map((person, index) => (
-                <motion.div
-                  key={index}
-                  variants={scaleIn}
-                  whileHover={{ 
-                    scale: 1.05,
-                    y: -8,
-                    boxShadow: "0 25px 50px -20px rgba(168, 85, 247, 0.25) dark:shadow-purple-900/40"
-                  }}
-                  className="group relative p-6 rounded-2xl backdrop-blur-xl border bg-white/90 dark:bg-white/10 border-purple-300/50 dark:border-purple-500/50 shadow-xl shadow-purple-100/20 dark:shadow-2xl hover:bg-white/95 dark:hover:bg-white/15 hover:border-purple-400/60 dark:hover:border-purple-400/30 transition-all duration-300 overflow-hidden"
-                >
-                  {/* Gradient overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${person.gradient}/5 rounded-2xl opacity-10 dark:opacity-0 group-hover:opacity-20 dark:group-hover:opacity-100 transition-opacity duration-300`} />
-                  
-                  {/* Shimmer effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/0 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                  
-                  {/* Avatar */}
-                  <div className="flex flex-col items-center text-center mb-4 relative z-10">
-                    <div className="w-20 h-20 rounded-xl flex items-center justify-center mb-4 bg-gradient-to-br from-purple-100 to-purple-50 border border-purple-200/50 dark:bg-gradient-to-br dark:from-[#6A3093]/20 dark:to-[#A044FF]/20 group-hover:scale-110 group-hover:shadow-md group-hover:shadow-purple-200/50 dark:group-hover:shadow-purple-900/30 transition-transform duration-300">
-                      <person.icon className="text-3xl text-purple-600 group-hover:text-purple-700 dark:text-purple-400 dark:group-hover:text-purple-300 transition-colors duration-300" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-xl text-gray-900 group-hover:text-purple-900 dark:text-white dark:group-hover:text-purple-200 transition-colors duration-300">
-                        {person.name}
-                      </h3>
-                      <p className="text-sm font-medium mt-1 text-purple-600 group-hover:text-purple-700 dark:text-purple-400 dark:group-hover:text-purple-300 transition-colors duration-300">
-                        {person.role}
-                      </p>
-                    </div>
-                  </div>
-                  
-                  {/* Bio */}
-                  <p className="text-sm text-center mb-4 text-gray-600 group-hover:text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-300 transition-colors duration-300 relative z-10">
-                    {person.bio}
-                  </p>
-                  
-                  {/* Expertise Tags */}
-                  <div className="flex flex-wrap justify-center gap-2 relative z-10">
-                    {person.expertise.map((skill, skillIndex) => (
-                      <span
-                        key={skillIndex}
-                        className="px-3 py-1 rounded-full text-xs font-medium border bg-gradient-to-r from-purple-100 to-purple-50 text-purple-700 border-purple-200 group-hover:bg-purple-200 group-hover:text-purple-800 group-hover:border-purple-300 dark:bg-gradient-to-r dark:from-purple-500/10 dark:to-purple-400/5 dark:text-purple-400 dark:border-purple-400/20 dark:group-hover:bg-purple-800/30 dark:group-hover:text-purple-300 transition-all duration-300"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+              <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
+                To become the global standard for AI-powered sign language translation, transforming how humanity connects across languages, cultures, and abilities.
+              </p>
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-700 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-right" />
+            </div></motion.div>
         </div>
+
+        {/* Features Section */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={staggerContainer}
+          className="mb-20"
+        >
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4 flex items-center justify-center gap-3">
+              <BsStars className="text-primary-500" />
+              Powerful Features
+              <BsLightningCharge className="text-primary-500" />
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Discover what makes LinguaSign the premier sign language translation platform
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {features.map((feature, i) => (
+              <motion.div
+                key={i}
+                variants={scaleIn}
+                whileHover={{ scale: 1.03, y: -5 }}
+                onMouseEnter={() => setHoveredCard(i)}
+                onMouseLeave={() => setHoveredCard(null)}
+                onClick={() => setExpandedItem(expandedItem === i ? null : i)}
+                className={`relative group cursor-pointer transition-all duration-300 ${
+                  hoveredCard === i ? 'z-10' : ''
+                }`}
+              >
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-500/30 to-primary-600/30 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className={`relative p-6 rounded-2xl bg-white/80 dark:bg-white/10 backdrop-blur-xl border-2 transition-all duration-300 ${
+                  hoveredCard === i || expandedItem === i
+                    ? 'border-primary-400 shadow-2xl shadow-primary-500/20 bg-white/95 dark:bg-white/15' 
+                    : 'border-primary-200/50 dark:border-primary-500/20 shadow-lg'
+                }`}>
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 opacity-0 group-hover:opacity-5 transition-opacity duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-primary-400 to-primary-600 opacity-0 group-hover:opacity-10 rounded-bl-2xl transition-all duration-500" />
+                  
+                  <div className="flex items-start gap-4">
+                    <div className={`p-3 rounded-xl bg-gradient-to-br ${feature.gradient} text-white group-hover:scale-110 transition-transform`}>
+                      {feature.icon}
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-gray-900 dark:text-white mb-2">{feature.text}</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{feature.desc}</p>
+                    </div>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-400 to-primary-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
+                </div></motion.div>
+            ))}
+          </div></motion.div>
+
+        {/* Team Section */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={staggerContainer}
+          className="mb-16"
+        >
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4 flex items-center justify-center gap-3">
+              <FaBrain className="text-primary-500" />
+              Meet Our Team
+              <FaRocket className="text-primary-500" />
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              The brilliant minds behind LinguaSign's groundbreaking technology
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {team.map((person, i) => (
+              <motion.div
+                key={i}
+                variants={scaleIn}
+                whileHover={{ scale: 1.03, y: -5 }}
+                className="relative group"
+              >
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-500/30 to-primary-600/30 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative p-6 rounded-2xl bg-white/80 dark:bg-white/10 backdrop-blur-xl border-2 border-primary-200/50 dark:border-primary-500/20 shadow-xl hover:shadow-2xl transition-all duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 opacity-0 group-hover:opacity-5 transition-opacity duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                  
+                  <div className="flex flex-col items-center text-center">
+                    <div className={`w-20 h-20 rounded-xl bg-gradient-to-br ${person.gradient} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg`}>
+                      <div className="text-white text-3xl">{person.icon}</div>
+                    </div>
+                    <h3 className="font-bold text-xl text-gray-900 dark:text-white mb-1">{person.name}</h3>
+                    <p className="text-sm text-primary-600 dark:text-primary-400 mb-3">{person.role}</p>
+                    <div className="flex flex-wrap justify-center gap-2">
+                      {person.expertise.map((skill, j) => (
+                        <span key={j} className="px-2 py-1 rounded-full text-xs font-medium bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-400 to-primary-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
+                </div></motion.div>
+            ))}
+          </div></motion.div>
       </div>
+
+      <style jsx>{`
+        @keyframes gradient {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+          background-size: 200% auto;
+          animation: gradient 8s ease infinite;
+        }
+      `}</style>
+      <style jsx>{`
+        @keyframes gradient {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+          animation: gradient 8s ease infinite;
+        }
+      `}</style>
     </div>
   );
 }
