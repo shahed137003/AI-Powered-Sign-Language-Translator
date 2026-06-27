@@ -7,6 +7,9 @@ import {
   BsStars,
   BsPlus,
   BsLayoutSidebar,
+  BsArrowLeft,
+  BsLightningFill,
+  BsDownload,
 } from 'react-icons/bs';
 import {
   FaUser,
@@ -14,8 +17,11 @@ import {
   FaCheck,
   FaRegThumbsUp,
   FaRegThumbsDown,
+  FaExpand,
+  FaCompress,
 } from 'react-icons/fa';
 import { TbHandLoveYou, TbMessage2 } from 'react-icons/tb';
+import { GiArtificialIntelligence } from 'react-icons/gi';
 import { getApiUrl } from '../lib/api';
 import axios from 'axios';
 
@@ -48,9 +54,11 @@ export default function Chatbot() {
   const [chatHistory, setChatHistory] = useState([
     { id: 1, title: 'Current conversation', active: true },
   ]);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const bottomRef = useRef(null);
   const textareaRef = useRef(null);
+  const chatContainerRef = useRef(null);
   const API_URL = getApiUrl();
 
   /* auto-scroll */
@@ -84,7 +92,6 @@ export default function Chatbot() {
         { id: Date.now() + 1, role: 'ai', text: reply, time: timestamp() },
       ]);
     } catch (err) {
-      // Fallback: show a smart contextual reply if backend isn't available
       const fallbackReplies = [
         "That's a great question about sign language! The AI backend is currently processing your request. Please make sure the backend server is running.",
         "I understand your query. For the best experience, ensure the backend server is connected via the Server Settings button in the navbar.",
@@ -123,348 +130,482 @@ export default function Chatbot() {
     setSidebarOpen(false);
   };
 
+  const handleClearChat = () => {
+    setMessages([WELCOME]);
+    setInput('');
+    setSidebarOpen(false);
+  };
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      chatContainerRef.current?.requestFullscreen();
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen();
+      setIsFullscreen(false);
+    }
+  };
+
+  const handleFeedback = (messageId, type) => {
+    console.log(`Feedback ${type} for message ${messageId}`);
+  };
+
   /* ─── render ─────────────────────────────────────────── */
   return (
-    <div className="flex h-screen bg-white dark:bg-[#0d0d0d] pt-[64px]">
+    <div className="relative w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-purple-50/60 dark:from-[#0a0518] dark:via-[#110a2e] dark:to-[#1e0f5c] overflow-hidden selection:bg-purple-500 selection:text-white transition-all duration-700">
+      {/* Animated background orbs */}
+      <div className="absolute inset-0 opacity-40 dark:opacity-60 pointer-events-none">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(90deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px),
+            linear-gradient(180deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '40px 40px'
+        }} />
+      </div>
+      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-gradient-to-r from-purple-600/20 via-purple-500/10 to-pink-500/10 rounded-full blur-[120px] pointer-events-none animate-pulse-slow" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-gradient-to-r from-pink-600/15 via-purple-400/10 to-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
 
-      {/* ── Sidebar ───────────────────────────────────────── */}
-      <AnimatePresence>
-        {sidebarOpen && (
-          <motion.aside
-            initial={{ x: -280, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: -280, opacity: 0 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed left-0 top-[64px] bottom-0 w-[260px] z-30
-              bg-gray-50 dark:bg-[#171717]
-              border-r border-gray-200 dark:border-gray-800
-              flex flex-col shadow-2xl"
-          >
-            {/* New chat */}
-            <div className="p-3 border-b border-gray-200 dark:border-gray-800">
-              <button
-                onClick={handleNewChat}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl
-                  border border-gray-300 dark:border-gray-700
-                  text-gray-700 dark:text-gray-300 text-sm font-medium
-                  hover:bg-white dark:hover:bg-gray-800 transition-all group"
-              >
-                <BsPlus className="text-xl group-hover:text-purple-500 transition-colors" />
-                New chat
-              </button>
-            </div>
-
-            {/* History */}
-            <div className="flex-1 overflow-y-auto p-3 space-y-1">
-              <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 px-3 mb-2 uppercase tracking-wider">
-                Today
-              </p>
-              {chatHistory.map(ch => (
-                <button
-                  key={ch.id}
-                  className={`w-full text-left px-3 py-2.5 rounded-lg text-sm transition-all
-                    ${ch.active
-                      ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
-                      : 'text-gray-600 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-800'
-                    }`}
-                >
-                  <TbMessage2 className="inline mr-2 opacity-60" />
-                  {ch.title}
-                </button>
-              ))}
-            </div>
-
-            {/* Clear */}
-            <div className="p-3 border-t border-gray-200 dark:border-gray-800">
-              <button
-                onClick={handleNewChat}
-                className="w-full flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm
-                  text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all"
-              >
-                <BsTrash />
-                Clear conversations
-              </button>
-            </div>
-          </motion.aside>
-        )}
-      </AnimatePresence>
-
-      {/* Sidebar backdrop */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-20 bg-black/30 md:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      {/* ── Main chat area ─────────────────────────────────── */}
-      <div className="flex flex-col flex-1 min-w-0 relative">
-
-        {/* Top bar */}
-        <div className="flex items-center gap-3 px-4 py-3 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0d0d0d]">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-20">
+        {/* Header Section */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <button
-            onClick={() => setSidebarOpen(s => !s)}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-500 dark:text-gray-400"
-            title="Toggle sidebar"
+            onClick={() => window.history.back()}
+            className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-purple-500/15 via-purple-400/10 to-purple-300/10 border border-purple-200/60 dark:border-purple-700/60 backdrop-blur-xl shadow-lg shadow-purple-500/10 hover:shadow-purple-500/20 transition-all"
           >
-            <BsLayoutSidebar className="text-lg" />
+            <BsArrowLeft className="text-purple-500" />
+            <span className="text-sm font-bold bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400 bg-clip-text text-transparent">
+              Back to Home
+            </span>
           </button>
-
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#6A3093] to-[#BF5AE0] flex items-center justify-center shadow-md">
-              <BsRobot className="text-white text-sm" />
+          <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-purple-500/15 via-purple-400/10 to-purple-300/10 border border-purple-200/60 dark:border-purple-700/60 backdrop-blur-xl shadow-lg shadow-purple-500/10">
+            <div className="relative">
+              <span className="absolute animate-ping inline-flex h-3.5 w-3.5 rounded-full bg-purple-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-gradient-to-r from-purple-500 to-purple-400" />
             </div>
-            <div>
-              <p className="text-sm font-semibold text-gray-900 dark:text-white leading-none">
-                LinguaSign AI
-              </p>
-              <p className="text-xs text-green-500 leading-none mt-0.5 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" />
-                Online
-              </p>
-            </div>
-          </div>
-
-          <div className="ml-auto flex items-center gap-2">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full
-                bg-purple-50 dark:bg-purple-900/20
-                border border-purple-200/60 dark:border-purple-700/40 text-xs font-medium
-                text-purple-600 dark:text-purple-400"
-            >
-              <BsStars className="text-purple-500" />
-              AI Assistant
-            </motion.div>
-            <button
-              onClick={handleNewChat}
-              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-500 dark:text-gray-400"
-              title="New chat"
-            >
-              <BsPlus className="text-xl" />
-            </button>
+            <span className="text-sm font-bold bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400 bg-clip-text text-transparent">
+              AI Assistant v3.0
+            </span>
           </div>
         </div>
 
-        {/* Messages */}
-        <div className="flex-1 overflow-y-auto scroll-smooth" style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(168,85,247,0.3) transparent' }}>
-
-          {/* Empty state / welcome */}
-          {messages.length === 1 && messages[0].id === 'welcome' && (
-            <div className="flex flex-col items-center justify-center min-h-[40vh] px-4 pt-12 pb-4 text-center">
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ type: 'spring', stiffness: 200 }}
-                className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#6A3093] via-[#A044FF] to-[#BF5AE0] flex items-center justify-center mb-6 shadow-2xl shadow-purple-500/40"
-              >
-                <TbHandLoveYou className="text-4xl text-white" />
-              </motion.div>
-              <motion.h2
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.1 }}
-                className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2"
-              >
-                How can I help you today?
-              </motion.h2>
-              <motion.p
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="text-gray-500 dark:text-gray-400 max-w-sm"
-              >
-                Ask anything about sign language — I'm here to help!
-              </motion.p>
-            </div>
-          )}
-
-          <div className="max-w-3xl mx-auto px-4 py-6 space-y-2">
-            <AnimatePresence initial={false}>
-              {messages.map((msg) => (
-                <MessageBubble
-                  key={msg.id}
-                  msg={msg}
-                  copiedId={copiedId}
-                  onCopy={handleCopy}
-                />
-              ))}
-            </AnimatePresence>
-
-            {/* Typing indicator */}
+        {/* Main grid: sidebar + chat */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Sidebar */}
+          <div className="lg:col-span-1 space-y-6">
+            {/* Slide-out sidebar for mobile */}
             <AnimatePresence>
-              {isLoading && (
-                <motion.div
-                  key="typing"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="flex items-start gap-3 py-2"
-                >
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#6A3093] to-[#BF5AE0] flex items-center justify-center flex-shrink-0 shadow-md">
-                    <BsRobot className="text-white text-sm" />
-                  </div>
-                  <div className="px-4 py-3 rounded-2xl rounded-tl-sm bg-gray-100 dark:bg-gray-800 flex items-center gap-1.5">
-                    {[0, 1, 2].map(i => (
-                      <motion.div
-                        key={i}
-                        className="w-2 h-2 rounded-full bg-purple-500"
-                        animate={{ y: [0, -6, 0] }}
-                        transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }}
-                      />
-                    ))}
-                  </div>
-                </motion.div>
+              {sidebarOpen && (
+                <>
+                  <motion.aside
+                    initial={{ x: -280, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: -280, opacity: 0 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    className="fixed left-0 top-[64px] bottom-0 w-[260px] z-30
+                      bg-gray-50 dark:bg-[#171717]
+                      border-r border-gray-200 dark:border-gray-800
+                      flex flex-col shadow-2xl lg:hidden"
+                  >
+                    {/* Sidebar content (same as before) */}
+                    <div className="p-3 border-b border-gray-200 dark:border-gray-800">
+                      <button
+                        onClick={handleNewChat}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl
+                          border border-gray-300 dark:border-gray-700
+                          text-gray-700 dark:text-gray-300 text-sm font-medium
+                          hover:bg-white dark:hover:bg-gray-800 transition-all group"
+                      >
+                        <BsPlus className="text-xl group-hover:text-purple-500 transition-colors" />
+                        New chat
+                      </button>
+                    </div>
+                    <div className="flex-1 overflow-y-auto p-3 space-y-1">
+                      <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 px-3 mb-2 uppercase tracking-wider">
+                        Today
+                      </p>
+                      {chatHistory.map(ch => (
+                        <button
+                          key={ch.id}
+                          className={`w-full text-left px-3 py-2.5 rounded-lg text-sm transition-all
+                            ${ch.active
+                              ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm'
+                              : 'text-gray-600 dark:text-gray-400 hover:bg-white dark:hover:bg-gray-800'
+                            }`}
+                        >
+                          <TbMessage2 className="inline mr-2 opacity-60" />
+                          {ch.title}
+                        </button>
+                      ))}
+                    </div>
+                    <div className="p-3 border-t border-gray-200 dark:border-gray-800">
+                      <button
+                        onClick={handleClearChat}
+                        className="w-full flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm
+                          text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all"
+                      >
+                        <BsTrash />
+                        Clear conversations
+                      </button>
+                    </div>
+                  </motion.aside>
+                  <div
+                    className="fixed inset-0 z-20 bg-black/30 lg:hidden"
+                    onClick={() => setSidebarOpen(false)}
+                  />
+                </>
               )}
             </AnimatePresence>
 
-            <div ref={bottomRef} />
-          </div>
-        </div>
-
-        {/* Input area */}
-        <div className="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0d0d0d] px-4 py-4">
-          <div className="max-w-3xl mx-auto">
-
-            {/* Quick prompts — only when no user messages yet */}
-            {messages.length <= 1 && (
-              <div className="flex flex-wrap gap-2 mb-3">
-                {QUICK_PROMPTS.map((p, i) => (
-                  <motion.button
-                    key={i}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                    onClick={() => setInput(p)}
-                    className="px-3.5 py-2 text-sm rounded-full
-                      border border-gray-200 dark:border-gray-700
-                      text-gray-600 dark:text-gray-300
-                      bg-white dark:bg-gray-900
-                      hover:border-purple-400 dark:hover:border-purple-500
-                      hover:text-purple-600 dark:hover:text-purple-400
-                      hover:bg-purple-50 dark:hover:bg-purple-900/20
-                      transition-all"
-                  >
-                    {p}
-                  </motion.button>
-                ))}
+            {/* Always-visible sidebar on large screens */}
+            <div className="hidden lg:block space-y-6">
+              {/* AI Capabilities Card */}
+              <div className="p-6 rounded-2xl backdrop-blur-xl bg-white/90 dark:bg-white/10 border border-white/30 dark:border-white/10 shadow-xl shadow-purple-500/10">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                  <GiArtificialIntelligence className="text-purple-500" />
+                  AI Capabilities
+                </h3>
+                <div className="space-y-3">
+                  {[
+                    { icon: <BsLightningFill />, text: "Real-time Translation", color: "text-green-500" },
+                    { icon: <TbHandLoveYou />, text: "Gesture Recognition", color: "text-blue-500" },
+                    { icon: <BsStars />, text: "Learning Assistance", color: "text-pink-500" },
+                    { icon: <BsRobot />, text: "Context Understanding", color: "text-purple-500" }
+                  ].map((feature, i) => (
+                    <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-gray-50/50 dark:bg-gray-900/30 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors">
+                      <div className={`text-lg ${feature.color}`}>
+                        {feature.icon}
+                      </div>
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        {feature.text}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            )}
 
-            {/* Input box */}
-            <div className="relative flex items-end gap-2
-              bg-white dark:bg-[#1a1a1a]
-              border border-gray-300 dark:border-gray-700
-              rounded-2xl shadow-sm focus-within:border-purple-500 focus-within:ring-2 focus-within:ring-purple-500/20
-              transition-all overflow-hidden"
-            >
-              <textarea
-                ref={textareaRef}
-                value={input}
-                onChange={e => setInput(e.target.value)}
-                onKeyDown={handleKey}
-                placeholder="Message LinguaSign AI…"
-                rows={1}
-                className="flex-1 resize-none bg-transparent px-4 py-3.5
-                  text-gray-900 dark:text-gray-100
-                  placeholder-gray-400 dark:placeholder-gray-500
-                  text-sm leading-relaxed outline-none max-h-[200px] overflow-y-auto"
-                style={{ scrollbarWidth: 'none' }}
-              />
-              <motion.button
-                onClick={handleSend}
-                disabled={!input.trim() || isLoading}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="m-2 p-2.5 rounded-xl
-                  bg-gradient-to-br from-[#6A3093] via-[#A044FF] to-[#BF5AE0]
-                  text-white shadow-lg shadow-purple-500/30
-                  disabled:opacity-40 disabled:cursor-not-allowed
-                  hover:shadow-purple-500/50 transition-all flex-shrink-0"
-              >
-                <BsSendFill className="text-base" />
-              </motion.button>
+              {/* Quick Actions */}
+              <div className="p-6 rounded-2xl backdrop-blur-xl bg-gradient-to-br from-purple-50/80 to-pink-50/50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200/50 dark:border-purple-500/20">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                  Quick Actions
+                </h3>
+                <div className="space-y-3">
+                  <button
+                    onClick={handleClearChat}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white/80 dark:bg-gray-800/80 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+                  >
+                    <BsTrash />
+                    Clear Chat
+                  </button>
+                  <button
+                    onClick={toggleFullscreen}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-300/50 dark:border-purple-500/50 rounded-xl text-purple-600 dark:text-purple-400 hover:from-purple-500/30 hover:to-pink-500/30 transition-all"
+                  >
+                    {isFullscreen ? <FaCompress /> : <FaExpand />}
+                    {isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
+                  </button>
+                  <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-300/50 dark:border-purple-500/50 rounded-xl text-purple-600 dark:text-purple-400 hover:from-purple-500/30 hover:to-pink-500/30 transition-all">
+                    <BsDownload />
+                    Export Chat
+                  </button>
+                </div>
+              </div>
             </div>
 
-            <p className="text-center text-xs text-gray-400 dark:text-gray-600 mt-2">
-              Press <kbd className="px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800 font-mono text-xs">Enter</kbd> to send &nbsp;·&nbsp; <kbd className="px-1 py-0.5 rounded bg-gray-100 dark:bg-gray-800 font-mono text-xs">Shift+Enter</kbd> for new line
-            </p>
+            {/* Mobile toggle button for sidebar */}
+            <button
+              onClick={() => setSidebarOpen(s => !s)}
+              className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-500 dark:text-gray-400"
+              title="Toggle sidebar"
+            >
+              <BsLayoutSidebar className="text-lg" />
+            </button>
           </div>
+
+          {/* Main Chat Interface */}
+          <motion.div
+            ref={chatContainerRef}
+            className="lg:col-span-3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="h-[600px] flex flex-col rounded-2xl backdrop-blur-xl bg-white/90 dark:bg-white/10 border border-white/30 dark:border-white/10 shadow-2xl shadow-purple-500/20 overflow-hidden">
+              {/* Chat Header */}
+              <div className="p-6 border-b border-gray-200/50 dark:border-gray-800/50 bg-gradient-to-r from-purple-50/50 to-pink-50/50 dark:from-purple-900/10 dark:to-pink-900/10">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] flex items-center justify-center">
+                    <BsRobot className="text-2xl text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                      LinguaSign AI
+                    </h2>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" />
+                      Online • Powered by Deep Learning
+                    </p>
+                  </div>
+                  <div className="ml-auto flex items-center gap-2">
+                    <button
+                      onClick={handleNewChat}
+                      className="p-2 rounded-lg hover:bg-white/20 dark:hover:bg-black/20 transition-colors text-gray-500 dark:text-gray-400"
+                      title="New chat"
+                    >
+                      <BsPlus className="text-xl" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Messages Container */}
+              <div className="flex-1 overflow-y-auto p-6 space-y-6" style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(168,85,247,0.3) transparent' }}>
+                {/* Welcome / empty state */}
+                {messages.length === 1 && messages[0].id === 'welcome' && (
+                  <div className="flex flex-col items-center justify-center h-full text-center">
+                    <motion.div
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ type: 'spring', stiffness: 200 }}
+                      className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#6A3093] via-[#A044FF] to-[#BF5AE0] flex items-center justify-center mb-6 shadow-2xl shadow-purple-500/40"
+                    >
+                      <TbHandLoveYou className="text-4xl text-white" />
+                    </motion.div>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                      How can I help you today?
+                    </h2>
+                    <p className="text-gray-500 dark:text-gray-400 max-w-sm">
+                      Ask anything about sign language — I'm here to help!
+                    </p>
+                  </div>
+                )}
+
+                {/* Messages */}
+                {messages.map((msg) => (
+                  <motion.div
+                    key={msg.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  >
+                    <div className={`max-w-[80%] ${msg.role === 'user' ? 'order-2' : 'order-1'}`}>
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                          msg.role === 'user'
+                            ? 'bg-gradient-to-r from-blue-500 to-blue-600'
+                            : 'bg-gradient-to-r from-purple-500 to-purple-600'
+                        }`}>
+                          {msg.role === 'user' ?
+                            <FaUser className="text-sm text-white" /> :
+                            <BsRobot className="text-sm text-white" />
+                          }
+                        </div>
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                          {msg.role === 'user' ? 'You' : 'AI Assistant'} • {msg.time}
+                        </span>
+                      </div>
+                      <div className={`rounded-2xl p-4 ${
+                        msg.role === 'user'
+                          ? 'bg-gradient-to-r from-blue-500/10 to-blue-600/10 border border-blue-200/50 dark:border-blue-800/50'
+                          : 'bg-gradient-to-r from-purple-500/10 to-purple-600/10 border border-purple-200/50 dark:border-purple-800/50'
+                      }`}>
+                        <p className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap">
+                          {msg.text}
+                        </p>
+                        {msg.role === 'ai' && (
+                          <div className="flex items-center justify-end gap-2 mt-3">
+                            <button
+                              onClick={() => handleCopy(msg.text, msg.id)}
+                              className="p-2 rounded-lg hover:bg-white/20 dark:hover:bg-black/20 transition-colors"
+                              title="Copy text"
+                            >
+                              {copiedId === msg.id ? (
+                                <FaCheck className="text-green-500" />
+                              ) : (
+                                <FaRegCopy className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" />
+                              )}
+                            </button>
+                            <button
+                              onClick={() => handleFeedback(msg.id, 'like')}
+                              className="p-2 rounded-lg hover:bg-white/20 dark:hover:bg-black/20 transition-colors"
+                              title="Helpful"
+                            >
+                              <FaRegThumbsUp className="text-gray-400 hover:text-green-500" />
+                            </button>
+                            <button
+                              onClick={() => handleFeedback(msg.id, 'dislike')}
+                              className="p-2 rounded-lg hover:bg-white/20 dark:hover:bg-black/20 transition-colors"
+                              title="Not helpful"
+                            >
+                              <FaRegThumbsDown className="text-gray-400 hover:text-red-500" />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+
+                {isLoading && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="flex justify-start"
+                  >
+                    <div className="max-w-[80%]">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center">
+                          <BsRobot className="text-sm text-white" />
+                        </div>
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                          AI Assistant is typing...
+                        </span>
+                      </div>
+                      <div className="rounded-2xl p-4 bg-gradient-to-r from-purple-500/10 to-purple-600/10 border border-purple-200/50 dark:border-purple-800/50">
+                        <div className="flex space-x-2">
+                          {[0, 1, 2].map(i => (
+                            <motion.div
+                              key={i}
+                              className="w-2 h-2 bg-purple-500 rounded-full"
+                              animate={{ y: [0, -6, 0] }}
+                              transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+                <div ref={bottomRef} />
+              </div>
+
+              {/* Input Area */}
+              <div className="p-6 border-t border-gray-200/50 dark:border-gray-800/50 bg-gradient-to-r from-gray-50/50 to-purple-50/50 dark:from-gray-900/10 dark:to-purple-900/10">
+                <div className="flex items-end gap-3">
+                  <div className="flex-1 relative">
+                    <textarea
+                      ref={textareaRef}
+                      value={input}
+                      onChange={e => setInput(e.target.value)}
+                      onKeyDown={handleKey}
+                      placeholder="Type your message here... Ask about sign language, translations, or learning tips"
+                      className="w-full px-4 py-3 pl-12 pr-24 bg-white/80 dark:bg-gray-900/80 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 resize-none transition-all"
+                      rows="2"
+                      style={{ scrollbarWidth: 'none' }}
+                    />
+                    <div className="absolute left-4 top-3.5 text-gray-400 dark:text-gray-500">
+                      <FaUser />
+                    </div>
+                    <div className="absolute right-4 top-3.5 flex items-center gap-2">
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        Press Enter to send
+                      </span>
+                    </div>
+                  </div>
+                  <motion.button
+                    onClick={handleSend}
+                    disabled={!input.trim() || isLoading}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="p-4 rounded-xl bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white shadow-lg shadow-purple-500/40 hover:shadow-purple-500/60 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <BsSendFill className="text-xl" />
+                  </motion.button>
+                </div>
+
+                {/* Quick Prompts */}
+                {messages.length <= 1 && (
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {QUICK_PROMPTS.map((p, i) => (
+                      <motion.button
+                        key={i}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.05 }}
+                        onClick={() => setInput(p)}
+                        className="px-3 py-1.5 text-sm rounded-full bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-300/30 dark:border-purple-500/30 text-purple-600 dark:text-purple-400 hover:from-purple-500/20 hover:to-pink-500/20 transition-all"
+                      >
+                        {p}
+                      </motion.button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </motion.div>
         </div>
-      </div>
-    </div>
-  );
-}
 
-/* ─── Message bubble component ────────────────────────── */
-function MessageBubble({ msg, copiedId, onCopy }) {
-  const isUser = msg.role === 'user';
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.25 }}
-      className={`flex items-start gap-3 py-2 group ${isUser ? 'flex-row-reverse' : ''}`}
-    >
-      {/* Avatar */}
-      <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 shadow-md
-        ${isUser
-          ? 'bg-gradient-to-br from-blue-500 to-blue-600'
-          : 'bg-gradient-to-br from-[#6A3093] to-[#BF5AE0]'
-        }`}
-      >
-        {isUser
-          ? <FaUser className="text-white text-xs" />
-          : <BsRobot className="text-white text-sm" />
-        }
-      </div>
-
-      {/* Bubble */}
-      <div className={`flex flex-col max-w-[75%] sm:max-w-[70%] ${isUser ? 'items-end' : 'items-start'}`}>
-        <div className={`px-4 py-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap break-words
-          ${isUser
-            ? 'rounded-tr-sm bg-gradient-to-br from-[#6A3093] to-[#A044FF] text-white shadow-lg shadow-purple-500/20'
-            : 'rounded-tl-sm bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 shadow-sm'
-          }`}
+        {/* Stats Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6"
         >
-          {msg.text}
-        </div>
-
-        {/* Action bar for AI messages */}
-        {!isUser && (
-          <div className="flex items-center gap-0.5 mt-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-            <ActionBtn
-              onClick={() => onCopy(msg.text, msg.id)}
-              title="Copy"
-              icon={copiedId === msg.id
-                ? <FaCheck className="text-green-500" />
-                : <FaRegCopy />
-              }
-            />
-            <ActionBtn icon={<FaRegThumbsUp />} title="Good response" />
-            <ActionBtn icon={<FaRegThumbsDown />} title="Bad response" />
-            <span className="text-xs text-gray-400 dark:text-gray-600 ml-2">{msg.time}</span>
+          <div className="p-6 rounded-2xl backdrop-blur-xl bg-gradient-to-r from-purple-500/5 to-transparent border border-purple-200/30 dark:border-purple-500/20">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center">
+                <BsLightningFill className="text-white" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">24/7</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Always Available</div>
+              </div>
+            </div>
           </div>
-        )}
-
-        {isUser && (
-          <span className="text-xs text-gray-400 dark:text-gray-600 mt-1">{msg.time}</span>
-        )}
+          <div className="p-6 rounded-2xl backdrop-blur-xl bg-gradient-to-r from-pink-500/5 to-transparent border border-pink-200/30 dark:border-pink-500/20">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-pink-500 to-pink-600 flex items-center justify-center">
+                <BsStars className="text-white" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">50+</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Sign Language Variants</div>
+              </div>
+            </div>
+          </div>
+          <div className="p-6 rounded-2xl backdrop-blur-xl bg-gradient-to-r from-blue-500/5 to-transparent border border-blue-200/30 dark:border-blue-500/20">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center">
+                <TbHandLoveYou className="text-white" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">99%</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Accuracy Rate</div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
-    </motion.div>
-  );
-}
 
-function ActionBtn({ onClick, icon, title }) {
-  return (
-    <button
-      onClick={onClick}
-      title={title}
-      className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all"
-    >
-      <span className="text-sm">{icon}</span>
-    </button>
+      {/* Custom CSS for animations and scrollbar */}
+      <style jsx>{`
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.5; }
+          50% { opacity: 0.8; }
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 4s ease-in-out infinite;
+        }
+        .overflow-y-auto {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(168, 85, 247, 0.3) transparent;
+        }
+        .overflow-y-auto::-webkit-scrollbar {
+          width: 6px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .overflow-y-auto::-webkit-scrollbar-thumb {
+          background-color: rgba(168, 85, 247, 0.3);
+          border-radius: 20px;
+        }
+        .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+          background-color: rgba(168, 85, 247, 0.5);
+        }
+      `}</style>
+    </div>
   );
 }
