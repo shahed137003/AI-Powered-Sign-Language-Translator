@@ -16,6 +16,7 @@ import HelloHand3D from "./components/HelloHand3D";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import About from "./components/About";
+import Chatbot from "./components/Chatbot";
 import ForgetPassword from "./components/ForgetPassword";
 import ResetPassword from "./components/ResetPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -72,7 +73,7 @@ function App() {
         <Route path="/contactus" element={<Contact />} />
         <Route path="/guide" element={<HelpGuide />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
-
+        <Route path="/chatbot" element={<ProtectedRoute><Chatbot /></ProtectedRoute>} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/dashboard"
