@@ -74,6 +74,31 @@ export default function Chatbot() {
     ta.style.height = Math.min(ta.scrollHeight, 200) + 'px';
   }, [input]);
 
+  /* ── fullscreen state sync ── */
+  useEffect(() => {
+    const onFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', onFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
+  }, []);
+
+  /* ── export chat ── */
+  const exportChat = useCallback(() => {
+    if (messages.length === 0) return;
+    const lines = messages.map(m =>
+      `[${m.time}] ${m.role === 'user' ? 'You' : 'AI Assistant'}:\n${m.text}`
+    );
+    const content = lines.join('\n\n');
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `chat-export-${new Date().toISOString().slice(0,10)}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [messages]);
+
   /* send message */
   const handleSend = useCallback(async () => {
     const text = input.trim();
@@ -138,11 +163,9 @@ export default function Chatbot() {
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
-      chatContainerRef.current?.requestFullscreen();
-      setIsFullscreen(true);
+      chatContainerRef.current?.requestFullscreen?.();
     } else {
-      document.exitFullscreen();
-      setIsFullscreen(false);
+      document.exitFullscreen?.();
     }
   };
 
@@ -152,38 +175,38 @@ export default function Chatbot() {
 
   /* ─── render ─────────────────────────────────────────── */
   return (
-    <div className="relative w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-purple-50/60 dark:from-[#0a0518] dark:via-[#110a2e] dark:to-[#1e0f5c] overflow-hidden selection:bg-purple-500 selection:text-white transition-all duration-700">
+    <div className="relative w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50/60 dark:from-primary-bg-1 dark:via-primary-bg-2 dark:to-primary-bg-3 overflow-hidden selection:bg-primary-500 selection:text-white transition-all duration-700">
       {/* Animated background orbs */}
       <div className="absolute inset-0 opacity-40 dark:opacity-60 pointer-events-none">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(90deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px),
-            linear-gradient(180deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px)
+            linear-gradient(90deg, var(--theme-grid-color) 1px, transparent 1px),
+            linear-gradient(180deg, var(--theme-grid-color) 1px, transparent 1px)
           `,
           backgroundSize: '40px 40px'
         }} />
       </div>
-      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-gradient-to-r from-purple-600/20 via-purple-500/10 to-pink-500/10 rounded-full blur-[120px] pointer-events-none animate-pulse-slow" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-gradient-to-r from-pink-600/15 via-purple-400/10 to-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-gradient-to-r from-primary-600/20 via-primary-500/10 to-pink-500/10 rounded-full blur-[120px] pointer-events-none animate-pulse-slow" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-gradient-to-r from-pink-600/15 via-primary-400/10 to-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-20">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <button
             onClick={() => window.history.back()}
-            className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-purple-500/15 via-purple-400/10 to-purple-300/10 border border-purple-200/60 dark:border-purple-700/60 backdrop-blur-xl shadow-lg shadow-purple-500/10 hover:shadow-purple-500/20 transition-all"
+            className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary-500/15 via-primary-400/10 to-primary-300/10 border border-primary-200/60 dark:border-primary-700/60 backdrop-blur-xl shadow-lg shadow-primary-500/10 hover:shadow-primary-500/20 transition-all"
           >
-            <BsArrowLeft className="text-purple-500" />
-            <span className="text-sm font-bold bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400 bg-clip-text text-transparent">
+            <BsArrowLeft className="text-primary-500" />
+            <span className="text-sm font-bold bg-gradient-to-r from-primary-600 via-primary-500 to-primary-400 bg-clip-text text-transparent">
               Back to Home
             </span>
           </button>
-          <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-purple-500/15 via-purple-400/10 to-purple-300/10 border border-purple-200/60 dark:border-purple-700/60 backdrop-blur-xl shadow-lg shadow-purple-500/10">
+          <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary-500/15 via-primary-400/10 to-primary-300/10 border border-primary-200/60 dark:border-primary-700/60 backdrop-blur-xl shadow-lg shadow-primary-500/10">
             <div className="relative">
-              <span className="absolute animate-ping inline-flex h-3.5 w-3.5 rounded-full bg-purple-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-gradient-to-r from-purple-500 to-purple-400" />
+              <span className="absolute animate-ping inline-flex h-3.5 w-3.5 rounded-full bg-primary-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-gradient-to-r from-primary-500 to-primary-400" />
             </div>
-            <span className="text-sm font-bold bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400 bg-clip-text text-transparent">
+            <span className="text-sm font-bold bg-gradient-to-r from-primary-600 via-primary-500 to-primary-400 bg-clip-text text-transparent">
               AI Assistant v3.0
             </span>
           </div>
@@ -216,7 +239,7 @@ export default function Chatbot() {
                           text-gray-700 dark:text-gray-300 text-sm font-medium
                           hover:bg-white dark:hover:bg-gray-800 transition-all group"
                       >
-                        <BsPlus className="text-xl group-hover:text-purple-500 transition-colors" />
+                        <BsPlus className="text-xl group-hover:text-primary-500 transition-colors" />
                         New chat
                       </button>
                     </div>
@@ -260,9 +283,9 @@ export default function Chatbot() {
             {/* Always-visible sidebar on large screens */}
             <div className="hidden lg:block space-y-6">
               {/* AI Capabilities Card */}
-              <div className="p-6 rounded-2xl backdrop-blur-xl bg-white/90 dark:bg-white/10 border border-white/30 dark:border-white/10 shadow-xl shadow-purple-500/10">
+              <div className="p-6 rounded-2xl backdrop-blur-xl bg-white/90 dark:bg-white/10 border border-white/30 dark:border-white/10 shadow-xl shadow-primary-500/10">
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                  <GiArtificialIntelligence className="text-purple-500" />
+                  <GiArtificialIntelligence className="text-primary-500" />
                   AI Capabilities
                 </h3>
                 <div className="space-y-3">
@@ -270,7 +293,7 @@ export default function Chatbot() {
                     { icon: <BsLightningFill />, text: "Real-time Translation", color: "text-green-500" },
                     { icon: <TbHandLoveYou />, text: "Gesture Recognition", color: "text-blue-500" },
                     { icon: <BsStars />, text: "Learning Assistance", color: "text-pink-500" },
-                    { icon: <BsRobot />, text: "Context Understanding", color: "text-purple-500" }
+                    { icon: <BsRobot />, text: "Context Understanding", color: "text-primary-500" }
                   ].map((feature, i) => (
                     <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-gray-50/50 dark:bg-gray-900/30 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors">
                       <div className={`text-lg ${feature.color}`}>
@@ -285,7 +308,7 @@ export default function Chatbot() {
               </div>
 
               {/* Quick Actions */}
-              <div className="p-6 rounded-2xl backdrop-blur-xl bg-gradient-to-br from-purple-50/80 to-pink-50/50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200/50 dark:border-purple-500/20">
+              <div className="p-6 rounded-2xl backdrop-blur-xl bg-gradient-to-br from-primary-50/80 to-pink-50/50 dark:from-primary-900/20 dark:to-pink-900/20 border border-primary-200/50 dark:border-primary-500/20">
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
                   Quick Actions
                 </h3>
@@ -299,12 +322,15 @@ export default function Chatbot() {
                   </button>
                   <button
                     onClick={toggleFullscreen}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-300/50 dark:border-purple-500/50 rounded-xl text-purple-600 dark:text-purple-400 hover:from-purple-500/30 hover:to-pink-500/30 transition-all"
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-primary-500/20 to-pink-500/20 border border-primary-300/50 dark:border-primary-500/50 rounded-xl text-primary-600 dark:text-primary-400 hover:from-primary-500/30 hover:to-pink-500/30 transition-all"
                   >
                     {isFullscreen ? <FaCompress /> : <FaExpand />}
                     {isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
                   </button>
-                  <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-300/50 dark:border-purple-500/50 rounded-xl text-purple-600 dark:text-purple-400 hover:from-purple-500/30 hover:to-pink-500/30 transition-all">
+                  <button
+                    onClick={exportChat}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-primary-500/20 to-pink-500/20 border border-primary-300/50 dark:border-primary-500/50 rounded-xl text-primary-600 dark:text-primary-400 hover:from-primary-500/30 hover:to-pink-500/30 transition-all"
+                  >
                     <BsDownload />
                     Export Chat
                   </button>
@@ -325,16 +351,16 @@ export default function Chatbot() {
           {/* Main Chat Interface */}
           <motion.div
             ref={chatContainerRef}
-            className="lg:col-span-3"
+            className={`lg:col-span-3 ${isFullscreen ? 'fixed inset-0 z-50 h-screen w-screen' : ''}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="h-[600px] flex flex-col rounded-2xl backdrop-blur-xl bg-white/90 dark:bg-white/10 border border-white/30 dark:border-white/10 shadow-2xl shadow-purple-500/20 overflow-hidden">
+            <div className={`flex flex-col rounded-2xl backdrop-blur-xl bg-white/90 dark:bg-white/10 border border-white/30 dark:border-white/10 shadow-2xl shadow-primary-500/20 overflow-hidden ${isFullscreen ? 'h-full rounded-none border-0' : 'h-[600px]'}`}>
               {/* Chat Header */}
-              <div className="p-6 border-b border-gray-200/50 dark:border-gray-800/50 bg-gradient-to-r from-purple-50/50 to-pink-50/50 dark:from-purple-900/10 dark:to-pink-900/10">
+              <div className="p-6 border-b border-gray-200/50 dark:border-gray-800/50 bg-gradient-to-r from-primary-50/50 to-pink-50/50 dark:from-primary-900/10 dark:to-pink-900/10">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 flex items-center justify-center">
                     <BsRobot className="text-2xl text-white" />
                   </div>
                   <div>
@@ -359,7 +385,7 @@ export default function Chatbot() {
               </div>
 
               {/* Messages Container */}
-              <div className="flex-1 overflow-y-auto p-6 space-y-6" style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(168,85,247,0.3) transparent' }}>
+              <div className="flex-1 overflow-y-auto p-6 space-y-6" style={{ scrollbarWidth: 'thin', scrollbarColor: 'var(--theme-scrollbar-thumb) transparent' }}>
                 {/* Welcome / empty state */}
                 {messages.length === 1 && messages[0].id === 'welcome' && (
                   <div className="flex flex-col items-center justify-center h-full text-center">
@@ -367,7 +393,7 @@ export default function Chatbot() {
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ type: 'spring', stiffness: 200 }}
-                      className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#6A3093] via-[#A044FF] to-[#BF5AE0] flex items-center justify-center mb-6 shadow-2xl shadow-purple-500/40"
+                      className="w-20 h-20 rounded-3xl bg-gradient-to-br from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 flex items-center justify-center mb-6 shadow-2xl shadow-primary-500/40"
                     >
                       <TbHandLoveYou className="text-4xl text-white" />
                     </motion.div>
@@ -394,7 +420,7 @@ export default function Chatbot() {
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
                           msg.role === 'user'
                             ? 'bg-gradient-to-r from-blue-500 to-blue-600'
-                            : 'bg-gradient-to-r from-purple-500 to-purple-600'
+                            : 'bg-gradient-to-r from-primary-500 to-primary-600'
                         }`}>
                           {msg.role === 'user' ?
                             <FaUser className="text-sm text-white" /> :
@@ -408,7 +434,7 @@ export default function Chatbot() {
                       <div className={`rounded-2xl p-4 ${
                         msg.role === 'user'
                           ? 'bg-gradient-to-r from-blue-500/10 to-blue-600/10 border border-blue-200/50 dark:border-blue-800/50'
-                          : 'bg-gradient-to-r from-purple-500/10 to-purple-600/10 border border-purple-200/50 dark:border-purple-800/50'
+                          : 'bg-gradient-to-r from-primary-500/10 to-primary-600/10 border border-primary-200/50 dark:border-primary-800/50'
                       }`}>
                         <p className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap">
                           {msg.text}
@@ -455,19 +481,19 @@ export default function Chatbot() {
                   >
                     <div className="max-w-[80%]">
                       <div className="flex items-center gap-2 mb-1">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary-500 to-primary-600 flex items-center justify-center">
                           <BsRobot className="text-sm text-white" />
                         </div>
                         <span className="text-xs text-gray-500 dark:text-gray-400">
                           AI Assistant is typing...
                         </span>
                       </div>
-                      <div className="rounded-2xl p-4 bg-gradient-to-r from-purple-500/10 to-purple-600/10 border border-purple-200/50 dark:border-purple-800/50">
+                      <div className="rounded-2xl p-4 bg-gradient-to-r from-primary-500/10 to-primary-600/10 border border-primary-200/50 dark:border-primary-800/50">
                         <div className="flex space-x-2">
                           {[0, 1, 2].map(i => (
                             <motion.div
                               key={i}
-                              className="w-2 h-2 bg-purple-500 rounded-full"
+                              className="w-2 h-2 bg-primary-500 rounded-full"
                               animate={{ y: [0, -6, 0] }}
                               transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }}
                             />
@@ -481,7 +507,7 @@ export default function Chatbot() {
               </div>
 
               {/* Input Area */}
-              <div className="p-6 border-t border-gray-200/50 dark:border-gray-800/50 bg-gradient-to-r from-gray-50/50 to-purple-50/50 dark:from-gray-900/10 dark:to-purple-900/10">
+              <div className="p-6 border-t border-gray-200/50 dark:border-gray-800/50 bg-gradient-to-r from-gray-50/50 to-primary-50/50 dark:from-gray-900/10 dark:to-primary-900/10">
                 <div className="flex items-end gap-3">
                   <div className="flex-1 relative">
                     <textarea
@@ -490,7 +516,7 @@ export default function Chatbot() {
                       onChange={e => setInput(e.target.value)}
                       onKeyDown={handleKey}
                       placeholder="Type your message here... Ask about sign language, translations, or learning tips"
-                      className="w-full px-4 py-3 pl-12 pr-24 bg-white/80 dark:bg-gray-900/80 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 resize-none transition-all"
+                      className="w-full px-4 py-3 pl-12 pr-24 bg-white/80 dark:bg-gray-900/80 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 resize-none transition-all"
                       rows="2"
                       style={{ scrollbarWidth: 'none' }}
                     />
@@ -508,7 +534,7 @@ export default function Chatbot() {
                     disabled={!input.trim() || isLoading}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="p-4 rounded-xl bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white shadow-lg shadow-purple-500/40 hover:shadow-purple-500/60 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="p-4 rounded-xl bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 text-white shadow-lg shadow-primary-500/40 hover:shadow-primary-500/60 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <BsSendFill className="text-xl" />
                   </motion.button>
@@ -524,7 +550,7 @@ export default function Chatbot() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.05 }}
                         onClick={() => setInput(p)}
-                        className="px-3 py-1.5 text-sm rounded-full bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-300/30 dark:border-purple-500/30 text-purple-600 dark:text-purple-400 hover:from-purple-500/20 hover:to-pink-500/20 transition-all"
+                        className="px-3 py-1.5 text-sm rounded-full bg-gradient-to-r from-primary-500/10 to-pink-500/10 border border-primary-300/30 dark:border-primary-500/30 text-primary-600 dark:text-primary-400 hover:from-primary-500/20 hover:to-pink-500/20 transition-all"
                       >
                         {p}
                       </motion.button>
@@ -543,9 +569,9 @@ export default function Chatbot() {
           transition={{ delay: 0.5 }}
           className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6"
         >
-          <div className="p-6 rounded-2xl backdrop-blur-xl bg-gradient-to-r from-purple-500/5 to-transparent border border-purple-200/30 dark:border-purple-500/20">
+          <div className="p-6 rounded-2xl backdrop-blur-xl bg-gradient-to-r from-primary-500/5 to-transparent border border-primary-200/30 dark:border-primary-500/20">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-primary-500 to-primary-600 flex items-center justify-center">
                 <BsLightningFill className="text-white" />
               </div>
               <div>
@@ -590,7 +616,7 @@ export default function Chatbot() {
         }
         .overflow-y-auto {
           scrollbar-width: thin;
-          scrollbar-color: rgba(168, 85, 247, 0.3) transparent;
+          scrollbar-color: var(--theme-scrollbar-thumb) transparent;
         }
         .overflow-y-auto::-webkit-scrollbar {
           width: 6px;
@@ -599,11 +625,11 @@ export default function Chatbot() {
           background: transparent;
         }
         .overflow-y-auto::-webkit-scrollbar-thumb {
-          background-color: rgba(168, 85, 247, 0.3);
+          background-color: var(--theme-scrollbar-thumb);
           border-radius: 20px;
         }
         .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-          background-color: rgba(168, 85, 247, 0.5);
+          background-color: var(--theme-scrollbar-thumb-hover);
         }
       `}</style>
     </div>

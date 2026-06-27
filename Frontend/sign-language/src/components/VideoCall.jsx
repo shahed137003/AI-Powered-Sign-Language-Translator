@@ -614,13 +614,13 @@ const VideoCall = ({
               <div className="text-center text-white">
                 {isConnecting ? (
                   <>
-                    <div className="w-24 h-24 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+                    <div className="w-24 h-24 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
                     <p className="text-2xl font-semibold">Connecting to {remoteUsername}...</p>
                   </>
                 ) : connectionError ? (
                   <>
                     <p className="text-2xl text-red-500 mb-4">{connectionError}</p>
-                    <button onClick={onClose} className="px-8 py-3 bg-purple-500 text-white rounded-full">Close</button>
+                    <button onClick={onClose} className="px-8 py-3 bg-primary-500 text-white rounded-full">Close</button>
                   </>
                 ) : (
                   <>
@@ -635,7 +635,7 @@ const VideoCall = ({
 
           {/* Local Video (Picture-in-Picture) */}
           {localStream && callType === "video" && (
-            <div className="absolute bottom-28 right-4 w-56 h-72 bg-gray-800 rounded-xl overflow-hidden border-2 border-purple-500 shadow-2xl">
+            <div className="absolute bottom-28 right-4 w-56 h-72 bg-gray-800 rounded-xl overflow-hidden border-2 border-primary-500 shadow-2xl">
               <video ref={localVideoRef} autoPlay playsInline muted className="w-full h-full object-cover" />
               {!isVideoEnabled && (
                 <div className="absolute inset-0 bg-gray-900/80 flex items-center justify-center">
@@ -687,13 +687,13 @@ const VideoCall = ({
                   <div className="flex gap-2 w-full">
                     <button
                       onClick={handleAcceptPrediction}
-                      className="flex-1 px-4 py-2 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] hover:opacity-90 active:scale-95 text-white font-bold rounded-xl text-xs transition-all flex items-center justify-center gap-1 shadow-md shadow-purple-500/20"
+                      className="flex-1 px-4 py-2 bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 hover:opacity-90 active:scale-95 text-white font-bold rounded-xl text-xs transition-all flex items-center justify-center gap-1 shadow-md shadow-primary-500/20"
                     >
                       Accept
                     </button>
                     <button
                       onClick={handleRejectPrediction}
-                      className="flex-1 px-4 py-2 border border-purple-500/40 text-purple-300 hover:bg-purple-500/10 active:scale-95 font-bold rounded-xl text-xs transition-all flex items-center justify-center gap-1 bg-transparent"
+                      className="flex-1 px-4 py-2 border border-primary-500/40 text-primary-300 hover:bg-primary-500/10 active:scale-95 font-bold rounded-xl text-xs transition-all flex items-center justify-center gap-1 bg-transparent"
                     >
                       Reject
                     </button>
@@ -709,12 +709,12 @@ const VideoCall = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
-              className="absolute bottom-40 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-900/95 to-pink-900/95 backdrop-blur-md rounded-2xl p-4 border border-purple-500/50 shadow-2xl max-w-md w-full mx-4 z-30"
+              className="absolute bottom-40 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-primary-900/95 to-pink-900/95 backdrop-blur-md rounded-2xl p-4 border border-primary-500/50 shadow-2xl max-w-md w-full mx-4 z-30"
             >
               <div className="flex justify-between items-start mb-2">
                 <div className="flex items-center gap-2">
-                  <BsRobot className="text-purple-400 text-sm" />
-                  <span className="text-purple-300 text-xs font-semibold">AI Translation</span>
+                  <BsRobot className="text-primary-400 text-sm" />
+                  <span className="text-primary-300 text-xs font-semibold">AI Translation</span>
                   {aiConfidence > 0 && <span className="text-green-400 text-xs">{aiConfidence.toFixed(0)}% conf</span>}
                 </div>
                 <div className="flex gap-2">
@@ -731,13 +731,13 @@ const VideoCall = ({
               </div>
               {aiGlossText && (
                 <div className="mb-2">
-                  <div className="text-purple-300 text-xs">Signs:</div>
+                  <div className="text-primary-300 text-xs">Signs:</div>
                   <p className="text-white text-md font-medium break-words">{aiGlossText}</p>
                 </div>
               )}
               {aiEnglishText && (
                 <div>
-                  <div className="text-purple-300 text-xs">English:</div>
+                  <div className="text-primary-300 text-xs">English:</div>
                   <p className="text-white text-md font-medium break-words">{aiEnglishText}</p>
                 </div>
               )}
@@ -746,7 +746,7 @@ const VideoCall = ({
 
           {/* AI Processing Indicator */}
           {isAiEnabled && isAiRecording && !aiGlossText && !aiEnglishText && !isAiLoading && (
-            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 bg-purple-500/80 text-white px-4 py-2 rounded-full text-sm font-semibold animate-pulse z-30">
+            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 bg-primary-500/80 text-white px-4 py-2 rounded-full text-sm font-semibold animate-pulse z-30">
               🤖 AI is processing your sign...
             </div>
           )}
@@ -757,7 +757,7 @@ const VideoCall = ({
             <button
               onClick={toggleAI}
               className={`p-4 rounded-full transition-all transform hover:scale-110 ${
-                isAiEnabled ? 'bg-purple-500 hover:bg-purple-600 text-white animate-pulse' : 'bg-gray-700 hover:bg-gray-600 text-white'
+                isAiEnabled ? 'bg-primary-500 hover:bg-primary-600 text-white animate-pulse' : 'bg-gray-700 hover:bg-gray-600 text-white'
               }`}
               title={isAiEnabled ? "Disable AI translation" : "Enable AI sign language translation"}
             >
@@ -831,7 +831,7 @@ const VideoCall = ({
               {isAiEnabled && (
                 <>
                   <div className="w-px h-4 bg-gray-600"></div>
-                  <span className="text-purple-400 text-sm flex items-center gap-1">
+                  <span className="text-primary-400 text-sm flex items-center gap-1">
                     <BsRobot size={12} /> AI Active
                   </span>
                 </>

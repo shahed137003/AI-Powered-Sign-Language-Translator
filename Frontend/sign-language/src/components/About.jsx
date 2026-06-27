@@ -20,7 +20,7 @@ export default function About() {
   const [expandedItem, setExpandedItem] = useState(null);
   const { themeColor } = useTheme();
 
-  const gridColor = themeColor === "midnight-blue" ? "rgba(99, 102, 241, 0.1)" : "rgba(168, 85, 247, 0.1)";
+  const gridColor = themeColor === "midnight-blue" ? "rgba(99, 102, 241, 0.1)" : "var(--theme-grid-color)";
 
   // Detect dark mode
   useEffect(() => {

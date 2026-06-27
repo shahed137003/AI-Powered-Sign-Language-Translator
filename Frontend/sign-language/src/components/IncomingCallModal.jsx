@@ -56,7 +56,7 @@ useEffect(() => {
           initial={{ scale: 0.9, y: 30 }}
           animate={{ scale: 1, y: 0 }}
           exit={{ scale: 0.9, y: 30 }}
-          className="bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 rounded-3xl p-8 max-w-md w-full mx-4 border border-purple-500/30 shadow-2xl"
+          className="bg-gradient-to-br from-gray-900 via-primary-900/20 to-gray-900 rounded-3xl p-8 max-w-md w-full mx-4 border border-primary-500/30 shadow-2xl"
         >
           <div className="text-center">
             {/* Animated rings */}
@@ -64,16 +64,16 @@ useEffect(() => {
               <motion.div
                 animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="absolute inset-0 rounded-full bg-purple-500/20"
+                className="absolute inset-0 rounded-full bg-primary-500/20"
               ></motion.div>
               <motion.div
                 animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0, 0.3] }}
                 transition={{ duration: 2, delay: 0.5, repeat: Infinity }}
-                className="absolute inset-0 rounded-full bg-purple-500/30"
+                className="absolute inset-0 rounded-full bg-primary-500/30"
               ></motion.div>
               
               {/* Caller Avatar */}
-              <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center mx-auto">
+              <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center mx-auto">
                 {callType === "video" ? (
                   <BsCameraVideo className="text-white text-5xl" />
                 ) : (
@@ -87,7 +87,7 @@ useEffect(() => {
               Incoming {callType === "video" ? "Video" : "Audio"} Call
             </h3>
             <p className="text-gray-300 text-xl mb-2">
-              <span className="font-semibold text-purple-400">@{caller}</span>
+              <span className="font-semibold text-primary-400">@{caller}</span>
             </p>
             <p className="text-gray-400 mb-8 flex items-center justify-center gap-2">
               <BsVolumeUp className="animate-pulse" />
@@ -100,7 +100,7 @@ useEffect(() => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={onReject}
-                className="flex-1 py-4 px-4 border border-[#BF5AE0]/40 hover:border-[#BF5AE0]/70 text-purple-300 hover:bg-purple-500/10 bg-transparent rounded-xl font-semibold transition-all flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-purple-500/10"
+                className="flex-1 py-4 px-4 border border-primary-custom-3/40 hover:border-primary-custom-3/70 text-primary-300 hover:bg-primary-500/10 bg-transparent rounded-xl font-semibold transition-all flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-primary-500/10"
               >
                 <BsTelephoneX className="text-xl" />
                 <span>Decline</span>
@@ -109,7 +109,7 @@ useEffect(() => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={onAccept}
-                className="flex-1 py-4 px-4 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white rounded-xl font-semibold transition-all flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-purple-500/30"
+                className="flex-1 py-4 px-4 bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 text-white rounded-xl font-semibold transition-all flex items-center justify-center gap-3 hover:shadow-lg hover:shadow-primary-500/30"
               >
                 {callType === "video" ? <BsCameraVideo className="text-xl" /> : <BsTelephone className="text-xl" />}
                 <span>Accept</span>

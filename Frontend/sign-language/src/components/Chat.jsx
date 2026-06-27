@@ -99,7 +99,7 @@ const Message = ({ message, isOwn, time, status, type = "text" }) => {
         {/* Avatar */}
         <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${isOwn ? 'ml-3' : 'mr-3'}`}>
           {isOwn ? (
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
               <BsPersonCircle className="text-white text-xl" />
             </div>
           ) : (
@@ -112,7 +112,7 @@ const Message = ({ message, isOwn, time, status, type = "text" }) => {
         {/* Message Content */}
         <div>
           <div className={`px-4 py-3 rounded-2xl ${isOwn 
-            ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-br-none' 
+            ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-br-none' 
             : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white rounded-bl-none'
           }`}>
             {type === "text" ? (
@@ -129,7 +129,7 @@ const Message = ({ message, isOwn, time, status, type = "text" }) => {
           <div className={`flex items-center gap-2 mt-1 text-xs ${isOwn ? 'justify-end' : 'justify-start'}`}>
             <span className="text-gray-500 dark:text-gray-400">{time}</span>
             {isOwn && (
-              <div className="text-purple-500">
+              <div className="text-primary-500">
                 {status === 'sent' && <BsCheckAll />}
                 {status === 'delivered' && <BsCheckAll className="text-blue-500" />}
                 {status === 'read' && <BsCheckCircle className="text-green-500" />}
@@ -218,7 +218,7 @@ const SearchUserModal = ({ isOpen, onClose, onUserFound, currentUsername }) => {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="e.g., john_doe"
-                className="w-full pl-10 pr-4 py-3 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-800 dark:text-white"
+                className="w-full pl-10 pr-4 py-3 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 text-gray-800 dark:text-white"
                 autoFocus
               />
             </div>
@@ -240,7 +240,7 @@ const SearchUserModal = ({ isOpen, onClose, onUserFound, currentUsername }) => {
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 py-3 px-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/30 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+              className="flex-1 py-3 px-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-primary-500/30 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {loading ? (
                 <AiOutlineLoading3Quarters className="animate-spin" />
@@ -339,7 +339,7 @@ const ChatInput = ({ onSendMessage, isTyping, onTyping }) => {
           type="button"
           className="p-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         >
-          <BsPlusCircleFill className="text-purple-500 text-xl" />
+          <BsPlusCircleFill className="text-primary-500 text-xl" />
         </button>
 
         <button
@@ -356,7 +356,7 @@ const ChatInput = ({ onSendMessage, isTyping, onTyping }) => {
             value={message}
             onChange={handleChange}
             placeholder="Type your message..."
-            className="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border-0 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-800 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+            className="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border-0 rounded-full focus:outline-none focus:ring-2 focus:ring-primary-500 text-gray-800 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
           />
           
           <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
@@ -378,7 +378,7 @@ const ChatInput = ({ onSendMessage, isTyping, onTyping }) => {
         {message.trim() ? (
           <button
             type="submit"
-            className="p-3 rounded-full bg-gradient-to-r from-purple-500 to-purple-600 text-white hover:shadow-lg hover:shadow-purple-500/30 transition-all"
+            className="p-3 rounded-full bg-gradient-to-r from-primary-500 to-primary-600 text-white hover:shadow-lg hover:shadow-primary-500/30 transition-all"
           >
             <TbSend className="text-xl" />
           </button>
@@ -420,12 +420,12 @@ const ChatSidebar = ({ conversations, onSelectConversation, activeConversation, 
       <div className="p-4 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
               <TbMessages className="text-white text-2xl" />
             </div>
             <div>
               <h2 className="font-bold text-lg text-gray-800 dark:text-white">Messages</h2>
-              <p className="text-sm text-purple-500">@{currentUser?.email?.split('@')[0] || 'user'}</p>
+              <p className="text-sm text-primary-500">@{currentUser?.email?.split('@')[0] || 'user'}</p>
             </div>
           </div>
         </div>
@@ -433,7 +433,7 @@ const ChatSidebar = ({ conversations, onSelectConversation, activeConversation, 
         {/* New Conversation Button - ALWAYS VISIBLE */}
         <button 
           onClick={onNewChat}
-          className="mt-4 w-full py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/30 transition-all flex items-center justify-center gap-2"
+          className="mt-4 w-full py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-full font-semibold hover:shadow-lg hover:shadow-primary-500/30 transition-all flex items-center justify-center gap-2"
         >
           <FaPlus className="text-lg" />
           New Conversation
@@ -445,7 +445,7 @@ const ChatSidebar = ({ conversations, onSelectConversation, activeConversation, 
           <input
             type="text"
             placeholder="Search conversations..."
-            className="w-full pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-800 border-0 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-800 dark:text-white"
+            className="w-full pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-800 border-0 rounded-full focus:outline-none focus:ring-2 focus:ring-primary-500 text-gray-800 dark:text-white"
           />
         </div>
       </div>
@@ -471,7 +471,7 @@ const ChatSidebar = ({ conversations, onSelectConversation, activeConversation, 
                 onClick={() => onSelectConversation(conversation)}
                 className={`w-full p-4 text-left border-b border-gray-100 dark:border-gray-800 transition-all ${
                   isActive
-                    ? 'bg-gradient-to-r from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 border-l-4 border-purple-500' 
+                    ? 'bg-gradient-to-r from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-800/20 border-l-4 border-primary-500' 
                     : 'hover:bg-gray-50 dark:hover:bg-gray-800'
                 }`}
               >
@@ -1024,9 +1024,9 @@ export default function ChatPage() {
 
   if (!isAuthenticated) {
     return (
-      <div className="w-full h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-purple-50/60 dark:from-[#0a0518] dark:via-[#110a2e] dark:to-[#1e0f5c]">
+      <div className="w-full h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-primary-50/60 dark:from-primary-bg-1 dark:via-primary-bg-2 dark:to-primary-bg-3">
         <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-2xl border border-gray-200 dark:border-gray-700 text-center">
-          <TbMessages className="text-5xl text-purple-500 mx-auto mb-4" />
+          <TbMessages className="text-5xl text-primary-500 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">Please Login</h2>
           <p className="text-gray-600 dark:text-gray-400">You need to be logged in to chat</p>
         </div>
@@ -1035,13 +1035,13 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="w-full h-screen bg-gradient-to-br from-gray-50 via-white to-purple-50/60 dark:from-[#0a0518] dark:via-[#110a2e] dark:to-[#1e0f5c] overflow-hidden pt-[64px]">
+    <div className="w-full h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50/60 dark:from-primary-bg-1 dark:via-primary-bg-2 dark:to-primary-bg-3 overflow-hidden pt-[64px]">
       {/* Geometric Grid Background */}
       <div className="absolute inset-0 opacity-20 dark:opacity-30 pointer-events-none">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(90deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px),
-            linear-gradient(180deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px)
+            linear-gradient(90deg, var(--theme-grid-color) 1px, transparent 1px),
+            linear-gradient(180deg, var(--theme-grid-color) 1px, transparent 1px)
           `,
           backgroundSize: '60px 60px'
         }} />
@@ -1119,7 +1119,7 @@ export default function ChatPage() {
             {/* Mobile New Chat Button */}
             <button 
               onClick={() => setShowSearchModal(true)}
-              className="md:hidden p-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-full hover:shadow-lg hover:shadow-purple-500/30 transition-all"
+              className="md:hidden p-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-full hover:shadow-lg hover:shadow-primary-500/30 transition-all"
             >
               <FaPlus className="text-xl" />
             </button>
@@ -1154,7 +1154,7 @@ export default function ChatPage() {
           </motion.div>
 
           {/* Messages Container */}
-          <div className="flex-1 overflow-y-auto p-4 md:p-6 bg-gradient-to-b from-transparent to-purple-50/20 dark:to-purple-900/5">
+          <div className="flex-1 overflow-y-auto p-4 md:p-6 bg-gradient-to-b from-transparent to-primary-50/20 dark:to-primary-900/5">
             {!activeConversation ? (
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -1162,7 +1162,7 @@ export default function ChatPage() {
                 className="text-center mt-20"
               >
                 <div className="inline-block bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm px-8 py-8 rounded-2xl border border-gray-200 dark:border-gray-700">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center mx-auto mb-4">
+                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center mx-auto mb-4">
                     <TbMessages className="text-white text-3xl" />
                   </div>
                   <span className="font-semibold text-gray-800 dark:text-white text-xl mb-2 block">
@@ -1173,7 +1173,7 @@ export default function ChatPage() {
                   </p>
                   <button
                     onClick={() => setShowSearchModal(true)}
-                    className="px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/30 transition-all"
+                    className="px-6 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-full font-semibold hover:shadow-lg hover:shadow-primary-500/30 transition-all"
                   >
                     Start New Chat
                   </button>
@@ -1181,7 +1181,7 @@ export default function ChatPage() {
               </motion.div>
             ) : loading ? (
               <div className="flex justify-center items-center h-full">
-                <AiOutlineLoading3Quarters className="animate-spin text-purple-500 text-3xl" />
+                <AiOutlineLoading3Quarters className="animate-spin text-primary-500 text-3xl" />
               </div>
             ) : (
               <>
@@ -1203,9 +1203,9 @@ export default function ChatPage() {
                     </div>
                     <div className="px-4 py-3 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
                       <div className="flex items-center gap-1">
-                        <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                        <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                        <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                        <div className="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                        <div className="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                        <div className="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                       </div>
                     </div>
                   </div>
@@ -1220,8 +1220,8 @@ export default function ChatPage() {
             <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl">
               <div className="flex items-center justify-center gap-4">
                 <button className="flex flex-col items-center gap-1 px-4 py-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                  <div className="p-2 rounded-full bg-gradient-to-br from-purple-500/20 to-purple-400/20">
-                    <TbHandLoveYou className="text-purple-500 text-xl" />
+                  <div className="p-2 rounded-full bg-gradient-to-br from-primary-500/20 to-primary-400/20">
+                    <TbHandLoveYou className="text-primary-500 text-xl" />
                   </div>
                   <span className="text-xs text-gray-600 dark:text-gray-400">Gesture</span>
                 </button>

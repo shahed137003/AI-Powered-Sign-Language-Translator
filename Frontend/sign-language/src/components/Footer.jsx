@@ -73,7 +73,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative w-full bg-gradient-to-br from-gray-50 via-white to-purple-50/60 dark:from-[#0a0518] dark:via-[#110a2e] dark:to-[#1e0f5c] text-gray-800 dark:text-gray-300 pt-20 pb-8 px-4 sm:px-6 lg:px-8 border-t border-purple-200/30 dark:border-purple-900/30 overflow-hidden transition-colors duration-500">
+    <footer className="relative w-full bg-gradient-to-br from-gray-50 via-white to-primary-50/60 dark:from-primary-bg-1 dark:via-primary-bg-2 dark:to-primary-bg-3 text-gray-800 dark:text-gray-300 pt-20 pb-8 px-4 sm:px-6 lg:px-8 border-t border-primary-200/30 dark:border-primary-900/30 overflow-hidden transition-colors duration-500">
       
       {/* Background Effects */}
       <div className="absolute inset-0 pointer-events-none">
@@ -81,8 +81,8 @@ export default function Footer() {
         <div className="absolute inset-0 opacity-5 dark:opacity-5">
           <div className="absolute inset-0" style={{
             backgroundImage: `
-              linear-gradient(90deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px),
-              linear-gradient(180deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px)
+              linear-gradient(90deg, var(--theme-grid-color) 1px, transparent 1px),
+              linear-gradient(180deg, var(--theme-grid-color) 1px, transparent 1px)
             `,
             backgroundSize: '40px 40px'
           }} />
@@ -92,7 +92,7 @@ export default function Footer() {
         <motion.div 
           animate={{ opacity: [0.1, 0.2, 0.1], scale: [1, 1.05, 1] }}
           transition={{ duration: 8, repeat: Infinity }}
-          className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-gradient-to-tr from-purple-600/10 to-pink-500/10 rounded-full blur-3xl"
+          className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-gradient-to-tr from-primary-600/10 to-pink-500/10 rounded-full blur-3xl"
         />
         <motion.div 
           animate={{ opacity: [0.05, 0.15, 0.05], scale: [1, 1.03, 1] }}
@@ -120,12 +120,12 @@ export default function Footer() {
               <motion.div
                 animate={{ rotate: [0, 10, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#6A3093] to-[#A044FF] flex items-center justify-center"
+                className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-custom-1 to-primary-custom-2 flex items-center justify-center"
               >
                 <FaHands className="text-white text-xl" />
               </motion.div>
               <h3 className="text-2xl font-bold">
-                <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 dark:from-primary-custom-1 dark:to-primary-custom-2 bg-clip-text text-transparent">
                   LinguaSign
                 </span>
               </h3>
@@ -137,7 +137,7 @@ export default function Footer() {
             </p>
             
             {/* Tagline */}
-            <div className="flex items-center gap-2 text-purple-600 dark:text-purple-400 text-sm font-medium">
+            <div className="flex items-center gap-2 text-primary-600 dark:text-primary-400 text-sm font-medium">
               <TbSparkles className="text-lg" />
               <span>Inclusive Technology for All</span>
             </div>
@@ -151,7 +151,7 @@ export default function Footer() {
             transition={{ delay: 0.1 }}
           >
             <h4 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white flex items-center gap-2">
-              <FaChevronRight className="text-purple-500" />
+              <FaChevronRight className="text-primary-500" />
               Navigation
             </h4>
             <ul className="space-y-3">
@@ -165,7 +165,7 @@ export default function Footer() {
                 >
                   <a 
                     href={link.href}
-                    className="flex items-center group text-gray-700 dark:text-gray-400 hover:text-purple-500 dark:hover:text-purple-400 transition-all duration-300 p-2 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20"
+                    className="flex items-center group text-gray-700 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 p-2 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20"
                   >
                     <span className="mr-3 opacity-80 group-hover:scale-110 transition-transform">
                       {link.icon}
@@ -186,7 +186,7 @@ export default function Footer() {
             transition={{ delay: 0.2 }}
           >
             <h4 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white flex items-center gap-2">
-              <FaChevronRight className="text-purple-500" />
+              <FaChevronRight className="text-primary-500" />
               Resources
             </h4>
             <ul className="space-y-3">
@@ -200,9 +200,9 @@ export default function Footer() {
                 >
                   <a 
                     href={link.href}
-                    className="flex items-center group text-gray-700 dark:text-gray-400 hover:text-purple-500 dark:hover:text-purple-400 transition-all duration-300 p-2 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20"
+                    className="flex items-center group text-gray-700 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-all duration-300 p-2 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20"
                   >
-                    <span className="w-2 h-2 rounded-full bg-purple-400 mr-3 opacity-60 group-hover:opacity-100 group-hover:scale-125 transition-all" />
+                    <span className="w-2 h-2 rounded-full bg-primary-400 mr-3 opacity-60 group-hover:opacity-100 group-hover:scale-125 transition-all" />
                     <span className="flex-1">{link.name}</span>
                     <FaChevronRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                   </a>
@@ -221,7 +221,7 @@ export default function Footer() {
           >
             <div>
               <h4 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white flex items-center gap-2">
-                <FaEnvelope className="text-purple-500" />
+                <FaEnvelope className="text-primary-500" />
                 Stay Updated
               </h4>
               <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm">
@@ -237,16 +237,16 @@ export default function Footer() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="w-full p-4 pl-12 rounded-xl border border-purple-300/50 dark:border-purple-700/50 bg-white/90 dark:bg-white/10 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:text-gray-500 dark:placeholder:text-gray-500 transition-all duration-300 backdrop-blur-sm"
+                    className="w-full p-4 pl-12 rounded-xl border border-primary-300/50 dark:border-primary-700/50 bg-white/90 dark:bg-white/10 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 placeholder:text-gray-500 dark:placeholder:text-gray-500 transition-all duration-300 backdrop-blur-sm"
                   />
-                  <FaEnvelope className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-500" />
+                  <FaEnvelope className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-500" />
                 </div>
                 
                 <motion.button
                   type="submit"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full relative overflow-hidden px-6 py-4 rounded-xl bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white font-semibold shadow-lg shadow-purple-500/40 hover:shadow-purple-500/60 transition-all duration-300 group"
+                  className="w-full relative overflow-hidden px-6 py-4 rounded-xl bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 text-white font-semibold shadow-lg shadow-primary-500/40 hover:shadow-primary-500/60 transition-all duration-300 group"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     Subscribe Now
@@ -303,7 +303,7 @@ export default function Footer() {
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
-          className="h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent my-12"
+          className="h-px bg-gradient-to-r from-transparent via-primary-500/30 to-transparent my-12"
         />
 
         {/* Footer Bottom */}
@@ -345,13 +345,13 @@ export default function Footer() {
             viewport={{ once: true }}
             className="flex items-center gap-6 text-sm"
           >
-            <a href="/accessibility" className="text-gray-600 dark:text-gray-400 hover:text-purple-500 dark:hover:text-purple-400 transition-colors">
+            <a href="/accessibility" className="text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">
               Accessibility
             </a>
-            <a href="/sitemap" className="text-gray-600 dark:text-gray-400 hover:text-purple-500 dark:hover:text-purple-400 transition-colors">
+            <a href="/sitemap" className="text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">
               Sitemap
             </a>
-            <a href="/status" className="text-gray-600 dark:text-gray-400 hover:text-purple-500 dark:hover:text-purple-400 transition-colors">
+            <a href="/status" className="text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">
               Status
             </a>
           </motion.div>

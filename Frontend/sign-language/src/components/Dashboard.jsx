@@ -195,7 +195,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="relative w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50/60 dark:from-[#0a0518] dark:via-[#110a2e] dark:to-[#1e0f5c] overflow-hidden selection:bg-primary-500 selection:text-white transition-all duration-700">
+    <div className="relative w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50/60 dark:from-primary-bg-1 dark:via-primary-bg-2 dark:to-primary-bg-3 overflow-hidden selection:bg-primary-500 selection:text-white transition-all duration-700">
       {/* Canvas Particles */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
@@ -205,8 +205,8 @@ export default function Dashboard() {
           className="absolute inset-0"
           style={{
             backgroundImage: `
-              linear-gradient(90deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px),
-              linear-gradient(180deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px)
+              linear-gradient(90deg, var(--theme-grid-color) 1px, transparent 1px),
+              linear-gradient(180deg, var(--theme-grid-color) 1px, transparent 1px)
             `,
             backgroundSize: "40px 40px",
           }}

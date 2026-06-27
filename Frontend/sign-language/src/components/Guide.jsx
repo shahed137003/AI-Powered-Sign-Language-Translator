@@ -40,7 +40,7 @@ export default function HelpGuide() {
   const gridColor =
     themeColor === "midnight-blue"
       ? "rgba(99, 102, 241, 0.1)"
-      : "rgba(168, 85, 247, 0.1)";
+      : "var(--theme-grid-color)";
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGloss, setSelectedGloss] = useState(null);

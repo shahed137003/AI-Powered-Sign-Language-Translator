@@ -9,6 +9,7 @@ import { RiTranslate2, RiShieldCheckFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Logo from "./Logo";
+import { useTheme } from "../context/ThemeContext";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ export default function Home() {
   const animationFrameRef = useRef(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [hoveredFeature, setHoveredFeature] = useState(null);
+  const { themeColor } = useTheme();
 
   // Detect dark mode
   const [isDark, setIsDark] = useState(
@@ -47,9 +49,14 @@ useEffect(() => {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
 
+    const themeColorsMap = {
+      purple: ['#A855F7', '#9333EA', '#7C3AED', '#6D28D9', '#8B5CF6'],
+      'midnight-blue': ['#6366F1', '#4F46E5', '#4338CA', '#3730A3', '#818CF8']
+    };
+    const currentThemeColors = themeColorsMap[themeColor] || themeColorsMap['purple'];
     const colors = isDark 
-      ? ['#A855F7', '#9333EA', '#7C3AED', '#6D28D9', '#8B5CF6'] 
-      : ['#8B5CF6', '#7C3AED', '#6D28D9', '#9333EA', '#A855F7'];
+      ? currentThemeColors 
+      : currentThemeColors.slice().reverse();
 
     particlesRef.current = Array.from({ length: 100 }).map(() => ({
       x: Math.random() * canvas.width,
@@ -129,7 +136,7 @@ useEffect(() => {
       }
       window.removeEventListener('resize', handleResize);
     };
-  }, [isDark, mousePosition]);
+  }, [isDark, mousePosition, themeColor]);
 
   // Enhanced animation variants
   const fadeUp = {
@@ -179,7 +186,7 @@ useEffect(() => {
   ];
 
   return (
-    <div className="relative w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-purple-50/60 dark:from-[#0a0518] dark:via-[#110a2e] dark:to-[#1e0f5c] overflow-hidden selection:bg-purple-500 selection:text-white transition-all duration-700">
+    <div className="relative w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50/60 dark:from-primary-bg-1 dark:via-primary-bg-2 dark:to-primary-bg-3 overflow-hidden selection:bg-primary-500 selection:text-white transition-all duration-700">
       
       {/* Premium Canvas Particles */}
       <canvas
@@ -194,8 +201,8 @@ useEffect(() => {
       <div className="absolute inset-0 opacity-40 dark:opacity-60 pointer-events-none">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(90deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px),
-            linear-gradient(180deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px)
+            linear-gradient(90deg, var(--theme-grid-color) 1px, transparent 1px),
+            linear-gradient(180deg, var(--theme-grid-color) 1px, transparent 1px)
           `,
           backgroundSize: '40px 40px'
         }} />
@@ -226,16 +233,16 @@ useEffect(() => {
           <motion.div
             variants={fadeUp}
             whileHover={{ scale: 1.05, rotate: 1 }}
-            className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-purple-500/15 via-purple-400/10 to-purple-300/10 border border-purple-200/60 dark:border-purple-700/60 backdrop-blur-xl shadow-lg shadow-purple-500/10 relative overflow-hidden group"
+            className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary-500/15 via-primary-400/10 to-primary-300/10 border border-primary-200/60 dark:border-primary-700/60 backdrop-blur-xl shadow-lg shadow-primary-500/10 relative overflow-hidden group"
           >
             <div className="relative">
-              <span className="absolute animate-ping inline-flex h-3.5 w-3.5 rounded-full bg-purple-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-gradient-to-r from-purple-500 to-purple-400" />
+              <span className="absolute animate-ping inline-flex h-3.5 w-3.5 rounded-full bg-primary-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-gradient-to-r from-primary-500 to-primary-400" />
             </div>
-            <span className="text-sm font-bold bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400 bg-clip-text text-transparent">
+            <span className="text-sm font-bold bg-gradient-to-r from-primary-600 via-primary-500 to-primary-400 bg-clip-text text-transparent">
              AI Integrated v3.0 
             </span>
-            <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/0 via-purple-400/10 to-purple-500/0 group-hover:via-purple-400/20 transition-all duration-500" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/0 via-primary-400/10 to-primary-500/0 group-hover:via-primary-400/20 transition-all duration-500" />
           </motion.div>
 
           {/* HEADLINE with Enhanced Typography */}
@@ -253,7 +260,7 @@ useEffect(() => {
   <motion.span
     variants={fadeUp}
     transition={{ delay: 0.1 }}
-    className="block bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent"
+    className="block bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent"
   >
     Sign Language
   </motion.span>
@@ -296,14 +303,14 @@ useEffect(() => {
                 onMouseLeave={() => setHoveredFeature(null)}
                 className={`group relative p-3 rounded-2xl backdrop-blur-xl border transition-all duration-300 overflow-hidden ${
                   hoveredFeature === i 
-                    ? 'bg-white/90 dark:bg-white/10 border-purple-300/50 dark:border-purple-500/50 shadow-2xl' 
+                    ? 'bg-white/90 dark:bg-white/10 border-primary-300/50 dark:border-primary-500/50 shadow-2xl' 
                     : 'bg-white/70 dark:bg-white/5 border-white/30 dark:border-white/10 shadow-lg'
                 }`}
               >
          
 
                 <div className="relative z-10 flex items-start gap-4">
-                  <div className={`p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-400/20 text-purple-600 dark:text-purple-400 group-hover:from-purple-500/30 group-hover:to-purple-400/30 transition-all duration-300 ${
+                  <div className={`p-2 rounded-xl bg-gradient-to-br from-primary-500/20 to-primary-400/20 text-primary-600 dark:text-primary-400 group-hover:from-primary-500/30 group-hover:to-primary-400/30 transition-all duration-300 ${
                     hoveredFeature === i ? 'scale-110' : ''
                   }`}
                   
@@ -333,7 +340,7 @@ useEffect(() => {
               }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate("/translate")}
-              className="relative overflow-hidden px-8 py-4 rounded-full bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white font-bold text-lg shadow-lg shadow-purple-400/40 hover:shadow-purple-500/60 transition-all group focus:outline-none focus:ring-4 focus:ring-purple-500/50"
+              className="relative overflow-hidden px-8 py-4 rounded-full bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 text-white font-bold text-lg shadow-lg shadow-primary-400/40 hover:shadow-primary-500/60 transition-all group focus:outline-none focus:ring-4 focus:ring-primary-500/50"
             >
               <span className="relative z-10 flex items-center gap-2">
                 Start Translating <TbHandLoveYou className="text-2xl" />
@@ -346,7 +353,7 @@ useEffect(() => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate("/chatbot")}
-              className="px-8 py-4 rounded-full font-bold text-lg text-gray-800 dark:text-white border-2 border-gray-300 dark:border-gray-700 hover:border-purple-500 bg-white/70 dark:bg-transparent hover:bg-gray-100 dark:hover:bg-white/5 shadow-sm hover:shadow-md transition-all flex items-center gap-2"
+              className="px-8 py-4 rounded-full font-bold text-lg text-gray-800 dark:text-white border-2 border-gray-300 dark:border-gray-700 hover:border-primary-500 bg-white/70 dark:bg-transparent hover:bg-gray-100 dark:hover:bg-white/5 shadow-sm hover:shadow-md transition-all flex items-center gap-2"
             >
               <BsRobot className="text-xl" />
               Chatbot
@@ -356,7 +363,7 @@ useEffect(() => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate("/chat")}
-              className="px-8 py-4 rounded-full font-bold text-lg text-gray-800 dark:text-white border-2 border-gray-300 dark:border-gray-700 hover:border-purple-500 bg-white/70 dark:bg-transparent hover:bg-gray-100 dark:hover:bg-white/5 shadow-sm hover:shadow-md transition-all flex items-center gap-2"
+              className="px-8 py-4 rounded-full font-bold text-lg text-gray-800 dark:text-white border-2 border-gray-300 dark:border-gray-700 hover:border-primary-500 bg-white/70 dark:bg-transparent hover:bg-gray-100 dark:hover:bg-white/5 shadow-sm hover:shadow-md transition-all flex items-center gap-2"
             >
               <BsRobot className="text-xl" />
               Chatting
@@ -376,18 +383,18 @@ useEffect(() => {
           {/* Image Container with Premium Effects */}
           <div className="relative w-full max-w-2xl">
             {/* Glow Effect Behind Image */}
-            {/* <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-br from-purple-600/20 via-purple-500/15 to-purple-400/10 blur-3xl rounded-full" /> */}
+            {/* <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-br from-primary-600/20 via-primary-500/15 to-primary-400/10 blur-3xl rounded-full" /> */}
             
             {/* Orbital Rings */}
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] border-2 border-purple-500/30 rounded-full"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] border-2 border-primary-500/30 rounded-full"
             />
             <motion.div
               animate={{ rotate: -360 }}
               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] border border-purple-400/20 rounded-full"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] border border-primary-400/20 rounded-full"
             />
 
             {/* Premium Image Display */}
@@ -407,7 +414,7 @@ useEffect(() => {
                 />
                 
                 {/* Image Overlay Glow
-                <div className="absolute inset-0 bg-gradient-to-t from-purple-600/5 via-transparent to-purple-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" /> */}
+                <div className="absolute inset-0 bg-gradient-to-t from-primary-600/5 via-transparent to-primary-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" /> */}
               </div>
               
               {/* Floating Elements on Image */}
@@ -416,8 +423,8 @@ useEffect(() => {
   transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
   className="absolute top-4 right-4 z-20"
 >
-  <div className="backdrop-blur-md bg-white/90 dark:bg-gray-800/90 border border-purple-200 dark:border-purple-700 p-3 rounded-xl shadow-lg flex items-center gap-2">
-    <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" />
+  <div className="backdrop-blur-md bg-white/90 dark:bg-gray-800/90 border border-primary-200 dark:border-primary-700 p-3 rounded-xl shadow-lg flex items-center gap-2">
+    <div className="w-2 h-2 bg-primary-500 rounded-full animate-pulse" />
     <span className="font-semibold text-gray-800 dark:text-white text-sm">
       AI Live Avatars
     </span>
@@ -429,8 +436,8 @@ useEffect(() => {
   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
   className="absolute bottom-4 left-4 z-20"
 >
-  <div className="backdrop-blur-md bg-white/90 dark:bg-gray-800/90 border border-purple-200 dark:border-purple-700 px-4 py-2 rounded-full shadow-lg">
-    <span className="font-semibold text-purple-600 dark:text-purple-400 text-sm">
+  <div className="backdrop-blur-md bg-white/90 dark:bg-gray-800/90 border border-primary-200 dark:border-primary-700 px-4 py-2 rounded-full shadow-lg">
+    <span className="font-semibold text-primary-600 dark:text-primary-400 text-sm">
       Real-time translation 
     </span>
   </div>
@@ -464,7 +471,7 @@ useEffect(() => {
           <div className="text-sm text-gray-500 dark:text-gray-400 mb-3 font-medium">
             Discover More Features ↓
           </div>
-          <div className="w-8 h-12 border-2 border-purple-300/50 dark:border-purple-700/50 rounded-full mx-auto relative overflow-hidden">
+          <div className="w-8 h-12 border-2 border-primary-300/50 dark:border-primary-700/50 rounded-full mx-auto relative overflow-hidden">
             <motion.div
               animate={{ y: [0, 20, 0] }}
               transition={{
@@ -472,7 +479,7 @@ useEffect(() => {
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              className="absolute top-2 left-1/2 transform -translate-x-1/2 w-1 h-3 bg-gradient-to-b from-purple-500 to-purple-400 rounded-full"
+              className="absolute top-2 left-1/2 transform -translate-x-1/2 w-1 h-3 bg-gradient-to-b from-primary-500 to-primary-400 rounded-full"
             />
           </div>
         </motion.div>

@@ -84,22 +84,22 @@ export default function Login() {
   };
 
   return (
-    <div className="relative w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-purple-50/60 dark:from-[#0a0518] dark:via-[#110a2e] dark:to-[#1e0f5c] overflow-hidden selection:bg-purple-500 selection:text-white transition-all duration-700">
+    <div className="relative w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50/60 dark:from-primary-bg-1 dark:via-primary-bg-2 dark:to-primary-bg-3 overflow-hidden selection:bg-primary-500 selection:text-white transition-all duration-700">
 
       {/* Premium Geometric Grid - Same as homepage */}
       <div className="absolute inset-0 opacity-40 dark:opacity-60 pointer-events-none">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(90deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px),
-            linear-gradient(180deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px)
+            linear-gradient(90deg, var(--theme-grid-color) 1px, transparent 1px),
+            linear-gradient(180deg, var(--theme-grid-color) 1px, transparent 1px)
           `,
           backgroundSize: '40px 40px'
         }} />
       </div>
 
       {/* Animated gradient orbs */}
-      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-gradient-to-r from-purple-600/20 via-purple-500/10 to-pink-500/10 rounded-full blur-[120px] pointer-events-none animate-pulse-slow" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-gradient-to-r from-pink-600/15 via-purple-400/10 to-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-gradient-to-r from-primary-600/20 via-primary-500/10 to-pink-500/10 rounded-full blur-[120px] pointer-events-none animate-pulse-slow" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-gradient-to-r from-pink-600/15 via-primary-400/10 to-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-24">
 
@@ -113,13 +113,13 @@ export default function Login() {
           <motion.div
             variants={fadeUp}
             whileHover={{ scale: 1.05, rotate: 1 }}
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-purple-500/15 via-purple-400/10 to-purple-300/10 border border-purple-200/60 dark:border-purple-700/60 backdrop-blur-xl shadow-lg shadow-purple-500/10 mb-8"
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-primary-500/15 via-primary-400/10 to-primary-300/10 border border-primary-200/60 dark:border-primary-700/60 backdrop-blur-xl shadow-lg shadow-primary-500/10 mb-8"
           >
             <div className="relative">
-              <span className="absolute animate-ping inline-flex h-4 w-4 rounded-full bg-purple-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-4 w-4 bg-gradient-to-r from-purple-500 to-purple-400" />
+              <span className="absolute animate-ping inline-flex h-4 w-4 rounded-full bg-primary-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-4 w-4 bg-gradient-to-r from-primary-500 to-primary-400" />
             </div>
-            <span className="text-sm font-bold bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400 bg-clip-text text-transparent">
+            <span className="text-sm font-bold bg-gradient-to-r from-primary-600 via-primary-500 to-primary-400 bg-clip-text text-transparent">
               WELCOME BACK
             </span>
           </motion.div>
@@ -138,7 +138,7 @@ export default function Login() {
             <motion.span
               variants={fadeUp}
               transition={{ delay: 0.1 }}
-              className="block bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent"
+              className="block bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent"
             >
               Your Account
             </motion.span>
@@ -181,8 +181,8 @@ export default function Login() {
                   icon: <BsRobot className="text-2xl" />,
                   title: "AI Translation Ready",
                   description: "Access real-time sign language translation with advanced AI",
-                  color: "from-purple-500/20 to-purple-600/20",
-                  iconColor: "text-purple-500",
+                  color: "from-primary-500/20 to-primary-600/20",
+                  iconColor: "text-primary-500",
                   delay: 0.1
                 },
                 {
@@ -205,7 +205,7 @@ export default function Login() {
                   icon: <BsStars className="text-2xl" />,
                   title: "Sync Across Devices",
                   description: "Your preferences and history saved in the cloud",
-                  color: "from-violet-500/20 to-purple-600/20",
+                  color: "from-violet-500/20 to-primary-600/20",
                   iconColor: "text-violet-500",
                   delay: 0.4
                 }
@@ -219,7 +219,7 @@ export default function Login() {
                     y: -8,
                     boxShadow: "0 20px 40px -15px rgba(139, 92, 246, 0.4)"
                   }}
-                  className={`group relative p-6 rounded-2xl backdrop-blur-xl border transition-all duration-300 overflow-hidden bg-white/80 dark:bg-white/5 border-white/30 dark:border-white/10 hover:border-purple-300/50 dark:hover:border-purple-500/50`}
+                  className={`group relative p-6 rounded-2xl backdrop-blur-xl border transition-all duration-300 overflow-hidden bg-white/80 dark:bg-white/5 border-white/30 dark:border-white/10 hover:border-primary-300/50 dark:hover:border-primary-500/50`}
                 >
                   <div className="relative z-10">
                     <div className={`p-4 rounded-xl bg-gradient-to-br ${feature.color} w-fit mb-4 group-hover:scale-110 transition-transform duration-300`}>
@@ -234,7 +234,7 @@ export default function Login() {
                       {feature.description}
                     </p>
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-primary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </motion.div>
               ))}
             </div>
@@ -242,11 +242,11 @@ export default function Login() {
             {/* Quick Stats */}
             <motion.div
               variants={fadeUp}
-              className="p-6 rounded-2xl backdrop-blur-xl bg-gradient-to-r from-gray-50/80 to-purple-50/50 dark:from-gray-900/40 dark:to-purple-900/20 border border-gray-200/50 dark:border-purple-500/20"
+              className="p-6 rounded-2xl backdrop-blur-xl bg-gradient-to-r from-gray-50/80 to-primary-50/50 dark:from-gray-900/40 dark:to-primary-900/20 border border-gray-200/50 dark:border-primary-500/20"
             >
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
-                  <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">
+                  <div className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
                     99%
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
@@ -254,7 +254,7 @@ export default function Login() {
                   </div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">
+                  <div className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
                     50+
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
@@ -309,8 +309,8 @@ export default function Login() {
             }}
             className="lg:col-span-2"
           >
-            <div className="p-8 rounded-3xl backdrop-blur-xl bg-white/90 dark:bg-white/10 border border-white/30 dark:border-white/10 shadow-2xl shadow-purple-500/20">
-              <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] mx-auto mb-8">
+            <div className="p-8 rounded-3xl backdrop-blur-xl bg-white/90 dark:bg-white/10 border border-white/30 dark:border-white/10 shadow-2xl shadow-primary-500/20">
+              <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 mx-auto mb-8">
                 <FaSignInAlt className="text-2xl text-white" />
               </div>
 
@@ -318,7 +318,7 @@ export default function Login() {
                 {/* Email Field */}
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                    <FaEnvelope className="text-purple-500" />
+                    <FaEnvelope className="text-primary-500" />
                     Email Address
                   </label>
                   <div className="relative">
@@ -328,7 +328,7 @@ export default function Login() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 pl-12 bg-white/50 dark:bg-gray-900/50 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition-all"
+                      className="w-full px-4 py-3 pl-12 bg-white/50 dark:bg-gray-900/50 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition-all"
                       placeholder="you@example.com"
                     />
                     <FaEnvelope className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" />
@@ -339,12 +339,12 @@ export default function Login() {
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
-                      <FaLock className="text-purple-500" />
+                      <FaLock className="text-primary-500" />
                       Password
                     </label>
                     <Link
                       to="/forget-password"
-                      className="text-xs text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 transition-colors"
+                      className="text-xs text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
                     >
                       Forgot password?
                     </Link>
@@ -356,14 +356,14 @@ export default function Login() {
                       value={formData.password}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 pl-12 pr-12 bg-white/50 dark:bg-gray-900/50 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition-all"
+                      className="w-full px-4 py-3 pl-12 pr-12 bg-white/50 dark:bg-gray-900/50 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 transition-all"
                       placeholder="Enter your password"
                     />
                     <FaLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-purple-500 dark:hover:text-purple-400 transition-colors"
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors"
                     >
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </button>
@@ -375,7 +375,7 @@ export default function Login() {
                   <input
                     type="checkbox"
                     id="remember"
-                    className="h-4 w-4 rounded border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-900/50 text-purple-600 focus:ring-purple-500 focus:ring-offset-0"
+                    className="h-4 w-4 rounded border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-gray-900/50 text-primary-600 focus:ring-primary-500 focus:ring-offset-0"
                   />
                   <label htmlFor="remember" className="ml-2 text-sm text-gray-600 dark:text-gray-400">
                     Remember this device
@@ -404,7 +404,7 @@ export default function Login() {
                   disabled={loading}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full px-6 py-4 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white font-bold rounded-xl shadow-lg shadow-purple-500/40 hover:shadow-purple-500/60 transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed group"
+                  className="w-full px-6 py-4 bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 text-white font-bold rounded-xl shadow-lg shadow-primary-500/40 hover:shadow-primary-500/60 transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed group"
                 >
                   {loading ? (
                     <>
@@ -434,7 +434,7 @@ export default function Login() {
                 {/* Register Link */}
                 <Link
                   to="/register"
-                  className="w-full px-6 py-4 border-2 border-purple-600/50 dark:border-purple-500/50 text-purple-600 dark:text-purple-400 hover:bg-purple-50/50 dark:hover:bg-purple-900/20 hover:border-purple-700/50 dark:hover:border-purple-400/50 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-3 group"
+                  className="w-full px-6 py-4 border-2 border-primary-600/50 dark:border-primary-500/50 text-primary-600 dark:text-primary-400 hover:bg-primary-50/50 dark:hover:bg-primary-900/20 hover:border-primary-700/50 dark:hover:border-primary-400/50 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-3 group"
                 >
                   <FaUserPlus className="group-hover:scale-110 transition-transform" />
                   Create New Account
@@ -445,11 +445,11 @@ export default function Login() {
               <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
                 <p className="text-xs text-center text-gray-500 dark:text-gray-400">
                   By signing in, you agree to our{' '}
-                  <a href="#" className="text-purple-600 dark:text-purple-400 hover:underline">
+                  <a href="#" className="text-primary-600 dark:text-primary-400 hover:underline">
                     Terms of Service
                   </a>{' '}
                   and{' '}
-                  <a href="#" className="text-purple-600 dark:text-purple-400 hover:underline">
+                  <a href="#" className="text-primary-600 dark:text-primary-400 hover:underline">
                     Privacy Policy
                   </a>
                 </p>
@@ -467,7 +467,7 @@ export default function Login() {
           className="mt-12 text-center"
         >
           <div className="inline-flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
-            <FaShieldAlt className="text-purple-500" />
+            <FaShieldAlt className="text-primary-500" />
             <span>Protected by 256-bit SSL encryption • Your data is never stored unencrypted</span>
           </div>
         </motion.div>

@@ -186,10 +186,10 @@ export default function Profile() {
       whileHover={hover ? { y: -5, scale: 1.02 } : {}}
       className={`
         relative p-8 bg-gradient-to-br from-white/80 to-white/60 dark:from-white/10 dark:to-white/5 
-        backdrop-blur-xl border border-purple-200/50 dark:border-purple-500/20 
-        rounded-3xl shadow-xl shadow-purple-100/20 dark:shadow-purple-900/20
+        backdrop-blur-xl border border-primary-200/50 dark:border-primary-500/20 
+        rounded-3xl shadow-xl shadow-primary-100/20 dark:shadow-primary-900/20
         transition-all duration-500 overflow-hidden
-        ${hover ? 'hover:shadow-2xl hover:shadow-purple-200/30 dark:hover:shadow-purple-900/40' : ''}
+        ${hover ? 'hover:shadow-2xl hover:shadow-primary-200/30 dark:hover:shadow-primary-900/40' : ''}
         ${className}
       `}
     >
@@ -200,7 +200,7 @@ export default function Profile() {
   const InputField = ({ label, type = "text", name, value, onChange, placeholder, icon, options, isSelect = false, disabled = false }) => (
     <div className="space-y-2">
       <label htmlFor={name} className="font-semibold text-gray-800 dark:text-gray-200 flex items-center gap-2">
-        {icon && <span className="text-purple-600 dark:text-purple-400">{icon}</span>}
+        {icon && <span className="text-primary-600 dark:text-primary-400">{icon}</span>}
         {label}
       </label>
       <div className="relative group">
@@ -215,9 +215,9 @@ export default function Profile() {
               w-full p-3 pl-12 rounded-xl bg-white/70 dark:bg-gray-800/50
               border border-gray-300 dark:border-gray-700
               text-gray-900 dark:text-gray-200
-              focus:outline-none focus:ring-2 focus:ring-[#A044FF]/80
+              focus:outline-none focus:ring-2 focus:ring-primary-custom-2/80
               transition-all duration-300
-              group-hover:border-purple-400/50 dark:group-hover:border-purple-400/30
+              group-hover:border-primary-400/50 dark:group-hover:border-primary-400/30
               appearance-none bg-no-repeat bg-[length:20px_20px] bg-[center_right_1rem]
             "
             style={{
@@ -247,9 +247,9 @@ export default function Profile() {
                 w-full p-3 pl-12 pr-12 rounded-xl bg-white/70 dark:bg-gray-800/50
                 border border-gray-300 dark:border-gray-700
                 text-gray-900 dark:text-gray-200
-                focus:outline-none focus:ring-2 focus:ring-[#A044FF]/80
+                focus:outline-none focus:ring-2 focus:ring-primary-custom-2/80
                 transition-all duration-300
-                group-hover:border-purple-400/50 dark:group-hover:border-purple-400/30
+                group-hover:border-primary-400/50 dark:group-hover:border-primary-400/30
                 ${disabled ? "opacity-60 cursor-not-allowed" : ""}
               `}
             />
@@ -257,7 +257,7 @@ export default function Profile() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-purple-600 transition-colors"
+                className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-primary-600 transition-colors"
               >
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
@@ -276,7 +276,7 @@ export default function Profile() {
         onClick={() => onChange({ target: { name, type: 'checkbox', checked: !checked } })}
         className={`
           relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300
-          ${checked ? 'bg-purple-600' : 'bg-gray-300 dark:bg-gray-700'}
+          ${checked ? 'bg-primary-600' : 'bg-gray-300 dark:bg-gray-700'}
         `}
       >
         <span
@@ -290,7 +290,7 @@ export default function Profile() {
   );
 
   return (
-    <div className="relative w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-purple-50/60 dark:from-[#0a0518] dark:via-[#110a2e] dark:to-[#1e0f5c] py-24 px-4 sm:px-6 lg:px-8 font-inter overflow-hidden z-0">
+    <div className="relative w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50/60 dark:from-primary-bg-1 dark:via-primary-bg-2 dark:to-primary-bg-3 py-24 px-4 sm:px-6 lg:px-8 font-inter overflow-hidden z-0">
       
       <input
         type="file"
@@ -303,15 +303,15 @@ export default function Profile() {
       <div className="absolute inset-0 opacity-40 dark:opacity-60 pointer-events-none">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(90deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px),
-            linear-gradient(180deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px)
+            linear-gradient(90deg, var(--theme-grid-color) 1px, transparent 1px),
+            linear-gradient(180deg, var(--theme-grid-color) 1px, transparent 1px)
           `,
           backgroundSize: '40px 40px'
         }} />
       </div>
 
-      <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-gradient-to-r from-purple-600/10 via-pink-600/10 to-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-gradient-to-r from-indigo-600/10 via-purple-600/10 to-pink-600/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-gradient-to-r from-primary-600/10 via-pink-600/10 to-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-gradient-to-r from-indigo-600/10 via-primary-600/10 to-pink-600/10 rounded-full blur-[100px] pointer-events-none" />
 
       <motion.div
         initial={{ x: "100%", opacity: 0 }}
@@ -340,17 +340,17 @@ export default function Profile() {
       >
         <motion.div
           variants={fadeUp}
-          className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-purple-500/15 via-purple-400/10 to-purple-300/10 border border-purple-200/60 dark:border-purple-700/60 backdrop-blur-xl shadow-lg shadow-purple-500/10 relative overflow-hidden group mb-8"
+          className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary-500/15 via-primary-400/10 to-primary-300/10 border border-primary-200/60 dark:border-primary-700/60 backdrop-blur-xl shadow-lg shadow-primary-500/10 relative overflow-hidden group mb-8"
         >
           <div className="relative">
-            <span className="absolute animate-ping inline-flex h-3.5 w-3.5 rounded-full bg-purple-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-gradient-to-r from-purple-500 to-purple-400" />
+            <span className="absolute animate-ping inline-flex h-3.5 w-3.5 rounded-full bg-primary-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-gradient-to-r from-primary-500 to-primary-400" />
           </div>
-          <span className="text-sm font-bold bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400 bg-clip-text text-transparent">
+          <span className="text-sm font-bold bg-gradient-to-r from-primary-600 via-primary-500 to-primary-400 bg-clip-text text-transparent">
             Personal Dashboard
           </span>
-          <TbSparkles className="text-purple-500 ml-1" />
-          <div className="absolute -inset-1 bg-gradient-to-r from-purple-500/0 via-purple-400/10 to-purple-500/0 group-hover:via-purple-400/20 transition-all duration-500" />
+          <TbSparkles className="text-primary-500 ml-1" />
+          <div className="absolute -inset-1 bg-gradient-to-r from-primary-500/0 via-primary-400/10 to-primary-500/0 group-hover:via-primary-400/20 transition-all duration-500" />
         </motion.div>
 
         <motion.h1
@@ -360,7 +360,7 @@ export default function Profile() {
           <span className="block text-gray-900 dark:text-white">
             Welcome Back,
           </span>
-          <span className="block bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
+          <span className="block bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 dark:from-primary-custom-1 dark:to-primary-custom-2 bg-clip-text text-transparent">
             {profileData.name || "User"}
           </span>
         </motion.h1>
@@ -376,13 +376,13 @@ export default function Profile() {
           variants={fadeUp}
           className="flex items-center justify-center gap-8 mt-10"
         >
-          <div className="w-12 h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent rounded-full" />
+          <div className="w-12 h-1 bg-gradient-to-r from-transparent via-primary-500 to-transparent rounded-full" />
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="w-6 h-6 rounded-full border-2 border-purple-400/50"
+            className="w-6 h-6 rounded-full border-2 border-primary-400/50"
           />
-          <div className="w-12 h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent rounded-full" />
+          <div className="w-12 h-1 bg-gradient-to-r from-transparent via-primary-500 to-transparent rounded-full" />
         </motion.div>
       </motion.div>
 
@@ -401,7 +401,7 @@ export default function Profile() {
                     alt="Profile"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-purple-600/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary-600/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                     <span className="text-white text-xs font-semibold bg-black/40 px-2.5 py-1 rounded-full backdrop-blur-sm">Change Photo</span>
                   </div>
                   <button 
@@ -409,18 +409,18 @@ export default function Profile() {
                     onClick={(e) => { e.stopPropagation(); handleCameraClick(); }}
                     className="absolute bottom-2 right-2 p-2 rounded-full bg-white dark:bg-gray-800 shadow-lg opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   >
-                    <Camera size={18} className="text-purple-600" />
+                    <Camera size={18} className="text-primary-600" />
                   </button>
                 </div>
                 <div className="absolute top-0 right-0">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#6A3093] to-[#A044FF] flex items-center justify-center shadow-lg">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-primary-custom-1 to-primary-custom-2 flex items-center justify-center shadow-lg">
                     <TbSparkles className="text-white" size={20} />
                   </div>
                 </div>
               </div>
               
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{profileData.name || "User"}</h2>
-              <p className="text-purple-600 dark:text-purple-400 font-medium mb-4 flex items-center justify-center gap-2">
+              <p className="text-primary-600 dark:text-primary-400 font-medium mb-4 flex items-center justify-center gap-2">
                 <Mail size={16} />
                 {profileData.email}
               </p>
@@ -429,7 +429,7 @@ export default function Profile() {
               </p>
               
               <div className="flex flex-wrap gap-2 justify-center">
-                <span className="px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-purple-500/10 to-pink-500/10 text-purple-700 dark:text-purple-300 border border-purple-300/30 dark:border-purple-500/30">
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-primary-500/10 to-pink-500/10 text-primary-700 dark:text-primary-300 border border-primary-300/30 dark:border-primary-500/30">
                   Premium
                 </span>
                 <span className="px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-blue-500/10 to-cyan-500/10 text-blue-700 dark:text-blue-300 border border-blue-300/30 dark:border-blue-500/30">
@@ -443,7 +443,7 @@ export default function Profile() {
 
             <Card>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
-                <Zap className="text-purple-600" size={20} />
+                <Zap className="text-primary-600" size={20} />
                 Quick Actions
               </h3>
               <div className="space-y-3">
@@ -462,7 +462,7 @@ export default function Profile() {
           <div className="lg:w-3/5 space-y-8">
             <Card>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
-                <User className="text-purple-600" size={24} />
+                <User className="text-primary-600" size={24} />
                 Personal Information
               </h3>
               {errorMsg && (
@@ -491,7 +491,7 @@ export default function Profile() {
               {/* Password Change Section */}
               <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
                 <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
-                  <Lock size={18} className="text-purple-600" />
+                  <Lock size={18} className="text-primary-600" />
                   Change Password
                 </h4>
                 <div className="grid md:grid-cols-2 gap-6">
@@ -533,7 +533,7 @@ export default function Profile() {
 
             <Card>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
-                <Palette className="text-purple-600" size={24} />
+                <Palette className="text-primary-600" size={24} />
                 Preferences & Settings
               </h3>
               <div className="space-y-6">
@@ -580,7 +580,7 @@ export default function Profile() {
               whileTap={{ scale: 0.98 }}
               onClick={handleSave}
               disabled={saving}
-              className={`w-full py-4 rounded-xl font-extrabold text-xl text-white bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 transition-all duration-300 relative overflow-hidden group ${
+              className={`w-full py-4 rounded-xl font-extrabold text-xl text-white bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 shadow-2xl shadow-primary-500/30 hover:shadow-primary-500/50 transition-all duration-300 relative overflow-hidden group ${
                 saving ? "opacity-75 cursor-wait" : ""
               }`}
             >

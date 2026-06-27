@@ -15,7 +15,7 @@ const Toast = ({ message, type }) => {
     type === "success" ? "bg-green-600 shadow-green-500/50" :
       type === "warning" ? "bg-yellow-600 shadow-yellow-500/50" :
         type === "error" ? "bg-red-600 shadow-red-500/50" :
-          "bg-purple-600 shadow-purple-500/50";
+          "bg-primary-600 shadow-primary-500/50";
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 50 }}
@@ -724,22 +724,22 @@ export default function Translate() {
   };
 
   // ── Style constants ───────────────────────────────────────────────────────
-  const box = "w-full bg-white dark:bg-[#0f0c29]/70 rounded-3xl p-6 sm:p-10 shadow-2xl shadow-purple-900/10 dark:shadow-purple-900/30 border border-purple-500/20 backdrop-blur-lg transition-colors duration-500";
+  const box = "w-full bg-white dark:bg-primary-bg-4/70 rounded-3xl p-6 sm:p-10 shadow-2xl shadow-primary-900/10 dark:shadow-primary-900/30 border border-primary-500/20 backdrop-blur-lg transition-colors duration-500";
   const btn = "px-6 py-3 rounded-full flex items-center justify-center gap-2 text-white font-bold shadow-lg transition-all duration-300";
   const dis = "opacity-50 cursor-not-allowed hover:scale-100";
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
-    <div className="w-full bg-gray-50 dark:bg-[#0f0c29] py-28 px-4 sm:px-6 lg:px-20 min-h-screen transition-colors duration-500">
+    <div className="w-full bg-gray-50 dark:bg-primary-bg-4 py-28 px-4 sm:px-6 lg:px-20 min-h-screen transition-colors duration-500">
 
       <motion.div initial="hidden" whileInView="visible" variants={fadeUp} className="max-w-6xl mx-auto text-center mb-16">
         <div className="flex items-center justify-center gap-3 mb-6 flex-wrap">
-          <h2 className="text-5xl sm:text-6xl font-extrabold bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] bg-clip-text text-transparent">
+          <h2 className="text-5xl sm:text-6xl font-extrabold bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 bg-clip-text text-transparent">
             Translation Center
           </h2>
           <button
             onClick={() => setShowGuide(true)}
-            className="p-2 text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 transition-all rounded-full hover:bg-purple-100 dark:hover:bg-purple-950/40 hover:scale-110 shadow-md border border-purple-500/20 cursor-pointer"
+            className="p-2 text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 transition-all rounded-full hover:bg-primary-100 dark:hover:bg-primary-950/40 hover:scale-110 shadow-md border border-primary-500/20 cursor-pointer"
             title="How it works"
           >
             <HelpCircle className="w-7 h-7" />
@@ -754,7 +754,7 @@ export default function Translate() {
         {options.map(o => (
           <button key={o} onClick={() => handleTabChange(o)}
             className={`px-8 py-3 rounded-full font-bold transition-all duration-300 text-lg ${selected === o
-                ? "bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] scale-105 text-white"
+                ? "bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 scale-105 text-white"
                 : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
               }`}>{o}</button>
         ))}
@@ -768,14 +768,14 @@ export default function Translate() {
             <div className={box}>
 
               <div className="flex justify-between items-center flex-wrap gap-4 mb-6">
-                <h3 className="text-2xl font-extrabold bg-gradient-to-r from-[#6A3093] to-[#BF5AE0] bg-clip-text text-transparent">
+                <h3 className="text-2xl font-extrabold bg-gradient-to-r from-primary-custom-1 to-primary-custom-3 bg-clip-text text-transparent">
                   Sign Language AI Camera / Video
                 </h3>
                 <div className="flex gap-3 flex-wrap">
                   {!isStreaming && !isProcessingVideo && (
                     <>
                       <button onClick={startCameraAndWS} disabled={isAiLoading}
-                        className={`${btn} bg-purple-600 hover:bg-purple-700 hover:scale-105 ${isAiLoading ? dis : ""}`}>
+                        className={`${btn} bg-primary-600 hover:bg-primary-700 hover:scale-105 ${isAiLoading ? dis : ""}`}>
                         {isAiLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Camera className="w-5 h-5" />}
                         {isAiLoading ? "Loading AI..." : "Turn On AI Camera"}
                       </button>
@@ -815,7 +815,7 @@ export default function Translate() {
                 {/* WebSocket / camera connecting */}
                 {isAiLoading && (
                   <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center text-white z-20 backdrop-blur-sm">
-                    <Loader2 className="w-12 h-12 animate-spin text-purple-500 mb-4" />
+                    <Loader2 className="w-12 h-12 animate-spin text-primary-500 mb-4" />
                     <h3 className="text-xl font-bold">Connecting to AI...</h3>
                     <p className="text-sm text-gray-400 mt-2">This may take a few seconds on first load.</p>
                   </div>
@@ -859,7 +859,7 @@ export default function Translate() {
 
                 {isTranslating && (
                   <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-white z-20">
-                    <Loader2 className="w-12 h-12 animate-spin text-purple-500 mb-4" />
+                    <Loader2 className="w-12 h-12 animate-spin text-primary-500 mb-4" />
                     <h3 className="text-xl font-bold">AI is predicting your sign...</h3>
                   </div>
                 )}
@@ -868,7 +868,7 @@ export default function Translate() {
               {(isStreaming || isProcessingVideo) && (
                 <div className="bg-gray-100 dark:bg-gray-800 rounded-xl p-6 border border-gray-300 dark:border-gray-700 text-center mb-4">
                   <div className="flex items-center justify-center gap-3 text-gray-700 dark:text-gray-300">
-                    <Hand className="w-5 h-5 text-purple-500" />
+                    <Hand className="w-5 h-5 text-primary-500" />
                     <p className="text-sm font-medium">
                       <span className="text-green-600 font-bold">Auto-sense active:</span>{" "}
                       Show hands to start recording, hide to predict
@@ -916,13 +916,13 @@ export default function Translate() {
                       <div className="flex gap-3 w-full sm:w-auto">
                         <button
                           onClick={handleAcceptPrediction}
-                          className="flex-1 sm:flex-initial px-6 py-2.5 bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] hover:opacity-90 active:scale-95 text-white font-bold rounded-xl shadow-md shadow-purple-500/20 transition-all text-sm flex items-center justify-center gap-1.5"
+                          className="flex-1 sm:flex-initial px-6 py-2.5 bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 hover:opacity-90 active:scale-95 text-white font-bold rounded-xl shadow-md shadow-primary-500/20 transition-all text-sm flex items-center justify-center gap-1.5"
                         >
                           Accept & Add
                         </button>
                         <button
                           onClick={handleRejectPrediction}
-                          className="flex-1 sm:flex-initial px-6 py-2.5 border border-purple-500/40 dark:border-purple-500/60 text-purple-700 dark:text-purple-300 hover:bg-purple-500/10 active:scale-95 font-bold rounded-xl shadow-sm transition-all text-sm flex items-center justify-center gap-1.5 bg-white/50 dark:bg-[#0f0c29]/50"
+                          className="flex-1 sm:flex-initial px-6 py-2.5 border border-primary-500/40 dark:border-primary-500/60 text-primary-700 dark:text-primary-300 hover:bg-primary-500/10 active:scale-95 font-bold rounded-xl shadow-sm transition-all text-sm flex items-center justify-center gap-1.5 bg-white/50 dark:bg-primary-bg-4/50"
                         >
                           Reject / Skip
                         </button>
@@ -935,15 +935,15 @@ export default function Translate() {
               <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Detected Signs Column */}
                 <div>
-                  <div className="flex justify-between items-end mb-2 border-b border-purple-500/50 pb-2">
+                  <div className="flex justify-between items-end mb-2 border-b border-primary-500/50 pb-2">
                     <h4 className="text-xl font-semibold text-gray-800 dark:text-white">Detected Signs:</h4>
                     <div className="flex gap-3">
                       <button onClick={() => speakText(recognizedText)} title="Speak"
-                        className="text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 transition-colors">
+                        className="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 transition-colors">
                         <Volume2 className="w-5 h-5" />
                       </button>
                       <button onClick={handleUndo} disabled={!recognizedText}
-                        className={`text-sm text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 flex items-center gap-1 font-semibold transition-opacity ${!recognizedText ? "opacity-30 cursor-not-allowed" : "hover:scale-105"
+                        className={`text-sm text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 flex items-center gap-1 font-semibold transition-opacity ${!recognizedText ? "opacity-30 cursor-not-allowed" : "hover:scale-105"
                           }`}>
                         <Undo className="w-4 h-4" /> Undo
                       </button>
@@ -953,7 +953,7 @@ export default function Translate() {
                       </button>
                     </div>
                   </div>
-                  <div className={`w-full min-h-32 p-4 rounded-xl border-2 border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 shadow-inner text-xl tracking-wide transition-colors ${recognizedText ? "text-purple-600 dark:text-pink-300 font-bold" : "text-gray-500 dark:text-gray-500 italic"
+                  <div className={`w-full min-h-32 p-4 rounded-xl border-2 border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 shadow-inner text-xl tracking-wide transition-colors ${recognizedText ? "text-primary-600 dark:text-pink-300 font-bold" : "text-gray-500 dark:text-gray-500 italic"
                     }`}>
                     {recognizedText || "Sign sequence will appear here..."}
                   </div>
@@ -961,20 +961,20 @@ export default function Translate() {
 
                 {/* English Translation Column */}
                 <div>
-                  <div className="flex justify-between items-end mb-2 border-b border-purple-500/50 pb-2">
+                  <div className="flex justify-between items-end mb-2 border-b border-primary-500/50 pb-2">
                     <h4 className="text-xl font-semibold text-gray-800 dark:text-white">English Translation:</h4>
                     <div className="flex gap-2">
                       <button onClick={() => speakText(englishSentence)} title="Speak"
-                        className="text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 transition-colors">
+                        className="text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300 transition-colors">
                         <Volume2 className="w-5 h-5" />
                       </button>
                       <button onClick={handleTranslateNow}
-                        className="text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded-full flex items-center gap-1">
+                        className="text-sm bg-primary-600 hover:bg-primary-700 text-white px-3 py-1 rounded-full flex items-center gap-1">
                         <Volume2 className="w-4 h-4" /> Translate
                       </button>
                     </div>
                   </div>
-                  <div className={`w-full min-h-32 p-4 rounded-xl border-2 border-purple-400 dark:border-purple-600 bg-purple-50 dark:bg-purple-900/20 shadow-inner text-xl tracking-wide transition-colors ${englishSentence ? "text-purple-700 dark:text-purple-300 font-bold" : "text-gray-500 dark:text-gray-500 italic"
+                  <div className={`w-full min-h-32 p-4 rounded-xl border-2 border-primary-400 dark:border-primary-600 bg-primary-50 dark:bg-primary-900/20 shadow-inner text-xl tracking-wide transition-colors ${englishSentence ? "text-primary-700 dark:text-primary-300 font-bold" : "text-gray-500 dark:text-gray-500 italic"
                     }`}>
                     {englishSentence || "Grammatically correct sentence will appear here..."}
                   </div>
@@ -989,28 +989,28 @@ export default function Translate() {
         {selected === "Text / Audio to Sign" && (
           <div className="flex flex-col items-center gap-10">
             <div className={box}>
-              <h3 className="text-3xl font-extrabold text-center mb-10 bg-gradient-to-r from-purple-500 to-pink-400 bg-clip-text text-transparent">
+              <h3 className="text-3xl font-extrabold text-center mb-10 bg-gradient-to-r from-primary-500 to-pink-400 bg-clip-text text-transparent">
                 Text / Audio → Sign Language Avatar
               </h3>
               <textarea rows={4} value={textInput} onChange={e => setTextInput(e.target.value)}
                 placeholder="Type your message here to see it signed by the avatar..."
                 disabled={isTranslating}
-                className={`w-full p-5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-200 shadow-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition resize-none text-lg ${isTranslating ? dis : ""}`}
+                className={`w-full p-5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-200 shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 transition resize-none text-lg ${isTranslating ? dis : ""}`}
               />
               <div className="flex justify-center items-center gap-8 mt-6">
                 <button onClick={() => showMessage("Audio coming soon", "info")} disabled={isTranslating}
-                  className={`w-16 h-16 rounded-full flex items-center justify-center text-white shadow-xl bg-purple-600 hover:bg-purple-700 ${isTranslating ? dis : ""}`}>
+                  className={`w-16 h-16 rounded-full flex items-center justify-center text-white shadow-xl bg-primary-600 hover:bg-primary-700 ${isTranslating ? dis : ""}`}>
                   <Mic className="text-2xl" />
                 </button>
                 <div className="text-2xl font-bold text-gray-500 dark:text-gray-400">OR</div>
                 <button onClick={handleConvertText} disabled={isTranslating || !textInput.trim()}
-                  className={`${btn} bg-gradient-to-r from-[#6A3093] to-[#BF5AE0] ${(isTranslating || !textInput.trim()) ? dis : "hover:scale-105"}`}>
+                  className={`${btn} bg-gradient-to-r from-primary-custom-1 to-primary-custom-3 ${(isTranslating || !textInput.trim()) ? dis : "hover:scale-105"}`}>
                   {isTranslating
                     ? <><Loader2 className="w-5 h-5 animate-spin" /> Generating Signs...</>
                     : <><RefreshCw className="w-5 h-5" /> Convert to Sign</>}
                 </button>
               </div>
-              <div className="mt-10 w-full h-64 rounded-2xl border border-gray-300 dark:border-purple-600/50 bg-gray-100 dark:bg-gray-800 shadow-inner flex flex-col items-center justify-center text-gray-500 dark:text-gray-400 text-center text-lg tracking-wide">
+              <div className="mt-10 w-full h-64 rounded-2xl border border-gray-300 dark:border-primary-600/50 bg-gray-100 dark:bg-gray-800 shadow-inner flex flex-col items-center justify-center text-gray-500 dark:text-gray-400 text-center text-lg tracking-wide">
                 {currentVideo ? (
                   <video key={currentVideo} src={currentVideo} autoPlay muted
                     className="rounded-lg w-full h-full object-contain mb-3"
@@ -1034,7 +1034,7 @@ export default function Translate() {
                   </>
                 )}
                 {isTranslating && (
-                  <p className="mt-2 text-purple-500 flex items-center gap-2">
+                  <p className="mt-2 text-primary-500 flex items-center gap-2">
                     <Loader2 className="w-4 h-4 animate-spin" /> Animating...
                   </p>
                 )}
@@ -1061,14 +1061,14 @@ export default function Translate() {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white dark:bg-[#120e3d] border border-purple-500/30 rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative overflow-hidden"
+              className="bg-white dark:bg-[#120e3d] border border-primary-500/30 rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative overflow-hidden"
             >
               {/* Decorative backgrounds */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl pointer-events-none" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary-500/10 rounded-full blur-2xl pointer-events-none" />
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-pink-500/10 rounded-full blur-2xl pointer-events-none" />
 
               <div className="flex items-center gap-3 mb-6 relative z-10">
-                <div className="p-3 bg-purple-100 dark:bg-purple-950/60 rounded-2xl text-purple-600 dark:text-purple-400">
+                <div className="p-3 bg-primary-100 dark:bg-primary-950/60 rounded-2xl text-primary-600 dark:text-primary-400">
                   <Sparkles className="w-6 h-6 animate-pulse" />
                 </div>
                 <div className="text-left">
@@ -1084,7 +1084,7 @@ export default function Translate() {
               <div className="space-y-5 my-6 text-left relative z-10">
                 {/* Step 1 */}
                 <div className="flex gap-4 items-start">
-                  <div className="w-7 h-7 rounded-full bg-purple-600 text-white font-bold text-sm flex items-center justify-center shrink-0 mt-0.5 shadow-md">
+                  <div className="w-7 h-7 rounded-full bg-primary-600 text-white font-bold text-sm flex items-center justify-center shrink-0 mt-0.5 shadow-md">
                     1
                   </div>
                   <div>
@@ -1097,7 +1097,7 @@ export default function Translate() {
 
                 {/* Step 2 */}
                 <div className="flex gap-4 items-start">
-                  <div className="w-7 h-7 rounded-full bg-purple-600 text-white font-bold text-sm flex items-center justify-center shrink-0 mt-0.5 shadow-md">
+                  <div className="w-7 h-7 rounded-full bg-primary-600 text-white font-bold text-sm flex items-center justify-center shrink-0 mt-0.5 shadow-md">
                     2
                   </div>
                   <div>
@@ -1110,7 +1110,7 @@ export default function Translate() {
 
                 {/* Step 3 */}
                 <div className="flex gap-4 items-start">
-                  <div className="w-7 h-7 rounded-full bg-purple-600 text-white font-bold text-sm flex items-center justify-center shrink-0 mt-0.5 shadow-md">
+                  <div className="w-7 h-7 rounded-full bg-primary-600 text-white font-bold text-sm flex items-center justify-center shrink-0 mt-0.5 shadow-md">
                     3
                   </div>
                   <div>
@@ -1123,7 +1123,7 @@ export default function Translate() {
 
                 {/* Step 4 */}
                 <div className="flex gap-4 items-start">
-                  <div className="w-7 h-7 rounded-full bg-purple-600 text-white font-bold text-sm flex items-center justify-center shrink-0 mt-0.5 shadow-md">
+                  <div className="w-7 h-7 rounded-full bg-primary-600 text-white font-bold text-sm flex items-center justify-center shrink-0 mt-0.5 shadow-md">
                     4
                   </div>
                   <div>
@@ -1145,7 +1145,7 @@ export default function Translate() {
                       onChange={(e) => setDontShowAgain(e.target.checked)}
                       className="sr-only peer"
                     />
-                    <div className="w-5 h-5 border-2 border-gray-300 dark:border-gray-600 rounded peer-checked:bg-purple-600 peer-checked:border-purple-600 flex items-center justify-center transition-colors">
+                    <div className="w-5 h-5 border-2 border-gray-300 dark:border-gray-600 rounded peer-checked:bg-primary-600 peer-checked:border-primary-600 flex items-center justify-center transition-colors">
                       <Check className="w-3.5 h-3.5 text-white stroke-[3px]" />
                     </div>
                   </div>
@@ -1156,7 +1156,7 @@ export default function Translate() {
 
                 <button
                   onClick={handleDismissGuide}
-                  className="w-full py-4 rounded-2xl bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] text-white font-black text-lg shadow-xl shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-[1.02] active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-4 rounded-2xl bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 text-white font-black text-lg shadow-xl shadow-primary-500/25 hover:shadow-primary-500/40 hover:scale-[1.02] active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Camera className="w-5 h-5" /> Got it, start translating!
                 </button>

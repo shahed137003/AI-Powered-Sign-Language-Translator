@@ -70,10 +70,10 @@ export default function ResetPassword() {
   const fadeIn = { hidden: { opacity: 0 }, visible: { opacity: 1 } };
 
   return (
-    <div className="w-full bg-gray-50 dark:bg-[#0f0c29] py-16 px-6 lg:px-20 relative overflow-hidden transition-colors duration-500 min-h-screen flex items-center justify-center">
+    <div className="w-full bg-gray-50 dark:bg-primary-bg-4 py-16 px-6 lg:px-20 relative overflow-hidden transition-colors duration-500 min-h-screen flex items-center justify-center">
       
       {/* Background Glows */}
-      <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-primary-600/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-green-600/10 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-lg w-full mx-auto relative z-10">
@@ -86,14 +86,14 @@ export default function ResetPassword() {
           transition={{ duration: 0.8 }}
           className="text-center mb-10"
         >
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-r from-green-600 to-purple-600 mb-6 shadow-lg">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-r from-green-600 to-primary-600 mb-6 shadow-lg">
             <FaCheckCircle className="text-3xl text-white" />
           </div>
-          <span className="text-purple-600 dark:text-purple-400 font-bold tracking-widest uppercase text-sm mb-2 block">
+          <span className="text-primary-600 dark:text-primary-400 font-bold tracking-widest uppercase text-sm mb-2 block">
             Account Security
           </span>
           <h2 className="text-4xl sm:text-5xl font-extrabold mb-4 text-gray-900 dark:text-white">
-            <span className="bg-gradient-to-r from-[#6A3093] via-[#A044FF] to-[#BF5AE0] dark:from-[#6A3093] dark:to-[#A044FF] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary-custom-1 via-primary-custom-2 to-primary-custom-3 dark:from-primary-custom-1 dark:to-primary-custom-2 bg-clip-text text-transparent">
               Set New Password
             </span>
           </h2>
@@ -108,7 +108,7 @@ export default function ResetPassword() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="p-8 lg:p-10 dark:bg-[#1a163a]/60 backdrop-blur-xl border border-gray-200 dark:border-purple-500/20 rounded-3xl shadow-xl transition duration-500 hover:shadow-purple-900/40"
+          className="p-8 lg:p-10 dark:bg-primary-bg-5/60 backdrop-blur-xl border border-gray-200 dark:border-primary-500/20 rounded-3xl shadow-xl transition duration-500 hover:shadow-primary-900/40"
         >
           {/* Success Message */}
           {message && (
@@ -153,10 +153,10 @@ export default function ResetPassword() {
                 required
                 disabled={!!location.state?.email}
                 placeholder="Your Email"
-                className="w-full p-4 pl-12 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-transparent peer bg-white/70 dark:bg-gray-700/50 text-gray-900 dark:text-gray-200 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full p-4 pl-12 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 placeholder-transparent peer bg-white/70 dark:bg-gray-700/50 text-gray-900 dark:text-gray-200 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
               />
-              <FaEnvelope className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-400 peer-focus:text-purple-600 transition-colors" />
-              <label className="absolute left-12 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 text-base peer-placeholder-shown:top-1/2 peer-focus:top-3 peer-focus:text-purple-600 peer-focus:dark:text-purple-400 peer-focus:text-sm transition-all pointer-events-none">
+              <FaEnvelope className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-400 peer-focus:text-primary-600 transition-colors" />
+              <label className="absolute left-12 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 text-base peer-placeholder-shown:top-1/2 peer-focus:top-3 peer-focus:text-primary-600 peer-focus:dark:text-primary-400 peer-focus:text-sm transition-all pointer-events-none">
                 Email Address
               </label>
             </div>
@@ -171,10 +171,10 @@ export default function ResetPassword() {
                 required
                 maxLength="6"
                 placeholder="6-digit Code"
-                className="w-full p-4 pl-12 text-center tracking-widest text-xl font-mono border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-transparent peer bg-white/70 dark:bg-gray-700/50 text-gray-900 dark:text-gray-200 transition-colors"
+                className="w-full p-4 pl-12 text-center tracking-widest text-xl font-mono border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 placeholder-transparent peer bg-white/70 dark:bg-gray-700/50 text-gray-900 dark:text-gray-200 transition-colors"
               />
-              <FaKey className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-400 peer-focus:text-purple-600 transition-colors" />
-              <label className="absolute left-12 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 text-base peer-placeholder-shown:top-1/2 peer-focus:top-3 peer-focus:text-purple-600 peer-focus:dark:text-purple-400 peer-focus:text-sm transition-all pointer-events-none">
+              <FaKey className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-400 peer-focus:text-primary-600 transition-colors" />
+              <label className="absolute left-12 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 text-base peer-placeholder-shown:top-1/2 peer-focus:top-3 peer-focus:text-primary-600 peer-focus:dark:text-primary-400 peer-focus:text-sm transition-all pointer-events-none">
                 Verification Code
               </label>
             </div>
@@ -189,17 +189,17 @@ export default function ResetPassword() {
                 required
                 minLength={6}
                 placeholder="New Password"
-                className="w-full p-4 pl-12 pr-12 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-transparent peer bg-white/70 dark:bg-gray-700/50 text-gray-900 dark:text-gray-200 transition-colors"
+                className="w-full p-4 pl-12 pr-12 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 placeholder-transparent peer bg-white/70 dark:bg-gray-700/50 text-gray-900 dark:text-gray-200 transition-colors"
               />
-              <FaLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-400 peer-focus:text-purple-600 transition-colors" />
+              <FaLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-400 peer-focus:text-primary-600 transition-colors" />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-purple-600 transition-colors"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary-600 transition-colors"
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
-              <label className="absolute left-12 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 text-base peer-placeholder-shown:top-1/2 peer-focus:top-3 peer-focus:text-purple-600 peer-focus:dark:text-purple-400 peer-focus:text-sm transition-all pointer-events-none">
+              <label className="absolute left-12 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 text-base peer-placeholder-shown:top-1/2 peer-focus:top-3 peer-focus:text-primary-600 peer-focus:dark:text-primary-400 peer-focus:text-sm transition-all pointer-events-none">
                 New Password (min 6 characters)
               </label>
             </div>
@@ -214,17 +214,17 @@ export default function ResetPassword() {
                 required
                 minLength={6}
                 placeholder="Confirm Password"
-                className="w-full p-4 pl-12 pr-12 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-transparent peer bg-white/70 dark:bg-gray-700/50 text-gray-900 dark:text-gray-200 transition-colors"
+                className="w-full p-4 pl-12 pr-12 border border-gray-300 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 placeholder-transparent peer bg-white/70 dark:bg-gray-700/50 text-gray-900 dark:text-gray-200 transition-colors"
               />
-              <FaLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-400 peer-focus:text-purple-600 transition-colors" />
+              <FaLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-400 peer-focus:text-primary-600 transition-colors" />
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-purple-600 transition-colors"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary-600 transition-colors"
               >
                 {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
-              <label className="absolute left-12 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 text-base peer-placeholder-shown:top-1/2 peer-focus:top-3 peer-focus:text-purple-600 peer-focus:dark:text-purple-400 peer-focus:text-sm transition-all pointer-events-none">
+              <label className="absolute left-12 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 text-base peer-placeholder-shown:top-1/2 peer-focus:top-3 peer-focus:text-primary-600 peer-focus:dark:text-primary-400 peer-focus:text-sm transition-all pointer-events-none">
                 Confirm Password
               </label>
             </div>
@@ -260,7 +260,7 @@ export default function ResetPassword() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="w-full px-6 py-4 bg-gradient-to-r from-[#6A3093] to-[#A044FF] text-white font-bold rounded-full shadow-lg shadow-purple-500/40 transform transition duration-300 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-6 py-4 bg-gradient-to-r from-primary-custom-1 to-primary-custom-2 text-white font-bold rounded-full shadow-lg shadow-primary-500/40 transform transition duration-300 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <>
@@ -283,7 +283,7 @@ export default function ResetPassword() {
               <div className="text-center">
                 <Link 
                   to="/forget-password" 
-                  className="text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 transition-colors font-medium text-sm"
+                  className="text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 transition-colors font-medium text-sm"
                 >
                   Need a new verification code?
                 </Link>

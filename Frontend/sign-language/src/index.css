@@ -47,6 +47,9 @@
   --theme-primary-bg-3: #1e0f5c;
   --theme-primary-bg-4: #0f0c29;
   --theme-primary-bg-5: #1a163a;
+  --theme-grid-color: rgba(168, 85, 247, 0.1);
+  --theme-scrollbar-thumb: rgba(168, 85, 247, 0.3);
+  --theme-scrollbar-thumb-hover: rgba(168, 85, 247, 0.5);
 }
 
 
@@ -73,4 +76,7 @@ html[data-theme="midnight-blue"] {
   --theme-primary-bg-3: #1c1955;
   --theme-primary-bg-4: #02040a;
   --theme-primary-bg-5: #0f0d2a;
+  --theme-grid-color: rgba(99, 102, 241, 0.1);
+  --theme-scrollbar-thumb: rgba(99, 102, 241, 0.3);
+  --theme-scrollbar-thumb-hover: rgba(99, 102, 241, 0.5);
 }
