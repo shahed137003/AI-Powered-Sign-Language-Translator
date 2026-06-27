@@ -84,6 +84,7 @@ export default function Navbar() {
     { name: "Guide", to: "/guide", icon: <TbHelp /> },
     { name: "Profile", to: "/profile", icon: <BsStars />, color: "from-primary-600 to-primary-400" },
     { name: "Contact", to: "/contactus", icon: <TbMail />, color: "from-primary-500 to-primary-400" },
+    
   ];
 
   const userMenuItems = [

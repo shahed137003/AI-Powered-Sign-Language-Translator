@@ -19,6 +19,7 @@ import About from "./components/About";
 import ForgetPassword from "./components/ForgetPassword";
 import ResetPassword from "./components/ResetPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Dashboard from "./components/Dashboard";
 function App() {
   const location = useLocation();
 
@@ -73,7 +74,14 @@ function App() {
         <Route path="/forget-password" element={<ForgetPassword />} />
 
         <Route path="/reset-password" element={<ResetPassword />} />
-        
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
     
