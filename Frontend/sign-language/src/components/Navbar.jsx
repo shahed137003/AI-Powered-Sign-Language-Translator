@@ -83,12 +83,13 @@ export default function Navbar() {
     { name: "Translate", to: "/translate", icon: <BsTranslate />, color: "from-primary-500 to-primary-300" },
     { name: "Profile", to: "/profile", icon: <BsStars />, color: "from-primary-600 to-primary-400" },
     { name: "Contact", to: "/contactus", icon: <TbMail />, color: "from-primary-500 to-primary-400" },
-    
+    { name: "Guide", to: "/guide", icon: <BsLightningCharge />, color: "from-primary-600 to-primary-400" },
   ];
 
   const userMenuItems = [
     { name: "Dashboard", to: "/", icon: <TbHome />, color: "from-primary-500 to-primary-400" },
     { name: "Profile", to: "/profile", icon: <FaUser />, color: "from-primary-600 to-primary-300" },
+       { name: "Guide", to: "/guide", icon: <BsLightningCharge />, color: "from-primary-600 to-primary-400" },
     { name: "Chatbot", to: "/chat", icon: <TbMessageChatbot />, color: "from-primary-500 to-primary-400" },
     { name: "Settings", to: "/profile", icon: <BsLightningCharge />, color: "from-primary-600 to-primary-400" },
   ];
