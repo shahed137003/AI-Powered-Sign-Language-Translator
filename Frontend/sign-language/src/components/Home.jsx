@@ -490,15 +490,15 @@ const colors = isDark ? currentThemeColors : currentThemeColors.slice().reverse(
   </div>
   <div className="flex items-center gap-2">
     <BsLightningFill className="text-primary-500 text-sm" />
-    <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">Real-time</span>
+    <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">Real-time Translation</span>
   </div>
   <div className="flex items-center gap-2">
     <FaGlobeAmericas className="text-primary-500 text-sm" />
-    <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">50+ Languages</span>
+    <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">Accessible Communication</span>
   </div>
   <div className="flex items-center gap-2">
     <BsCheckCircleFill className="text-primary-500 text-sm" />
-    <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">99% Accuracy</span>
+    <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">92% Accuracy</span>
   </div>
 </motion.div>
         </motion.div>

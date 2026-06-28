@@ -24,7 +24,21 @@ import { getApiUrl } from "../lib/api";
 import axios from "axios";
 
 const PROFILE_PLACEHOLDER_URL = "https://placehold.co/300x300/A044FF/ffffff?text=User";
+const fadeUp = {
+    hidden: { opacity: 0, y: 25 },
+    visible: { opacity: 1, y: 0 },
+  };
 
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+ 
 export default function Profile() {
   const { user: authUser, updateUser, logout } = useAuth();
   const navigate = useNavigate();
@@ -49,138 +63,7 @@ export default function Profile() {
   const [avatar, setAvatar] = useState(PROFILE_PLACEHOLDER_URL);
 
   const fileInputRef = useRef(null);
-
-  // Sync profile details and picture from AuthContext/localStorage
-  useEffect(() => {
-    if (authUser) {
-      setProfileData(prev => ({
-        ...prev,
-        name: authUser.username || "",
-        email: authUser.email || "",
-      }));
-
-      const savedAvatar = localStorage.getItem(`profile_pic_${authUser.email}`);
-      if (savedAvatar) {
-        setAvatar(savedAvatar);
-      } else {
-        const initials = authUser.username?.charAt(0).toUpperCase() || 'U';
-        setAvatar(`https://placehold.co/300x300/A044FF/ffffff?text=${initials}`);
-      }
-    }
-  }, [authUser]);
-
-  const fadeUp = {
-    hidden: { opacity: 0, y: 25 },
-    visible: { opacity: 1, y: 0 },
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setProfileData((prev) => ({ 
-      ...prev, 
-      [name]: type === 'checkbox' ? checked : value 
-    }));
-  };
-
-  const handleSave = async () => {
-    if (!authUser) return;
-    setSaving(true);
-    setErrorMsg("");
-
-    // Validate password fields
-    const isOldFilled = oldPassword.trim().length > 0;
-    const isNewFilled = newPassword.trim().length > 0;
-    const isConfirmFilled = confirmPassword.trim().length > 0;
-
-    if (isOldFilled || isNewFilled || isConfirmFilled) {
-      // If any password field is filled, all three must be filled
-      if (!isOldFilled || !isNewFilled || !isConfirmFilled) {
-        setErrorMsg("Please fill in all password fields to change your password.");
-        setSaving(false);
-        return;
-      }
-      if (newPassword !== confirmPassword) {
-        setErrorMsg("New password and confirm password do not match.");
-        setSaving(false);
-        return;
-      }
-      if (newPassword.length < 6) {
-        setErrorMsg("New password must be at least 6 characters long.");
-        setSaving(false);
-        return;
-      }
-    }
-
-    try {
-      // Prepare payload – send old and new password only if they are filled
-      const payload = {
-        username: profileData.name,
-      };
-      if (isOldFilled && isNewFilled) {
-        payload.old_password = oldPassword;
-        payload.new_password = newPassword;
-      }
-
-      await axios.put(`${getApiUrl()}/users/me`, payload);
-
-      // Update AuthContext user state
-      updateUser({ username: profileData.name });
-
-      // Clear password fields after success
-      setOldPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
-
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 3000);
-    } catch (err) {
-      console.error("Failed to save profile changes:", err);
-      setErrorMsg(
-        err?.response?.data?.detail || 
-        err?.message || 
-        "Failed to update profile. Please try again."
-      );
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const handleCameraClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result;
-        setAvatar(base64String);
-        if (authUser?.email) {
-          localStorage.setItem(`profile_pic_${authUser.email}`, base64String);
-          window.dispatchEvent(new Event('storage'));
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSignOut = () => {
-    logout();
-    navigate("/");
-  };
-
-  const Card = ({ children, className = "", hover = false }) => (
+   const Card = ({ children, className = "", hover = false }) => (
     <motion.div
       variants={fadeUp}
       whileHover={hover ? { y: -5, scale: 1.02 } : {}}
@@ -288,6 +171,124 @@ export default function Profile() {
       </button>
     </div>
   );
+  // Sync profile details and picture from AuthContext/localStorage
+  useEffect(() => {
+    if (authUser) {
+      setProfileData(prev => ({
+        ...prev,
+        name: authUser.username || "",
+        email: authUser.email || "",
+      }));
+
+      const savedAvatar = localStorage.getItem(`profile_pic_${authUser.email}`);
+      if (savedAvatar) {
+        setAvatar(savedAvatar);
+      } else {
+        const initials = authUser.username?.charAt(0).toUpperCase() || 'U';
+        setAvatar(`https://placehold.co/300x300/A044FF/ffffff?text=${initials}`);
+      }
+    }
+  }, [authUser]);
+
+  
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setProfileData((prev) => ({ 
+      ...prev, 
+      [name]: type === 'checkbox' ? checked : value 
+    }));
+  };
+
+  const handleSave = async () => {
+    if (!authUser) return;
+    setSaving(true);
+    setErrorMsg("");
+
+    // Validate password fields
+    const isOldFilled = oldPassword.trim().length > 0;
+    const isNewFilled = newPassword.trim().length > 0;
+    const isConfirmFilled = confirmPassword.trim().length > 0;
+
+    if (isOldFilled || isNewFilled || isConfirmFilled) {
+      // If any password field is filled, all three must be filled
+      if (!isOldFilled || !isNewFilled || !isConfirmFilled) {
+        setErrorMsg("Please fill in all password fields to change your password.");
+        setSaving(false);
+        return;
+      }
+      if (newPassword !== confirmPassword) {
+        setErrorMsg("New password and confirm password do not match.");
+        setSaving(false);
+        return;
+      }
+      if (newPassword.length < 6) {
+        setErrorMsg("New password must be at least 6 characters long.");
+        setSaving(false);
+        return;
+      }
+    }
+
+    try {
+      // Prepare payload – send old and new password only if they are filled
+      const payload = {
+        username: profileData.name,
+      };
+      if (isOldFilled && isNewFilled) {
+        payload.old_password = oldPassword;
+        payload.new_password = newPassword;
+      }
+
+      await axios.put(`${getApiUrl()}/users/me`, payload);
+
+      // Update AuthContext user state
+      updateUser({ username: profileData.name });
+
+      // Clear password fields after success
+      setOldPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    } catch (err) {
+      console.error("Failed to save profile changes:", err);
+      setErrorMsg(
+        err?.response?.data?.detail || 
+        err?.message || 
+        "Failed to update profile. Please try again."
+      );
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleCameraClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result;
+        setAvatar(base64String);
+        if (authUser?.email) {
+          localStorage.setItem(`profile_pic_${authUser.email}`, base64String);
+          window.dispatchEvent(new Event('storage'));
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSignOut = () => {
+    logout();
+    navigate("/");
+  };
+
+  
 
   return (
     <div className="relative w-full min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50/60 dark:from-primary-bg-1 dark:via-primary-bg-2 dark:to-primary-bg-3 py-24 px-4 sm:px-6 lg:px-8 font-inter overflow-hidden z-0">

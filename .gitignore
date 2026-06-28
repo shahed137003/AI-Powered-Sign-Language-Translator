@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environments
+venv/
+venv_backend/
+venv_ai/
+
+# Environment variables
+.env
+
+# Database
+*.db
+
+# Node
+node_modules/
